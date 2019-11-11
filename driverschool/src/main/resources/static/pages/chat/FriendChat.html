@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../../plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../js/axios-0.18.0.js"></script>
+    <script src="../../js/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="../../plugins/elementui/index.js"></script>
+    <script type="text/javascript"></script>  <!--  使用的时候要先script      -->
+    <style type="text/css">
+        .userfaceImg {
+            width: 37px;
+            height: 37px;
+            border-radius: 30px;
+            margin-right: 10px;
+        }
+        .friendListDiv {
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 20px;
+            box-sizing: border-box;
+            align-items: center;
+            width: 160px;
+            height: 40px;
+            border-color: #20a0ff;
+            border-left-style: solid;
+            border-top-style: solid;
+            border-right-style: solid;
+            border-width: 1px;
+            cursor: pointer
+        }
+        .chatDiv {
+            border-color: #ff83fc;
+            border-style: solid;
+            border-radius: 5px;
+            border-width: 2px;
+            box-sizing: border-box;
+            width: 1000px;
+            height: 450px;
+            overflow-y: auto;
+            padding-bottom: 50px;
+        }
+        .sendBtn {
+            padding-left: 25px;
+            padding-right: 25px
+        }
+        .currentChatFriend {
+            background-color: #dcdfe6;
+        }
+        el-aside {
+            background-color: #D3DCE6;
+            color: #333;
+            text-align: center;
+            line-height: 200px;
+        }
+        .timeStyle {
+            font-size: 12px ;
+            color: #0abdfe;
+        }
+        .chatDiv1{
+            width: 660px;
+            height: 450px;
+            border-color: #ff83fc;
+            border-style: solid;
+            border-radius: 5px;
+            border-width: 2px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            padding-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="content-header">
+            <h1>聊天</h1>
+            <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
+                <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                <el-breadcrumb-item>朋友聊天</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+        <div class="app-container">
+            <div class="box">
+                <el-container>
+                <el-aside width="230px">
+                    <div class="friendListDiv" v-for="hr in hrs" :key="hr.id" @click="clickfriendChat(hr)"
+                         v-bind:class="{currentChatFriend:currentFriend.id==hr.id}">
+                        <img v-bind:src="hr.userface" class="userfaceImg"/>
+                        <el-badge  :value="hr.messageInform" class="item">{{hr.name}}</el-badge>
+                    </div>
+                </el-aside>
+                <el-main>
+                    <div class="chatDiv" ref="chatDiv" id="chatDiv">
+                        <p v-show="currentFriend.name">与
+                            <el-tag type="primary" size="small" style="margin-left: 5px;margin-right: 5px">{{currentFriend.name}}
+                            </el-tag>
+                            聊天中
+                        </p>
+                        <template v-for="msg in msg.msgList">
+                            <!--发送来的消息-->
+                            <div style="display: flex;justify-content: flex-start;align-items: center;box-sizing: border-box;"
+                                 v-if="msg.fromUser==currentFriend.username">
+                                <!-- 判断用户名是否相等 -->
+                                <img :src="currentFriend.userface" class="userfaceImg">
+                                <div>
+                                    <div style="color: magenta"><div style="font-size: 10px">{{msg.name}} :<br></div></div>
+                                    <div
+                                            style="display: inline-flex;border-style: solid;border-width: 1px;border-color: #20a0ff;border-radius: 5px;padding: 5px 8px 5px 8px"
+                                            v-html="msg.message" >
+                                    </div>
+                                </div>
+                            </div>
+                            <!--发送来消息，不是正在沟通的-->
+                            <div v-if="msg.fromUser!=currentFriend.username"
+                                 style="display: flex;justify-content: flex-end;align-items: center;box-sizing: border-box;">
+                                <div>
+                                    <div style="color: magenta"><div style="font-size: 10px">{{msg.name}} :<br></div></div>
+                                    <div
+                                            style="display: inline-flex;border-style: solid;border-width: 1px;border-color: #20a0ff;border-radius: 5px;padding: 5px 8px 5px 8px;margin-right: 3px;background-color: #9eea6a"
+                                            v-html="msg.message" >
+                                    </div>
+                                </div>
+                                <img :src="currentUser.userface" class="userfaceImg">
+                            </div>
+                        </template>
+                    </div>
+                    <div>
+                        <el-button :disabled="!currentFriend.id" @click="talkMessagehistory()" type="primary">聊天记录</el-button>
+                    </div>
+                    <div style="text-align: left;margin-top: 10px">
+                        <i class="el-icon-edit"></i>
+                        <el-input v-model="msg.input" placeholder="请输入内容" size="mini" style="width: 900px;" type="textarea"
+                                  autosize></el-input>
+                        <el-button :disabled="!currentFriend.id" size="small" type="primary" class="sendBtn" @click="sendMsg"><i
+                                class="fa fa-send"
+                                style="margin-right: 15px"></i>发送
+                        </el-button>
+                    </div>
+                </el-main>
+                </el-container>
+            </div>
+            <div class="talkDiv" >
+                <el-dialog title="聊天记录" :visible.sync="dialogFormVisible">
+                    <div class="chatDiv1" ref="chatDiv" >
+                        <p v-show="currentFriend.name">与
+                            <el-tag type="primary" size="small" style="margin-left: 5px;margin-right: 5px">{{currentFriend.name}}
+                            </el-tag>
+                            的聊天记录
+                        </p>
+                        <template v-for="msg in msgHistory">
+                            <!--发送来的消息-->
+                            <div style="display: flex;justify-content: flex-start;align-items: center;box-sizing: border-box;"
+                                 v-if="msg.fromUser==currentFriend.username">
+                                <!-- 判断用户名是否相等 -->
+                                <img :src="msg.userface" class="userfaceImg">
+                                <div>
+                                    <div style="color: magenta"><div style="font-size: 10px">{{msg.name}} :<br></div></div>
+                                    <div
+                                            style="display: inline-flex;border-style: solid;border-width: 1px;border-color: #20a0ff;border-radius: 5px;padding: 5px 8px 5px 8px"
+                                            v-html="msg.message" >
+                                    </div>
+                                </div>
+                            </div>
+                            <!--发送来消息，不是正在沟通的-->
+                            <div v-if="msg.fromUser!=currentFriend.username"
+                                 style="display: flex;justify-content: flex-end;align-items: center;box-sizing: border-box;">
+                                <div>
+                                    <div style="color: magenta"><div style="font-size: 10px">{{msg.name}} :<br></div></div>
+                                    <div
+                                            style="display: inline-flex;border-style: solid;border-width: 1px;border-color: #20a0ff;border-radius: 5px;padding: 5px 8px 5px 8px;margin-right: 3px;background-color: #9eea6a"
+                                            v-html="msg.message" >
+                                    </div>
+                                </div>
+                                <img :src="msg.userface" class="userfaceImg">
+                            </div>
+                        </template>
+                    </div>
+                    <el-pagination
+                            @current-change="handleCurrentChange"
+                            :current-page="currentPage"
+                            :page-size="pageSize"
+                            layout="prev, pager, next"
+                            :total="totalPage">
+                    </el-pagination>
+                </el-dialog>
+            </div>
+        </div>
+    </div>
+</body>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el : "#app" ,
+            data: {
+                totalPage : 0 ,
+                currentPage : 1 ,
+                pageSize : 10 ,
+                dialogFormVisible : false ,
+                webSocket : "" ,
+                hrs: [],
+                msgdata : {
+                    name : "" ,
+                    message : "" ,
+                    fromUser : "" ,
+                    userface : ""
+                } ,
+                msgHisData : {
+                    name : "" ,
+                    message : "" ,
+                    fromUser : "" ,
+                    userface : ""
+                } ,
+                msgHistory : [],
+                msg: {
+                    input : "" ,     //  输入的信息
+                    msgList : []     //  信息内容
+                } ,
+                currentUser: {       //  发送信息的人
+                } ,
+                currentFriend: ""    //  正在沟通的朋友
+            } ,
+            created : function() {
+                that = this ;
+                that.SearchAllHrs() ;
+                axios.get( "/friendChat/Senduser" ).then(function (value) {
+                    var data = value.data ;
+                    if ( data.booler ) {
+                        that.currentUser = data.entity ;
+                        that.openStocket() ;
+                    } else {
+                        that.$message.error( "消息发送失败" ) ;
+                    }
+                })
+            } ,
+            methods : {
+                openStocket : function () {
+                    that.webSocket = new WebSocket( "ws://127.0.0.1:8083/webSocket/" + that.currentUser.id ) ;
+                    //  打开和该用户的沟通,注意在使用的时候 webSocket 必须为data里面的属性值
+                    that.webSocket.onopen = that.onopen ;
+                    //  接受消息
+                    that.webSocket.onmessage = that.onMessage ;
+                    axios.get( "/friendChat/peopleState" ).then(function (value) {
+                        var data = value.data ;
+                        if ( data.booler ) {
+                           fromid = data.entity ;
+                            for (i = 0; i < that.hrs.length ; i++) {
+                                if ( fromid == that.hrs[i].id ) {
+                                    Vue.set(that.hrs[i], 'messageInform', "有信息" ) ;
+                                }
+                            }
+                        }
+                    })
+                } ,
+                SearchAllHrs: function () {
+                    axios.get( "/friendChat/searchAllHrs" ).then(function(value) {
+                        var data = value.data ;
+                        if ( data.booler ) {
+                            that.hrs = data.entity ;
+                        } else {
+                            that.$message( data.message ) ;
+                        }
+                    })
+                } ,
+                clickfriendChat: function (emp) {
+                    //  清空聊天记录
+                    that.clearMsg() ;
+                    //  别人的通信号码
+                    that.currentFriend = emp ;
+                    //  取消消息通知样式
+                    for (i = 0; i < that.hrs.length ; i++) {
+                        if (that.currentFriend.id == that.hrs[i].id ) {
+                            Vue.set(that.hrs[i], 'messageInform', "" ) ;
+                        }
+                    }
+                    //  调出聊天记录
+                    axios.post( "/friendChat/searchTellMessage" ,
+                        {"useId" : that.currentUser.id ,
+                         "fromId" : that.currentFriend.id  }).then(function (value) {
+                        var data = value.data ;
+                        if ( data.booler ) {
+                            talkObject = data.entity ;
+                            var length ;
+                            if ( talkObject.length >= 100 ) {
+                                length = 100 ;
+                            }  else {
+                                length = talkObject.length ;
+                            }
+                            for ( i = length - 1 ; i >= 0 ; i-- ) {
+                                that.msgdata.fromUser = talkObject[i].talkPeople.username ;
+                                that.msgdata.name = talkObject[i].talkPeople.name ;
+                                that.msgdata.message = talkObject[i].talkMessage ;
+                                var message = JSON.stringify( that.msgdata ) ;
+                                parse = JSON.parse( message ) ;
+                                that.msg.msgList.push( parse ) ;
+                            }
+                        }
+                    })
+                } ,
+                sendMsg: function () {
+                    var message = JSON.stringify( that.msg.input ) ;
+                    var parse = JSON.parse( message ) ;
+
+                    that.msgdata.message = parse ;
+                    //  聊天的时间
+                    var time = new Date() ;
+                    var chineseTime = time.toLocaleString('chinese',{hour12:false}) ;
+                    that.msgdata.message = "<div><div class='timeStyle'>"  + chineseTime + "</div>"
+                        + that.msgdata.message + "</div>" ;
+
+                    that.msgdata.fromUser = that.currentUser.username ;
+                    that.msgdata.name = that.currentUser.name ;
+                    that.msgdata.userface = that.currentUser.userface ;
+                    //  转换对象
+                    var message = JSON.stringify( that.msgdata ) ;
+                    parse = JSON.parse( message ) ;
+                    that.msg.msgList.push( parse ) ;
+                    axios.get( "/friendChat/sendMessage?fromid=" + that.currentFriend.id
+                     + "&message=" +  that.msgdata.message ).then(function (value) {
+                        var data = value.data ;
+                        if ( !data.booler ) {
+                            that.$message.error( "消息发送失败" ) ;
+                        }
+                    }) ;
+                    that.msg.input = "" ;
+                } ,
+                //  接受消息
+                onMessage: function(fromidAndMessage) {
+                    if ( fromidAndMessage ) {
+                        var fromidAndMesObject = JSON.parse(fromidAndMessage.data);
+                        fromid = fromidAndMesObject.fromid;       //  和朋友谈话的id
+                        userid = fromidAndMesObject.userid ;      //  正在使用的用户
+                        if (fromid == that.currentUser.id) {       //  判断是否来自于正在聊天的朋友
+                            if ( userid == that.currentFriend.id ) {      //  注意：此处的id已经相反了
+                                that.msgdata.message = fromidAndMesObject.message ;
+                                //  添加事件
+                                // that.msgdata.message = "<div><div class='timeStyle'>"  + chineseTime + "</div>"
+                                //     + that.msgdata.message + "</div>" ;
+                                // 信息是传输的 ，所以不用在添加时间
+
+                                that.msgdata.fromUser = that.currentFriend.username ;
+                                that.msgdata.name = that.currentFriend.name ;
+                                var message = JSON.stringify( that.msgdata ) ;
+                                parse = JSON.parse( message ) ;
+                                that.msg.msgList.push( parse ) ;
+                            }
+                            else {
+                                for (i = 0; i < that.hrs.length ; i++) {
+                                    if (userid == that.hrs[i].id ) {
+                                        Vue.set(that.hrs[i], 'messageInform', "有消息" ) ;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } ,
+                clearMsg : function () {
+                    that.msg.input = "" ;
+                    that.msg.msgList = [] ;
+                } ,
+                talkMessagehistory : function () {
+                    page = { "size" : that.pageSize , "page" : that.currentPage ,
+                            "useId" : that.currentUser.id ,
+                            "fromId" : that.currentFriend.id }
+                    axios.post( "/friendChat/searchTalkHistory" ,
+                    page ).then(function (value) {
+                        that.dialogFormVisible = true ;
+                        var data =  value.data ;
+                        that.msgHistory=[] ;
+                        if ( data.booler ) {
+                            talkObject = data.entity ;
+                            that.currentPage = data.nowPage ;
+                            that.totalPage = data.allPage ;
+                            for ( i = 0 ; i < talkObject.length ; i++ ) {
+                                talkPeople = talkObject[i].talkPeople;
+                                that.msgHisData.fromUser = talkPeople.username;
+                                that.msgHisData.name = talkPeople.name;
+                                that.msgHisData.message = talkObject[i].talkMessage;
+                                that.msgHisData.userface = talkPeople.userface;
+                                var message = JSON.stringify(that.msgHisData);
+                                parse = JSON.parse(message);
+                                that.msgHistory.push(parse);
+                            }
+                        }
+                    })
+                } ,
+                handleCurrentChange : function (currentPage) {
+                    that.currentPage = currentPage ;
+                    that.talkMessagehistory() ;
+                }
+            } ,
+            destroyed :function () {
+                //  监听关闭页面的事件
+                that.webSocket.onclose = that.onclose ;
+            }
+        })
+    </script>
+</html>

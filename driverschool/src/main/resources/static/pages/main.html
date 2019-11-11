@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>交流平台</title>
+    <meta name="description" content="交流平台">
+    <meta name="keywords" content="交流平台">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <!-- 引入样式 -->
+<!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <style type="text/css">
+        .el-main{
+            margin: 0px;
+            position: absolute;
+            top: 70px;
+            bottom: 0px;
+            left: 200px;
+            right: 10px;
+            padding: 0;
+        }
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .head{
+            padding-left: 500px;
+            font-size: 30px;
+        }
+        .tac{
+            margin: 0cm;
+            padding: 0cm;
+            width: 200px;
+            height:16cm;
+        }
+        .el-menu-demo{
+            padding-top: 0px;
+        }
+    </style>
+    <script src="../js/vue.js"></script>
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+</head>
+<body class="hold-transition skin-purple sidebar-mini">
+    <div id="app">
+    <el-container>
+        <el-header  class="main-header">
+            <el-menu
+                :default-active="activeIndex2"
+                class="el-menu-demo"
+                mode="horizontal"
+                background-color="#545c64"
+                text-color="#fff"
+                active-text-color="#ffd04b">
+            <el-menu-item index="1">处理中心</el-menu-item>
+            <el-menu-item index="2">我的工作台</el-menu-item>
+            <el-menu-item class="head"  index="5">万顺驾培</el-menu-item>
+            <div class="right-menu">
+               <span class="help">管理员</span>
+                  <el-dropdown class="avatar-container right-menu-item" trigger="click">
+                     <div class="avatar-wrapper">
+                        <img src="../img/134.jpg" class="user-avatar">
+                     </div>
+                     <el-dropdown-menu slot="dropdown">
+                       <el-dropdown-item divided>
+                          <span  style="display:block;">修改密码</span>
+                       </el-dropdown-item>
+                       <el-dropdown-item divided>
+                          <span style="display:block;" >退出</span>
+                       </el-dropdown-item>
+                       <el-dropdown-item divided>
+                          <span style="display:block;" >跟换头像</span>
+                        </el-dropdown-item>
+                   </el-dropdown-menu>
+               </el-dropdown>
+            </div>
+        </el-menu>
+        </el-header>
+        <el-container>
+           <el-aside>
+               <el-row class="tac">
+                   <el-col :span="12">
+                       <el-menu
+                               default-active="2"
+                               class="tac"
+                               background-color="#545c64"
+                               text-color="#fff"
+                               active-text-color="#ffd04b">
+                           <el-submenu index="1">
+                               <template slot="title">
+                                   <i class="el-icon-location"></i>
+                                   <span>首页</span>
+                               </template>
+                               <el-menu-item @click="button(1)" class="el-icon-s-management" index="1-1">
+                                   热门首选
+                               </el-menu-item>
+                           </el-submenu>
+                           <el-menu-item index="3">
+                               <i class="el-icon-user-solid"></i>
+                               <span slot="title">教练</span>
+                           </el-menu-item>
+                           <el-menu-item index="4">
+                               <i class="el-icon-setting"></i>
+                               <span slot="title">驾校</span>
+                           </el-menu-item>
+                       </el-menu>
+                   </el-col>
+               </el-row>
+            </el-aside>
+            <el-container>
+                <!--  嵌套使用  -->
+                <iframe name="right" class="el-main" :src="picPath" width="100%" height="580px" frameborder="0"></iframe>
+            </el-container>
+        </el-container>
+    </el-container>
+    </div>
+</body>
+<script>
+    var that ;
+    new Vue({
+        el: '#app',
+        data:{
+            picPath:"../pages/headPage/welcome.html" ,
+            username:"" ,
+            form : {
+                hint : "" ,
+                oldPassword : "" ,
+                oldTwoPassword : "" ,
+                newPassword : ""
+            } ,
+            name : ""
+        },
+        created: function() {
+            that = this ;
+        },
+        methods : {
+            button : function (value) {
+                if ( value == 1 ) {
+                    that.picPath = "../pages/headPage/hotProject.html" ;
+                }
+            }
+        }
+    });
+    $(function() {
+        var wd = 200;
+        $(".el-main").css('width', $('body').width() - wd + 'px');
+    });
+</script>

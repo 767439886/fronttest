@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../../css/hotShow.css">
+    <script src="../../js/axios-0.18.0.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../plugins/elementui/index.js"></script>
+    <link rel="stylesheet" href="../../css/teacherDetails.css">
+</head>
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <div class="title">
+                    教练详情
+                </div>
+                <el-divider>
+                    <el-divider><i class="el-icon-s-management"></i></el-divider>
+                </el-divider>
+            </el-header>
+            <el-row>
+                <el-col class="col" :span="12">
+                    <div class="grid-content bg-purple">
+                        <el-col :span="24">
+                            <div class="demo-basic--circle">
+                                <div class="block"><el-avatar shape="square" class="size" :src="squareUrl"></el-avatar></div>
+                            </div>
+                        </el-col>
+                    </div>
+                </el-col>
+                <el-col class="col" :span="12">
+                    <div class="grid-content bg-purple-light">
+                        <el-row >
+                            <el-col :span="24">
+                                <div class="name">
+                                    李教练
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="24">
+                                <div class="grid-content bg-purple">
+                                    <el-tag>
+                                        倒车入库
+                                    </el-tag>
+                                    <el-tag>
+                                        侧方入库
+                                    </el-tag>
+                                    <el-tag>
+                                        直角入库
+                                    </el-tag>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <el-row >
+                            <el-col :span="24">
+                                <div class="grid-content bg-purple">
+                                    服务范围：
+                                    <span class="write" >
+                                        C1 , C2 , C3
+                                    </span>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <el-row >
+                            <el-col :span="24">
+                                <div class="grid-content bg-purple">
+                                    科目二通过率：
+                                    <span class="write" >
+                                        88%
+                                    </span>
+                                </div>
+                            </el-col>
+                            <el-col :span="24">
+                                <div class="grid-content bg-purple">
+                                    科目三通过率：
+                                    <span class="write" >
+                                        88%
+                                    </span>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <el-row >
+                            <el-col :span="24">
+                                <div class="grid-content bg-purple">
+                                    一共培训了：
+                                    <span class="write" >
+                                        99个学员
+                                    </span>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="24">
+                                <el-row>
+                                    <el-button @click="predict" type="primary">预约</el-button>
+                                    <el-button type="warning">沟通</el-button>
+                                </el-row>
+                            </el-col>
+                        </el-row>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-dialog
+                    title="预约选择"
+                    :visible.sync="dialogVisible"
+                    width="90%"
+                    :before-close="handleClose">
+                <template>
+                    <div class="block">
+                        <span class="demonstration">默认</span>
+                        <el-date-picker
+                                v-model="value1"
+                                type="date"
+                                placeholder="选择日期">
+                        </el-date-picker>
+                    </div>
+                </template>
+            </el-dialog>
+        </el-container>
+
+    </div>
+</body>
+<script type="text/javascript">
+    new Vue({
+        el: "#app" ,
+        data : {
+            dialogVisible : true
+        } ,
+        methods : {
+            predict : function () {
+
+            }
+        }
+    })
+</script>

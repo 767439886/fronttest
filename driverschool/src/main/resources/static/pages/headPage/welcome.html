@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>首页展示</title>
+    <meta name="description" content="首页展示">
+    <meta name="keywords" content="首页展示">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../../plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../../css/welcome.css">
+    <script src="../../js/axios-0.18.0.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../plugins/elementui/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <div class="title">
+                    首页欢迎
+                </div>
+                <el-divider>
+                    <el-divider><i class="el-icon-s-management"></i></el-divider>
+                </el-divider>
+            </el-header>
+            <el-main>
+                <template>
+                    <div class="block">
+                        <span class="demonstration">热门展示</span>
+                        <el-carousel height="400px">
+                            <el-carousel-item v-for="item in pics " :key="item">
+                                <h3 class="small"><img class="pic" :src="item"></img></h3>
+                            </el-carousel-item>
+                        </el-carousel>
+                    </div>
+                </template>
+            </el-main>
+        </el-container>
+    </div>
+</body>
+<script type="text/javascript">
+    new Vue ({
+        el:"#app" ,
+        data:{
+            pics:[
+                "../../img/driverSchool/11.jpg" ,
+                "../../img/driverSchool/12.jpg" ,
+                "../../img/driverSchool/14.jpg"
+            ]
+        } ,
+        methods:{
+
+        }
+    })
+</script>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../img/asset-favico.ico">
+    <link rel="stylesheet" href="css/page-health-orderNotice.css" />
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="plugins/elementui/index.css">
+    <script>
+        if(window.self != window.top){
+            window.top.location = window.location;
+        }
+    </script>
+    <style type="text/css">
+        .loginDistance{
+            padding-right: 160px;
+            text-align:center ;
+            padding-top: 100px ;
+            padding-bottom: 50px ;
+        }
+        .hfont{
+            color:#F00;
+            font-weight:bold;
+        }
+        .headtop{
+            padding-top: 100px ;
+            loginUser : 20
+        }
+        .loginUser{
+            padding-top: 30px ;
+        }
+        .loginPass{
+            padding-bottom: 30px;
+        }
+        .buttonType{
+            text-align:center ;
+            padding-bottom: 20px;
+        }
+        .but{
+            width: 300px;
+        }
+        .contentBox{
+            background-color: #d3dce6 ;
+        }
+        .button{
+            padding-bottom: 100px;
+        }
+    </style>
+    <!-- 引入组件库 -->
+    <script src="js/vue.js"></script>
+    <script src="js/axios-0.18.0.js"></script>
+    <script src="plugins/elementui/index.js"></script>
+</head>
+
+<body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+    <div class="app">
+        <!-- 页面头部 -->
+        <div class="top-header">
+            <span class="f-left"><i class="icon-back" onclick="history.go(-1)"></i></span>
+            <span class="center">万顺驾培</span>
+            <span class="f-right"><i class="icon-more"></i></span>
+        </div >
+        <div class="contentBox">
+            <div>
+                <div class="loginBox">
+                    <form method="post" class="login-form" action="/loginUser" label-position="left">
+                        <div style=" text-align:center" class="title-container">
+                            <template class="headtop">
+                                <div class="headtop">
+                                    <div>
+                                        <el-avatar :size="100" :src="circleUrl"></el-avatar>
+                                    </div>
+                                    <div class="sub-title">万顺驾培</div>
+                                </div>
+                            </template>
+                        </div>
+                            <el-form class="loginDistance" ref="form" :model="form"label-width="180px" >
+                                <el-form-item label="用户名">
+                                    <el-input v-model="form.username" placeholder="请输入用户名"></el-input>
+                                </el-form-item>
+                                <el-form-item label="密码">
+                                    <el-input v-model="form.password" placeholder="请输入密码"></el-input>
+                                </el-form-item>
+                            </el-form>
+                        <div class="button">
+                            <el-row class="buttonType">
+                                <el-button class="but" type="danger">登录</el-button>
+                            </el-row>
+                            <el-row class="buttonType">
+                                <el-button @click="register" class="but" type="warning">注册</el-button>
+                            </el-row>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var that ;
+    var vue = new Vue({
+        el:".app" ,
+        data : {
+            circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+            sizeList: ["large", "medium", "small"] ,
+            form : {
+                username : "" ,
+                password : ""
+            }
+        } ,
+        created : function () {
+            that = this ;
+        } ,
+        methods : {
+            register : function () {
+                location.href = "/pages/register.html" ; 
+            }
+        }
+    })
+</script>

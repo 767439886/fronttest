@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../../css/hotShow.css">
+    <script src="../../js/axios-0.18.0.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../plugins/elementui/index.js"></script>
+</head>
+<body>
+    <div id="app">
+    <el-container>
+        <el-header>
+            <div class="title">
+                热门展示
+            </div>
+            <el-divider>
+                <el-divider><i class="el-icon-s-management"></i></el-divider>
+            </el-divider>
+        </el-header>
+        <el-main>
+            <template>
+                <div class="block">
+                    <span class="demonstration">热门教练</span>
+                    <el-row :gutter="20">
+                        <el-col :span="6"><div class="grid-content bg-purple">
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <span>李教练</span>
+                                    <el-button style="float: right; padding: 3px 0" type="text">详情</el-button>
+                                </div>
+                                <el-col>
+                                    <div class="demo-basic--circle">
+                                        <div class="black"><el-avatar :size="55" src="../../img/driverSchool/14.jpg"></el-avatar></div>
+                                    </div>
+                                </el-col>
+                                <div class="text item">
+                                    <div>价钱：100/每小时</div>
+                                    <div>合格率：96%</div>
+                                    <div>星级评价：
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </div></el-col>
+                        <el-col :span="6"><div class="grid-content bg-purple">
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <span>黄教练</span>
+                                    <el-button style="float: right; padding: 3px 0" type="text">详情</el-button>
+                                </div>
+                                <el-col>
+                                    <div class="demo-basic--circle">
+                                        <div class="black"><el-avatar :size="55" src="../../img/driverSchool/14.jpg"></el-avatar></div>
+                                    </div>
+                                </el-col>
+                                <div class="text item">
+                                    <div>价钱：100/每小时</div>
+                                    <div>合格率：96%</div>
+                                    <div>星级评价：
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </div></el-col>
+                        <el-col :span="6"><div class="grid-content bg-purple">
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <span>马教练</span>
+                                    <el-button style="float: right; padding: 3px 0" type="text">详情</el-button>
+                                </div>
+                                <el-col>
+                                    <div class="demo-basic--circle">
+                                        <div class="black"><el-avatar :size="55" src="../../img/driverSchool/14.jpg"></el-avatar></div>
+                                    </div>
+                                </el-col>
+                                <div class="text item">
+                                    <div>价钱：100/每小时</div>
+                                    <div>合格率：96%</div>
+                                    <div>星级评价：
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </div></el-col>
+                        <el-col :span="6"><div class="grid-content bg-purple">
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <span>陈教练</span>
+                                    <el-button style="float: right; padding: 3px 0" type="text">详情</el-button>
+                                </div>
+                                <el-col>
+                                <div class="demo-basic--circle">
+                                    <div class="black"><el-avatar :size="55" src="../../img/driverSchool/14.jpg"></el-avatar></div>
+                                </div>
+                            </el-col>
+                                <div class="text item">
+                                    <div>价钱：100/每小时</div>
+                                    <div>合格率：96%</div>
+                                    <div>星级评价：
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                    </div>
+                                </div>
+                            </el-card></div>
+                        </el-col>
+                    </el-row>
+                </div>
+            </template>
+            <el-divider>
+                <el-divider><i class="el-icon-user-solid"></i></el-divider>
+            </el-divider>
+            <template>
+                <div class="blck">
+                    <span class="demonstration">热门驾校</span>
+                    <el-row :gutter="20">
+                        <el-col :span="6"><div class="grid-content bg-purple">
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <div class="sub-title">完顺驾校</div>
+                                    <el-button style="float: right; padding: 3px 0" type="text">详情</el-button>
+                                </div>
+                                <el-col>
+                                    <div class="demo-basic--circle">
+                                        <div class="black"><el-avatar :size="55" src="../../img/driverSchool/13.jpg"></el-avatar></div>
+                                    </div>
+                                </el-col>
+                                <div class="text item">
+                                    <div>资质：拥有5600学员，高级教练教导</div>
+                                    <div>合格率：96%</div>
+                                    <div>价钱：5600全包</div>
+                                    <div>星级评价：
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </div></el-col>
+                        <el-col :span="6"><div class="grid-content bg-purple">
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <span>天陪驾校</span>
+                                    <el-button style="float: right; padding: 3px 0" type="text">详情</el-button>
+                                </div>
+                                <el-col>
+                                    <div class="demo-basic--circle">
+                                        <div class="black"><el-avatar :size="55" src="../../img/driverSchool/13.jpg"></el-avatar></div>
+                                    </div>
+                                </el-col>
+                                <div class="text item">
+                                    <div>资质：拥有5600学员，高级教练教导</div>
+                                    <div>合格率：96%</div>
+                                    <div>价钱：5600全包</div>
+                                    <div>星级评价：
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-off"></div>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </div></el-col>
+                        <el-col :span="6"><div class="grid-content bg-purple">
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <span>地黄驾校</span>
+                                    <el-button style="float: right; padding: 3px 0" type="text">详情</el-button>
+                                </div>
+                                <el-col>
+                                    <div class="demo-basic--circle">
+                                        <div class="black"><el-avatar :size="55" src="../../img/driverSchool/13.jpg"></el-avatar></div>
+                                    </div>
+                                </el-col>
+                                <div class="text item">
+                                    <div>资质：拥有5600学员，高级教练教导</div>
+                                    <div>合格率：96%</div>
+                                    <div>价钱：5600全包</div>
+                                    <div>星级评价：
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-off"></div>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </div></el-col>
+                        <el-col :span="6"><div class="grid-content bg-purple">
+                            <el-card class="box-card">
+                                <div slot="header" class="clearfix">
+                                    <span>天职驾校</span>
+                                    <el-button style="float: right; padding: 3px 0" type="text">详情</el-button>
+                                </div>
+                                <el-col>
+                                    <div class="demo-basic--circle">
+                                        <div class="black"><el-avatar :size="55" src="../../img/driverSchool/13.jpg"></el-avatar></div>
+                                    </div>
+                                </el-col>
+                                <div class="text item">
+                                    <div>资质：拥有5600学员，高级教练教导</div>
+                                    <div>合格率：96%</div>
+                                    <div>价钱：5600全包</div>
+                                    <div>星级评价：
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-on"></div>
+                                        <div class="el-icon-star-off"></div>
+                                    </div>
+                                </div>
+                            </el-card></div>
+                        </el-col>
+                    </el-row>
+                </div>
+            </template>
+        </el-main>
+    </el-container>
+</div>
+</body>
+    <script type="text/javascript">
+        new Vue({
+            el:"#app" ,
+            data:{
+
+            } ,
+            methods:{
+
+            }
+        })
+    </script>
+</html>

@@ -1,0 +1,24 @@
+.title{
+    text-align: center ;
+    font-size: 35px;
+}
+.block{
+    padding-top: 20px;
+    text-align: center ;
+    margin-bottom: 40px;
+}
+.demonstration{
+    text-align: center ;
+    color: #0abdfe;
+    margin-bottom: 20px;
+}
+.el-row{
+    margin: 20px;
+}
+.blck{
+    text-align: center ;
+}
+.demo-basic--circle{
+    padding: 0px;
+    margin: 0px;
+}

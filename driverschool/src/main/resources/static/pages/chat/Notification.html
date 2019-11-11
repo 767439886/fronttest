@@ -1,0 +1,172 @@
+<html>
+   <head>
+       <meta charset="utf-8">
+       <!-- 引入样式 -->
+       <link rel="stylesheet" href="../../plugins/elementui/index.css">
+       <link rel="stylesheet" href="../../plugins/font-awesome/css/font-awesome.min.css">
+       <link rel="stylesheet" href="../../css/style.css">
+       <script src="../../js/axios-0.18.0.js"></script>
+       <script src="../../js/vue.js"></script>
+       <!-- 引入组件库 -->
+       <script src="../../plugins/elementui/index.js"></script>
+       <script type="text/javascript"></script>  <!--  使用的时候要先script      -->
+   </head>
+   <body>
+    <div id="app" style="margin-right:100px">
+       <template>
+               <el-container>
+                   <el-header style="text-align: left;padding-left: 0px">
+                       <el-button type="success" size="mini" plain icon="el-icon-success" @click="allRead">全部标为已读</el-button>
+                       <el-button type="primary" size="mini" plain v-if="isAdmin!=''" @click="dialogVisible = true"><i
+                               class="fa fa-send"
+                               style="margin-right: 15px"></i>发送系统通知
+                       </el-button>
+                   </el-header>
+                   <el-main style="padding: 0px;">
+                       <div v-for="(msg,index) in sysmsgs">
+                       <el-collapse accordion style="width: 90%"
+                                     :key="index" :name="msg.id">
+                           <el-collapse-item>
+                               <template slot="title">
+                                   <div style="display: flex;justify-content: flex-start;align-items: center;">
+                                       <div style="display: flex;justify-content: center;align-items: center;width: 25px;height: 25px">
+                                           <div
+                                                   style="width: 8px;height: 8px;background-color: #ea0206;border-radius: 8px;"
+                                                   v-if="msg.state==0"></div>
+                                       </div>
+                                       <span style="width: 600px;text-align: left">{{msg.title}}</span>
+                                       <el-tag>{{msg.createDate}}</el-tag>
+                                   </div>
+                                   <div  v-if="msg.state==0" style="color: red">&nbsp;&nbsp;&nbsp;已读</div>
+                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                               </template>
+                               <div
+                                       style="display: flex;justify-content: flex-start;align-items: center;border-style: solid;border-width: 1px;border-color: #409eff;border-radius: 5px;padding: 4px 0px 4px 8px;box-sizing: border-box;height: 100%">
+                                   {{msg.message}}
+                               </div>
+                           </el-collapse-item>
+                       </el-collapse>
+                       <div style="color: #ea0206;font-size: 18px;text-align: center" v-if="sysmsgs.length==0">暂无通知</div>
+                       <el-row>
+                           <el-button v-if="msg.state==1" @click.prevent="handleChange(msg.id)"
+                                          type="primary" size="mini" plain>已阅读按钮</el-button>
+                       </el-row>
+                       </div>
+                   </el-main>
+               </el-container>
+               <div style="text-align: left">
+                   <el-dialog
+                           title="发送系统通知"
+                           v-loading="dialogLoading"
+                           :visible.sync="dialogVisible"
+                           :close-on-click-modal="false"
+                           width="45%">
+                       <el-row>
+                           <el-col :span="3">
+                               通知标题:
+                           </el-col>
+                           <el-col :span="21">
+                               <el-input v-model="title" size="mini" placeholder="请输入标题"></el-input>
+                           </el-col>
+                       </el-row>
+                       <el-row style="margin-top: 10px;">
+                           <el-col :span="3">
+                               通知内容:
+                           </el-col>
+                           <el-col :span="21">
+                               <el-input
+                                       type="textarea"
+                                       size="mini"
+                                       :autosize="{ minRows: 5, maxRows: 10}"
+                                       placeholder="请输入通知内容..."
+                                       v-model="message"></el-input>
+                           </el-col>
+                       </el-row>
+                       <el-row style="margin-top: 10px;padding-right: 10px">
+                           <el-col :offset="18">
+                               <el-button type="default" size="mini" @click="cancelSend">取消
+                               </el-button>
+                               <el-button type="primary" size="mini" @click="sendNFMsg"><i
+                                       class="fa fa-send"
+                                       style="margin-right: 15px"></i>发送
+                               </el-button>
+                           </el-col>
+                       </el-row>
+                   </el-dialog>
+               </div>
+       </template>
+   </div>
+   </body>
+</html>
+
+<script>
+    var that ;
+    new Vue ({
+      el : '#app' ,
+    data: {
+        dialogVisible: false,
+        dialogLoading: false,
+        title: '',
+        message: '',
+        mid: -1,
+        sysmsgs: [] ,
+        isAdmin : ""            //  是否是管理者
+    },
+    created:function() {
+        that = this ;
+        this.initSysMsgs();
+    } ,
+    methods: {
+      handleChange: function(newVal){
+        var that = this;                         //  单个改变已读的状态
+          axios.get("/notification/markread?mid=" + newVal ).then(function (value) {
+            data = value.data ;
+            if (data.booler) {
+                that.initSysMsgs();
+            }
+        })
+      },
+      initSysMsgs : function() {
+          axios.get( "/notification/searchAllNotification" ).then(function (value) {
+              data = value.data ;
+              if ( data.booler ) {
+                  that.sysmsgs = data.entity ;
+                  if( that.sysmsgs[0].hrid == 3 ) {     //   这是一个数组，当数组的id为3的时候则为admin
+                      that.isAdmin = "1" ;
+                  }
+              } else {
+                  that.$message.error( data.message ) ;
+              }
+          })
+      },
+      allRead : function() {                                //    标记所有的信息已经读了
+          axios.post("/notification/updateHrIdState" ,
+          that.sysmsgs ).then( function(value) {
+          if ( value.data.booler ) {
+              that.sysmsgs=[] ;
+              that.initSysMsgs();
+          }
+        })
+      },
+      sendNFMsg:function (){
+        this.dialogLoading = true;
+        axios.post("/notification/releaseMessage", {message: that.message, title: that.title}).then(function(resp) {
+          that.dialogLoading = false;
+          data = resp.data ;
+          if ( data.booler ) {
+            var data = resp.data;
+            if (data.booler) {
+              that.initSysMsgs();
+              that.cancelSend();
+            }
+          }
+        })
+      },
+      cancelSend : function () {
+          this.dialogVisible = false;
+          this.title = '';
+          this.message = '';
+      }
+    }
+  })
+</script>

@@ -1,0 +1,25 @@
+.name{
+    font-size: 35px;
+    color: #ffa34b;
+}
+.el-row{
+    margin-right: 10px;
+}
+.block{
+    text-align: center ;
+}
+.el-col el-col-12{
+    text-align: center ;
+}
+.write{
+    color: #ffa34b;
+    font-size: 20px;
+    text-align: center ;
+}
+.el-col el-col-24{
+    text-align: center ;
+}
+.size{
+    width: 700px;
+    height: 350px;
+}
