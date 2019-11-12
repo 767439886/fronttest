@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bcf9f05f-286b-4235-b524-9d04cddfc0f1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/java/com/example/driverschool/common/Result.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/java/com/example/driverschool/controller/register.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/java/com/example/driverschool/utils/SMSUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/css/hotShow.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/css/login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/css/orderset.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/css/page-health-orderNotice.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/css/teacherDetails.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/css/welcome.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/fonts/health-icon.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/fonts/health-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/fonts/health-icon.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/fonts/health-icon.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/134.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/136-mobileskin-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/136-smallskin-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/136-smallskin-2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/136-smallskin-3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/140.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/asdfasdfasdf.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/avatar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/avatar04.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/avatar2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/avatar3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/avatar5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/bg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/boxed-bg.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/boxed-bg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/cirrus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/driverSchool/11.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/driverSchool/12.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/driverSchool/13.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/driverSchool/14.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/driverSchool/ee439a5766735bf12157e897d2b55f0f.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/icons.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/logingBg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/mastercard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/mestro.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/minilogo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/paypal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/paypal2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/photo1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/photo2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/photo3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/photo4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/pwd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/user.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/user1-128x128.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/user2-160x160.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/user3-128x128.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/user4-128x128.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/user5-128x128.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/user6-128x128.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/user7-128x128.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/user8-128x128.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/img/visa.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/js/axios-0.18.0.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/js/jquery.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/js/vue.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/loginDriverSchool.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/pages/Telemplate/allEmployeeData.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/pages/Telemplate/empMessageTelemplate.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/pages/chat/FriendChat.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/pages/chat/GroupChat.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/pages/chat/Notification.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/pages/headPage/hotProject.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/pages/headPage/teacherDetails.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/pages/headPage/welcome.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/pages/main.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/pages/register.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/echarts/echarts.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/elementui/fonts/element-icons.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/elementui/fonts/element-icons.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/elementui/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/elementui/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/font-awesome/css/font-awesome.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/font-awesome/css/font-awesome.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/font-awesome/fonts/FontAwesome.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/font-awesome/fonts/fontawesome-webfont.eot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/font-awesome/fonts/fontawesome-webfont.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/font-awesome/fonts/fontawesome-webfont.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/font-awesome/fonts/fontawesome-webfont.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/driverschool/src/main/resources/plugins/font-awesome/fonts/fontawesome-webfont.woff2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/driverschool/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="testRunner" value="GRADLE" />
+    <option name="delegatedBuild" value="true" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/driverschool/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="53">
+              <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/driverschool/src/main/java/com/example/driverschool/utils/SMSUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="1.1" />
+      </map>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/driverschool/pom.xml" />
+        <option value="$PROJECT_DIR$/driverschool/src/main/java/com/example/driverschool/utils/SMSUtils.java" />
+        <option value="$PROJECT_DIR$/driverschool/src/main/resources/application.properties" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\repository" />
+        <option name="mavenHome" value="D:/Maven/apache-maven-3.6.1" />
+        <option name="userSettingsFile" value="D:\Maven\apache-maven-3.6.1\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="driverschool" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="driverschool" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="100" />
+    <option name="y" value="470" />
+    <option name="width" value="1410" />
+    <option name="height" value="1040" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="newDriverSchool" type="b2602c69:ProjectViewProjectNode" />
+              <item name="driverschool" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="jdk.selected.JAVA_MODULE" value="1.8" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/driverschool/src/main/java/com/example/driverschool" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\cg\newDriverSchool\driverschool\src\main\java\com\example\driverschool" />
+      <recent name="D:\cg\newDriverSchool\driverschool\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="DriverschoolApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="driverschool" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.driverschool.DriverschoolApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bcf9f05f-286b-4235-b524-9d04cddfc0f1" name="Default Changelist" comment="" />
+      <created>1573473905615</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1573473905615</updated>
+      <workItem from="1573473907116" duration="1123000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1123000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Designer" />
+      <window_info id="Image Layers" />
+      <window_info id="Capture Tool" />
+      <window_info id="UI Designer" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info id="Web" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22386059" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Spring" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Java Enterprise" />
+      <window_info anchor="bottom" id="Database Changes" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info active="true" anchor="bottom" id="Messages" visible="true" weight="0.37623763" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.10481586" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.5247525" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Maven" visible="true" weight="0.039544236" />
+      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Capture Analysis" />
+      <window_info anchor="right" id="Database" />
+      <window_info anchor="right" id="Palette&#9;" />
+      <window_info anchor="right" id="Theme Preview" />
+      <window_info anchor="right" id="Bean Validation" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/driverschool/src/main/resources/css/login.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/driverschool/src/main/java/com/example/driverschool/common/Result.java">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/driverschool/src/main/java/com/example/driverschool/DriverschoolApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/driverschool/src/main/resources/loginDriverSchool.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1122" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/driverschool/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="55" lean-forward="true" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/driverschool/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="53">
+          <caret line="8" column="26" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/driverschool/src/main/java/com/example/driverschool/utils/SMSUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
