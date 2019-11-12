@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.driverschool.mapper.hotShow.SearchExerisetimelMapper" >
+    <select id="searchExerciselist" parameterType="String" resultType="com.example.driverschool.entity.Exerciselist">
+        SELECT
+          el.`id`,
+          `uid`,
+          `teacherId`,
+          execiseTime ,
+          `price`,
+          `name`
+        FROM
+          `exerciselist` el
+        WHERE
+          `teacherId` = #{value}
+    </select>
+</mapper>

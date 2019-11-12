@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.driverschool.mapper.hotShow.SearcherTeacherMapper" >
+    <select id="searcherTeacher" resultType="com.example.driverschool.entity.Teacher">
+        SELECT
+          `id`,
+          `name`,
+          `price`,
+          `percent`
+        FROM
+          `teacher`
+        ORDER BY percent DESC
+        LIMIT 0, 4 ;
+    </select>
+    <select id="searcherTeacherId" parameterType="String" resultType="com.example.driverschool.entity.Teacher">
+        SELECT
+          `id`,
+          `name`,
+          `price`,
+          `percent`,
+          `together`
+        FROM
+          `teacher`
+        <where>
+            <if test=" value != null and value != '' ">
+                `id` = #{value}
+            </if>
+        </where>
+    </select>
+</mapper>

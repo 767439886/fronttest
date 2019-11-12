@@ -27,11 +27,12 @@
                 <div class="block">
                     <span class="demonstration">热门教练</span>
                     <el-row :gutter="20">
-                        <el-col :span="6"><div class="grid-content bg-purple">
+                        <el-col :span="6" v-for="teacher in teachers ">
+                            <div class="grid-content bg-purple">
                             <el-card class="box-card">
                                 <div slot="header" class="clearfix">
-                                    <span>李教练</span>
-                                    <el-button style="float: right; padding: 3px 0" type="text">详情</el-button>
+                                    <span>{{teacher.name}}</span>
+                                    <el-button @click="detail( teacher.id )" style="float: right; padding: 3px 0" type="text">详情</el-button>
                                 </div>
                                 <el-col>
                                     <div class="demo-basic--circle">
@@ -39,8 +40,8 @@
                                     </div>
                                 </el-col>
                                 <div class="text item">
-                                    <div>价钱：100/每小时</div>
-                                    <div>合格率：96%</div>
+                                    <div>价钱：{{teacher.price}}/每小时</div>
+                                    <div>合格率：{{teacher.percent}}</div>
                                     <div>星级评价：
                                         <div class="el-icon-star-on"></div>
                                         <div class="el-icon-star-on"></div>
@@ -50,74 +51,6 @@
                                 </div>
                             </el-card>
                         </div></el-col>
-                        <el-col :span="6"><div class="grid-content bg-purple">
-                            <el-card class="box-card">
-                                <div slot="header" class="clearfix">
-                                    <span>黄教练</span>
-                                    <el-button style="float: right; padding: 3px 0" type="text">详情</el-button>
-                                </div>
-                                <el-col>
-                                    <div class="demo-basic--circle">
-                                        <div class="black"><el-avatar :size="55" src="../../img/driverSchool/14.jpg"></el-avatar></div>
-                                    </div>
-                                </el-col>
-                                <div class="text item">
-                                    <div>价钱：100/每小时</div>
-                                    <div>合格率：96%</div>
-                                    <div>星级评价：
-                                        <div class="el-icon-star-on"></div>
-                                        <div class="el-icon-star-on"></div>
-                                        <div class="el-icon-star-on"></div>
-                                        <div class="el-icon-star-on"></div>
-                                    </div>
-                                </div>
-                            </el-card>
-                        </div></el-col>
-                        <el-col :span="6"><div class="grid-content bg-purple">
-                            <el-card class="box-card">
-                                <div slot="header" class="clearfix">
-                                    <span>马教练</span>
-                                    <el-button style="float: right; padding: 3px 0" type="text">详情</el-button>
-                                </div>
-                                <el-col>
-                                    <div class="demo-basic--circle">
-                                        <div class="black"><el-avatar :size="55" src="../../img/driverSchool/14.jpg"></el-avatar></div>
-                                    </div>
-                                </el-col>
-                                <div class="text item">
-                                    <div>价钱：100/每小时</div>
-                                    <div>合格率：96%</div>
-                                    <div>星级评价：
-                                        <div class="el-icon-star-on"></div>
-                                        <div class="el-icon-star-on"></div>
-                                        <div class="el-icon-star-on"></div>
-                                        <div class="el-icon-star-on"></div>
-                                    </div>
-                                </div>
-                            </el-card>
-                        </div></el-col>
-                        <el-col :span="6"><div class="grid-content bg-purple">
-                            <el-card class="box-card">
-                                <div slot="header" class="clearfix">
-                                    <span>陈教练</span>
-                                    <el-button style="float: right; padding: 3px 0" type="text">详情</el-button>
-                                </div>
-                                <el-col>
-                                <div class="demo-basic--circle">
-                                    <div class="black"><el-avatar :size="55" src="../../img/driverSchool/14.jpg"></el-avatar></div>
-                                </div>
-                            </el-col>
-                                <div class="text item">
-                                    <div>价钱：100/每小时</div>
-                                    <div>合格率：96%</div>
-                                    <div>星级评价：
-                                        <div class="el-icon-star-on"></div>
-                                        <div class="el-icon-star-on"></div>
-                                        <div class="el-icon-star-on"></div>
-                                        <div class="el-icon-star-on"></div>
-                                    </div>
-                                </div>
-                            </el-card></div>
                         </el-col>
                     </el-row>
                 </div>
@@ -237,13 +170,30 @@
 </div>
 </body>
     <script type="text/javascript">
+        var that ;
         new Vue({
             el:"#app" ,
             data:{
-
+                teachers : []
+            } ,
+            created : function() {
+                that  = this ;
+                that.searchTeacher() ;
             } ,
             methods:{
-
+                searchTeacher : function () {
+                    axios.get( "/hotShow/searchTeacher" ).then(function (value) {
+                        data =  value.data ;
+                        if ( data.bool ) {
+                            that.teachers = data.data ;
+                        } else {
+                            that.$message.error(data.message);
+                        }
+                    })
+                } ,
+                detail : function ( index ) {
+                    location.href = "/pages/headPage/teacherDetails.html?user=" + index  ;
+                }
             }
         })
     </script>

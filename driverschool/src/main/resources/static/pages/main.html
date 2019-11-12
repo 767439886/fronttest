@@ -155,9 +155,9 @@
                 axios.get( "/loginUser/loginUser" ).then(function (value) {
                     data = value.data ;
                     if ( data.bool ) {
-                        that.name = data.username ;
+                        that.name = data.data ;
                     } else  {
-                        this.$message.error(data.message);
+                        that.$message.error(data.message);
                     }
                 })
             }

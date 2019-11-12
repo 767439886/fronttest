@@ -38,7 +38,7 @@
                         <el-row >
                             <el-col :span="24">
                                 <div class="name">
-                                    李教练
+                                    {{teacher.name}}
                                 </div>
                             </el-col>
                         </el-row>
@@ -72,7 +72,7 @@
                                 <div class="grid-content bg-purple">
                                     科目二通过率：
                                     <span class="write" >
-                                        88%
+                                        {{teacher.percent}}
                                     </span>
                                 </div>
                             </el-col>
@@ -80,7 +80,7 @@
                                 <div class="grid-content bg-purple">
                                     科目三通过率：
                                     <span class="write" >
-                                        88%
+                                        {{teacher.percent}}
                                     </span>
                                 </div>
                             </el-col>
@@ -90,7 +90,7 @@
                                 <div class="grid-content bg-purple">
                                     一共培训了：
                                     <span class="write" >
-                                        99个学员
+                                        {{teacher.together}}人
                                     </span>
                                 </div>
                             </el-col>
@@ -98,7 +98,7 @@
                         <el-row>
                             <el-col :span="24">
                                 <el-row>
-                                    <el-button @click="predict" type="primary">预约</el-button>
+                                    <el-button @click="prepare" type="primary">预约</el-button>
                                     <el-button type="warning">沟通</el-button>
                                 </el-row>
                             </el-col>
@@ -109,8 +109,7 @@
             <el-dialog
                     title="预约选择"
                     :visible.sync="dialogVisible"
-                    width="90%"
-                    :before-close="handleClose">
+                    width="90%">
                 <el-row>
                     <el-col :span="12"><div class="grid-content bg-purple">
                         <div class="black">
@@ -134,109 +133,18 @@
                     </div></el-col>
                 </el-row>
                 <el-row :gutter="20">
-                    <el-col :span="6"><div class="grid-content bg-purple">
+                    <el-col :span="6" v-for="( time , index ) in times " >
+                        <div class="grid-content bg-purple">
                         <el-card class="box-card">
                             <div slot="header" class="clearfix">
-                                <span>科目二</span>
+                                <span>{{project[index]}}</span>
                             </div>
                             <div class="cardContext">
-                                <div class="time">时间：9：10-10：10</div>
+                                <div class="time">时间：{{time}}</div>
                                 <div class="money">价钱：200元/小时</div>
-                                <div class="state">预约状态：<span>未预约</span></div>
-                                <el-button type="success">预约按钮</el-button>
-                            </div>
-                        </el-card>
-                    </div></el-col>
-                    <el-col :span="6"><div class="grid-content bg-purple">
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span>科目二</span>
-                            </div>
-                            <div class="cardContext">
-                                <div class="time">时间：10：10-11：10</div>
-                                <div class="money">价钱：200元/小时</div>
-                                <div class="state">预约状态：<span>未预约</span></div>
-                                <el-button type="success">预约按钮</el-button>
-                            </div>
-                        </el-card>
-                    </div></el-col>
-                    <el-col :span="6"><div class="grid-content bg-purple">
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span>科目二</span>
-                            </div>
-                            <div class="cardContext">
-                                <div class="time">时间：11：10-12：10</div>
-                                <div class="money">价钱：200元/小时</div>
-                                <div class="state">预约状态：<span>未预约</span></div>
-                                <el-button type="success">预约按钮</el-button>
-                            </div>
-                        </el-card>
-                    </div></el-col>
-                    <el-col :span="6"><div class="grid-content bg-purple">
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span>科目二</span>
-                            </div>
-                            <div class="cardContext">
-                                <div class="time">时间：11：10-12：10</div>
-                                <div class="money">价钱：200元/小时</div>
-                                <div class="state">预约状态：<span>未预约</span></div>
-                                <el-button type="success">预约按钮</el-button>
-                            </div>
-                        </el-card>
-                    </div></el-col>
-                </el-row>
-                <el-row :gutter="20">
-                    <el-col :span="6"><div class="grid-content bg-purple">
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span>科目二</span>
-                            </div>
-                            <div class="cardContext">
-                                <div class="time">时间：9：10-10：10</div>
-                                <div class="money">价钱：200元/小时</div>
-                                <div class="state">预约状态：<span>未预约</span></div>
-                                <el-button type="success">预约按钮</el-button>
-                            </div>
-                        </el-card>
-                    </div></el-col>
-                    <el-col :span="6"><div class="grid-content bg-purple">
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span>科目二</span>
-                            </div>
-                            <div class="cardContext">
-                                <div class="time">时间：10：10-11：10</div>
-                                <div class="money">价钱：200元/小时</div>
-                                <div class="state">预约状态：<span>未预约</span></div>
-                                <el-button type="success">预约按钮</el-button>
-                            </div>
-                        </el-card>
-                    </div></el-col>
-                    <el-col :span="6"><div class="grid-content bg-purple">
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span>科目二</span>
-                            </div>
-                            <div class="cardContext">
-                                <div class="time">时间：11：10-12：10</div>
-                                <div class="money">价钱：200元/小时</div>
-                                <div class="state">预约状态：<span>未预约</span></div>
-                                <el-button type="success">预约按钮</el-button>
-                            </div>
-                        </el-card>
-                    </div></el-col>
-                    <el-col :span="6"><div class="grid-content bg-purple">
-                        <el-card class="box-card">
-                            <div slot="header" class="clearfix">
-                                <span>科目二</span>
-                            </div>
-                            <div class="cardContext">
-                                <div class="time">时间：11：10-12：10</div>
-                                <div class="money">价钱：200元/小时</div>
-                                <div class="state">预约状态：<span>未预约</span></div>
-                                <el-button type="success">预约按钮</el-button>
+                                <div class="state">预约状态：<span v-html="order[index]"></span></div>
+                                <el-button @click="prepareBut(index)" v-disabled="preparebut" type="success">预约按钮</el-button>
+                                <el-button @click="cancelPrepare(index)" v-disabled="preparebut" type="danger">取消预约</el-button>
                             </div>
                         </el-card>
                     </div></el-col>
@@ -247,15 +155,87 @@
     </div>
 </body>
 <script type="text/javascript">
+    var that ;
     new Vue({
         el: "#app" ,
         data : {
-            dialogVisible : true ,
-            area : ""
+            //  你预约的id
+            prepareMyId : [] ,
+            //  已经预约的id
+            prepareId : [] ,
+            dialogVisible : false ,
+            area : "" ,
+            squareUrl : "" ,
+            teacher : {} ,
+            preparebut : false ,
+            project : [ "科目二" , "科目二" , "科目二" , "科目二" ,
+                "科目三" , "科目三" , "科目三" , "科目三"]  ,
+            order : ["未预约" , "未预约" , "未预约" , "未预约" , "未预约" ,
+                "未预约" , "未预约" , "未预约" ] ,
+            times : [ "09:10-10:10" , "10:10-11:10" , "11:10-12:10"
+                , "13:10-14:10" , "14:10-15:10" , "15-10-16:10" , "16:10-17:10" , "17:10-18:10" ]
+        } ,
+        created : function(){
+            that = this ;
+            that.predict() ;
+            //  头像
+            that.squareUrl = "/img/driverSchool/220.jpg" ;
+            //
         } ,
         methods : {
             predict : function () {
+                var search = location.search ;
+                //  搜索出？后面数据，主要为老师的id
+                var strings = search.split( "=" ) ;
+                axios.get ( "/hotShow/thisTeacher?id=" + strings[1] ).then( function (value) {
+                    data =  value.data ;
+                    if ( data.bool ) {
+                        that.teacher = data.data ;
+                        axios.get( "/hotShow/exeriselist?id=" +  strings[1] ).then(function (value) {
+                            data = value.data ;
+                            if ( data.bool ) {
+                                data = data.data ;
+                                for ( var i = 0 ; i < data.length ; i++ ) {
+                                    for ( var j = 0 ; j < that.times.length ; j++ ) {
+                                        if ( that.times[j] == data[i].execiseTime ) {
+                                            that.order[j] = "<span style='color: red'>已预约</span>" ;
+                                            that.prepareId.push( j ) ;
+                                        }
+                                    }
+                                }
+                            } else {
+                                that.$message.error(data.message);
+                            }
+                        })
+                    } else {
+                        that.$message.error(data.message);
+                    }
+                })
+            } ,
+            prepare : function () {
+                that.dialogVisible = true ;
+            } ,
+            prepareBut : function (index) {
+                for ( var i = 0 ; i < that.prepareId.length ; i++ ) {
+                    if ( index == that.prepareId[i] ) {
+                        that.$message.error("已经被预约，请不要重复预约") ;
+                        return ;
+                    }
+                }
+                //  先移除再添加
+                that.order.splice(index, 1 ,"<span style='color: #489b45'>已被您预约</span>");
+                that.order[index] = "<span style='color: green'>已被您预约</span>"
 
+                //  添加你预约的id
+                that.prepareMyId.push( index ) ;
+            } ,
+            cancelPrepare : function ( index ) {
+                for ( var i = 0 ; i < that.prepareMyId.length ; i++ ) {
+                    if ( index == that.prepareMyId[i] ) {
+                        that.order.splice( index , 1 ,"未预约");
+                        that.order[index] = "未预约" ;
+                    }
+                }
             }
         }
     })

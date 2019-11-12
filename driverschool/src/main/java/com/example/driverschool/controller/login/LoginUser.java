@@ -40,10 +40,10 @@ public class LoginUser {
     public Result loginUser () {
         try {
             String cookies = Cookies.getCookies(httpServletRequest) ;
-//            User user = new User() ;
-//            user.setUsername(cookies) ;
-//            User user1 = loginUserService.SearchUser(user) ;
-            return new Result(  cookies , "返回成功，用户名或密码错误" , false ) ;
+            User user = new User() ;
+            user.setUsername(cookies) ;
+            User user1 = loginUserService.SearchUser(user) ;
+            return new Result(  user1.getName() , "返回成功，用户名或密码错误" , true ) ;
         } catch ( Exception e ) {
             e.printStackTrace();
             return new Result( "返回失败" , false ) ;

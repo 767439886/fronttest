@@ -11,7 +11,7 @@ public class Exerciselist implements java.io.Serializable{
 	private Long id;
 	private Long uid;
 	private Long teacherid;
-	private Long execisetime;
+	private String execiseTime;
 	private Double price;
 
 	/** setter and getter method */
@@ -33,13 +33,13 @@ public class Exerciselist implements java.io.Serializable{
 	public Long getTeacherid(){
 		return this.teacherid;
 	}
-	public void setExecisetime(Long execisetime){
-		this.execisetime = execisetime;
-	}
-	public Long getExecisetime(){
-		return this.execisetime;
-	}
-	public void setPrice(Double price){
+    public String getExeciseTime() {
+        return execiseTime;
+    }
+    public void setExeciseTime(String execiseTime) {
+        this.execiseTime = execiseTime;
+    }
+    public void setPrice(Double price){
 		this.price = price;
 	}
 	public Double getPrice(){
