@@ -1,8 +1,8 @@
-package com.example.driverschool.controller;
+package com.example.driverschool.controller.login;
 
+import com.example.driverschool.common.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.example.driverschool.common.Result ;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

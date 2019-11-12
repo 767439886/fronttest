@@ -143,12 +143,23 @@
         },
         created: function() {
             that = this ;
+            that.getUser() ;
         },
         methods : {
             button : function (value) {
                 if ( value == 1 ) {
                     that.picPath = "../pages/headPage/hotProject.html" ;
                 }
+            }  ,
+            getUser : function () {
+                axios.get( "/loginUser/loginUser" ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.name = data.username ;
+                    } else  {
+                        this.$message.error(data.message);
+                    }
+                })
             }
         }
     });

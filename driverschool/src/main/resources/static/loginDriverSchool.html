@@ -122,7 +122,14 @@
                 location.href = "/pages/register.html" ; 
             } ,
             dengLu : function () {
-                axios.get( "" )
+                axios.post( "/loginUser/user" , that.form ).then(function (value) {
+                    data = value.data ;
+                    if( data.bool ) {
+                        location.href = "/pages/main.html" ;
+                    } else {
+                        that.$message.error(data.message);
+                    }
+                })
             }
         }
     })
