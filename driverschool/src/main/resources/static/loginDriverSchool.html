@@ -90,7 +90,7 @@
                             </el-form>
                         <div class="button">
                             <el-row class="buttonType">
-                                <el-button class="but" type="danger">登录</el-button>
+                                <el-button @click="dengLu" class="but" type="danger">登录</el-button>
                             </el-row>
                             <el-row class="buttonType">
                                 <el-button @click="register" class="but" type="warning">注册</el-button>
@@ -120,6 +120,9 @@
         methods : {
             register : function () {
                 location.href = "/pages/register.html" ; 
+            } ,
+            dengLu : function () {
+                axios.get( "" )
             }
         }
     })

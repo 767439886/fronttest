@@ -111,16 +111,136 @@
                     :visible.sync="dialogVisible"
                     width="90%"
                     :before-close="handleClose">
-                <template>
-                    <div class="block">
-                        <span class="demonstration">默认</span>
-                        <el-date-picker
-                                v-model="value1"
-                                type="date"
-                                placeholder="选择日期">
-                        </el-date-picker>
-                    </div>
-                </template>
+                <el-row>
+                    <el-col :span="12"><div class="grid-content bg-purple">
+                        <div class="black">
+                            <span class="demonstration">默认</span>
+                            <el-date-picker
+                                    v-model="value1"
+                                    type="date"
+                                    placeholder="选择日期">
+                            </el-date-picker>
+                        </div>
+                    </div></el-col>
+                    <el-col :span="12"><div class="grid-content bg-purple-light">
+                        <el-form label-width="120px">
+                            <el-form-item label="训练地区选择：">
+                                <el-select v-model="area" placeholder="请选择选来你的地区">
+                                    <el-option label="区域一" value="shanghai"></el-option>
+                                    <el-option label="区域二" value="beijing"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-form>
+                    </div></el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="6"><div class="grid-content bg-purple">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span>科目二</span>
+                            </div>
+                            <div class="cardContext">
+                                <div class="time">时间：9：10-10：10</div>
+                                <div class="money">价钱：200元/小时</div>
+                                <div class="state">预约状态：<span>未预约</span></div>
+                                <el-button type="success">预约按钮</el-button>
+                            </div>
+                        </el-card>
+                    </div></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span>科目二</span>
+                            </div>
+                            <div class="cardContext">
+                                <div class="time">时间：10：10-11：10</div>
+                                <div class="money">价钱：200元/小时</div>
+                                <div class="state">预约状态：<span>未预约</span></div>
+                                <el-button type="success">预约按钮</el-button>
+                            </div>
+                        </el-card>
+                    </div></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span>科目二</span>
+                            </div>
+                            <div class="cardContext">
+                                <div class="time">时间：11：10-12：10</div>
+                                <div class="money">价钱：200元/小时</div>
+                                <div class="state">预约状态：<span>未预约</span></div>
+                                <el-button type="success">预约按钮</el-button>
+                            </div>
+                        </el-card>
+                    </div></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span>科目二</span>
+                            </div>
+                            <div class="cardContext">
+                                <div class="time">时间：11：10-12：10</div>
+                                <div class="money">价钱：200元/小时</div>
+                                <div class="state">预约状态：<span>未预约</span></div>
+                                <el-button type="success">预约按钮</el-button>
+                            </div>
+                        </el-card>
+                    </div></el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="6"><div class="grid-content bg-purple">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span>科目二</span>
+                            </div>
+                            <div class="cardContext">
+                                <div class="time">时间：9：10-10：10</div>
+                                <div class="money">价钱：200元/小时</div>
+                                <div class="state">预约状态：<span>未预约</span></div>
+                                <el-button type="success">预约按钮</el-button>
+                            </div>
+                        </el-card>
+                    </div></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span>科目二</span>
+                            </div>
+                            <div class="cardContext">
+                                <div class="time">时间：10：10-11：10</div>
+                                <div class="money">价钱：200元/小时</div>
+                                <div class="state">预约状态：<span>未预约</span></div>
+                                <el-button type="success">预约按钮</el-button>
+                            </div>
+                        </el-card>
+                    </div></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span>科目二</span>
+                            </div>
+                            <div class="cardContext">
+                                <div class="time">时间：11：10-12：10</div>
+                                <div class="money">价钱：200元/小时</div>
+                                <div class="state">预约状态：<span>未预约</span></div>
+                                <el-button type="success">预约按钮</el-button>
+                            </div>
+                        </el-card>
+                    </div></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span>科目二</span>
+                            </div>
+                            <div class="cardContext">
+                                <div class="time">时间：11：10-12：10</div>
+                                <div class="money">价钱：200元/小时</div>
+                                <div class="state">预约状态：<span>未预约</span></div>
+                                <el-button type="success">预约按钮</el-button>
+                            </div>
+                        </el-card>
+                    </div></el-col>
+                </el-row>
             </el-dialog>
         </el-container>
 
@@ -130,7 +250,8 @@
     new Vue({
         el: "#app" ,
         data : {
-            dialogVisible : true
+            dialogVisible : true ,
+            area : ""
         } ,
         methods : {
             predict : function () {

@@ -23,3 +23,18 @@
     width: 700px;
     height: 350px;
 }
+.cardContext{
+    text-align: center ;
+}
+.time{
+    padding-bottom: 10px;
+    font-size: 20px;
+}
+.money{
+    padding-bottom: 10px;
+    font-size: 20px;
+}
+.state{
+    font-size: 20px;
+    padding-bottom: 10px;
+}

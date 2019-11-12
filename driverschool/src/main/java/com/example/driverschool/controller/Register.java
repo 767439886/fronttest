@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping( "/register" )
-public class register{
+public class Register{
 
     //  增加用户
     @GetMapping( "/addUser" )
