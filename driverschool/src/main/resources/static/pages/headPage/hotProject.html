@@ -29,10 +29,10 @@
                     <el-row :gutter="20">
                         <el-col :span="6" v-for="teacher in teachers ">
                             <div class="grid-content bg-purple">
-                            <el-card class="box-card">
+                            <el-card class="box-card" shadow="hover" @click="detail( teacher.id )">
                                 <div slot="header" class="clearfix">
                                     <span>{{teacher.name}}</span>
-                                    <el-button @click="detail( teacher.id )" style="float: right; padding: 3px 0" type="text">详情</el-button>
+                                    <el-button @click="detail( teacher.id )" style="float: right; padding: 3px 0" type="text">进入了解</el-button>
                                 </div>
                                 <el-col>
                                     <div class="demo-basic--circle">
@@ -42,6 +42,7 @@
                                 <div class="text item">
                                     <div>价钱：{{teacher.price}}/每小时</div>
                                     <div>合格率：{{teacher.percent}}</div>
+                                    <div>所属驾校：天顺驾校</div>
                                     <div>星级评价：
                                         <div class="el-icon-star-on"></div>
                                         <div class="el-icon-star-on"></div>

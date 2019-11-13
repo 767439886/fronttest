@@ -28,4 +28,14 @@
             </if>
         </where>
     </select>
+    <select id="searchAllTeacher" resultType="com.example.driverschool.entity.Teacher">
+        SELECT
+          `id`,
+          `name`,
+          `price`,
+          `percent`,
+          `together`
+        FROM
+          `teacher`
+    </select>
 </mapper>

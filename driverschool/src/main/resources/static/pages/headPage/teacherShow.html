@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../../css/teacherShow.css">
+    <script src="../../js/axios-0.18.0.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../plugins/elementui/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <el-header>
+            <div class="title">
+                教练
+            </div>
+            <el-divider>
+                <el-divider><i class="el-icon-s-management"></i></el-divider>
+            </el-divider>
+        </el-header>
+        <el-row>
+            <el-col :span="12" v-for="teacher in teachers ">
+                <div class="grid-content bg-purple">
+                    <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                            <span>{{teacher.name}}</span>
+                            <el-button @click="teacherDetail(teacher.id)" type="primary" style="float: right;" >教练详情</el-button>
+                        </div>
+                        <el-col>
+                            <div class="demo-basic--circle">
+                                <div class="black"><el-avatar :size="55" src="../../img/driverSchool/14.jpg"></el-avatar></div>
+                            </div>
+                        </el-col>
+                        <div>价钱：{{teacher.price}}/每小时</div>
+                        <div>合格率：{{teacher.percent}}</div>
+                        <div>所属驾校：天顺驾校</div>
+                        <div>星级评价：
+                            <div class="el-icon-star-on"></div>
+                            <div class="el-icon-star-on"></div>
+                            <div class="el-icon-star-on"></div>
+                            <div class="el-icon-star-on"></div>
+                        </div>
+                    </el-card>
+                </div>
+            </el-col>
+        </el-row>
+    </div>
+</body>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el : "#app" ,
+            data : {
+                teachers :[]
+            } ,
+            created : function(){
+                that = this ;
+                that.searchTeacher() ;
+            } ,
+            methods : {
+                searchTeacher :function(){
+                    axios.get( "/hotShow/searchAllTeacher" ).then(function (value) {
+                        data =  value.data ;
+                        if ( data.bool ) {
+                            that.teachers = data.data ;
+                        } else {
+                            that.$message.error(data.message);
+                        }
+                    })
+                } ,
+                teacherDetail : function ( index ) {
+                    location.href = "/pages/headPage/teacherDetails.html?user=" + index  ;
+                }
+            }
+        })
+    </script>
+</html>

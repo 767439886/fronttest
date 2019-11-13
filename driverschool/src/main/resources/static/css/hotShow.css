@@ -22,3 +22,13 @@
     padding: 0px;
     margin: 0px;
 }
+.box-card{
+    background-color : #cdd0d4;
+}
+.box{
+    border-radius: 30px ;
+    height: 400px;
+}
+.box-title{
+    font-size: 30px;
+}

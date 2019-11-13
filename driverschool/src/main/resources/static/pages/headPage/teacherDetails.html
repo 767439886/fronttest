@@ -33,7 +33,7 @@
                         </el-col>
                     </div>
                 </el-col>
-                <el-col class="col" :span="12">
+                <el-col class="col" :span="6">
                     <div class="grid-content bg-purple-light">
                         <el-row >
                             <el-col :span="24">
@@ -105,6 +105,22 @@
                         </el-row>
                     </div>
                 </el-col>
+                <el-col class="col" :span="6"><div class="grid-content bg-purple-dark">
+                    <el-card class="box">
+                        <div class="box-title">介绍 ：</div>
+                        <div class="box-center">
+                            &nbsp;&nbsp;&nbsp;&nbsp;安全驾驶，出行安全，
+                            是每一位驾驶员的真心愿望。汽车驾驶过程中经常遇到一些特殊情况，
+                            没有经验的驾驶新手一旦遇到必将惊魂失措、不知如何处理，
+                            可能造成严重的交通事故。为此，本文初步分析与总结了汽车驾驶过程中遇到的特殊情况及应对技巧，
+                            希望为驾驶人员提供更多有价值的建设与指导，做到安全驾驶、保证人身安全.<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            在车辆行驶中,驾驶员的驾驶技术水平如何,不仅影响到行车安全,而且与燃油消耗密切相关。据资料介绍:经测试.驾驶技术水平的高低所引起的燃油消耗差为7%～15%;
+                            新老驾驶员所引起的燃油消耗差可达20%～40%;同一驾驶员,
+                            只要稍加改进原来不合理的操诈.
+                        </div>
+                    </el-card>
+                </div></el-col>
             </el-row>
             <el-dialog
                     title="预约选择"
@@ -113,7 +129,7 @@
                 <el-row>
                     <el-col :span="12"><div class="grid-content bg-purple">
                         <div class="black">
-                            <span class="demonstration">默认</span>
+                            <span class="demonstration">选择日期：</span>
                             <el-date-picker
                                     v-model="value1"
                                     type="date"
@@ -125,8 +141,10 @@
                         <el-form label-width="120px">
                             <el-form-item label="训练地区选择：">
                                 <el-select v-model="area" placeholder="请选择选来你的地区">
-                                    <el-option label="区域一" value="shanghai"></el-option>
-                                    <el-option label="区域二" value="beijing"></el-option>
+                                    <el-option label="广州市黄埔区xx街xx号天警训练场" value="广州市黄埔区xx街xx号天警训练场"></el-option>
+                                    <el-option label="广州市黄埔区xx街xx号天警训练场" value="广州市黄埔区xx街xx号天警训练场"></el-option>
+                                    <el-option label="广州市黄埔区xx街xx号行大训练场" value="广州市黄埔区xx街xx号行大训练场"></el-option>
+                                    <el-option label="广州市黄埔区xx街xx号云顺训练场" value="广州市黄埔区xx街xx号云顺训练场"></el-option>
                                 </el-select>
                             </el-form-item>
                         </el-form>
@@ -143,11 +161,14 @@
                                 <div class="time">时间：{{time}}</div>
                                 <div class="money">价钱：200元/小时</div>
                                 <div class="state">预约状态：<span v-html="order[index]"></span></div>
-                                <el-button @click="prepareBut(index)" v-disabled="preparebut" type="success">预约按钮</el-button>
-                                <el-button @click="cancelPrepare(index)" v-disabled="preparebut" type="danger">取消预约</el-button>
+                                <el-button @click="prepareBut(index)"  type="success">预约按钮</el-button>
+                                <el-button @click="cancelPrepare(index)"  type="danger">取消预约</el-button>
                             </div>
                         </el-card>
                     </div></el-col>
+                </el-row>
+                <el-row>
+                    <el-button @click="sure()"  style="float: right"  type="success" plain>确定按钮</el-button>
                 </el-row>
             </el-dialog>
         </el-container>
@@ -159,8 +180,12 @@
     new Vue({
         el: "#app" ,
         data : {
+            //  teacherId
+            teacherId : "" ,
             //  你预约的id
             prepareMyId : [] ,
+            value1: "" ,
+            data : "" ,
             //  已经预约的id
             prepareId : [] ,
             dialogVisible : false ,
@@ -175,6 +200,11 @@
             times : [ "09:10-10:10" , "10:10-11:10" , "11:10-12:10"
                 , "13:10-14:10" , "14:10-15:10" , "15-10-16:10" , "16:10-17:10" , "17:10-18:10" ]
         } ,
+        watch :{
+            //  监控数据改变事件
+            value1(val){
+            }
+        } ,
         created : function(){
             that = this ;
             that.predict() ;
@@ -187,18 +217,20 @@
                 var search = location.search ;
                 //  搜索出？后面数据，主要为老师的id
                 var strings = search.split( "=" ) ;
+                that.teacherId = strings[1] ;
                 axios.get ( "/hotShow/thisTeacher?id=" + strings[1] ).then( function (value) {
                     data =  value.data ;
+                    that.value1 = new Date() ;
                     if ( data.bool ) {
                         that.teacher = data.data ;
-                        axios.get( "/hotShow/exeriselist?id=" +  strings[1] ).then(function (value) {
+                        axios.post( "/hotShow/exeriselist" ,{ id : strings[1] , date : that.value1 } ).then(function (value) {
                             data = value.data ;
                             if ( data.bool ) {
                                 data = data.data ;
                                 for ( var i = 0 ; i < data.length ; i++ ) {
                                     for ( var j = 0 ; j < that.times.length ; j++ ) {
                                         if ( that.times[j] == data[i].execiseTime ) {
-                                            that.order[j] = "<span style='color: red'>已预约</span>" ;
+                                            that.order[j] = "<span style='color: red'>已预约</span style='color: red'>" ;
                                             that.prepareId.push( j ) ;
                                         }
                                     }
@@ -224,7 +256,6 @@
                 }
                 //  先移除再添加
                 that.order.splice(index, 1 ,"<span style='color: #489b45'>已被您预约</span>");
-                that.order[index] = "<span style='color: green'>已被您预约</span>"
 
                 //  添加你预约的id
                 that.prepareMyId.push( index ) ;
@@ -233,8 +264,30 @@
                 for ( var i = 0 ; i < that.prepareMyId.length ; i++ ) {
                     if ( index == that.prepareMyId[i] ) {
                         that.order.splice( index , 1 ,"未预约");
-                        that.order[index] = "未预约" ;
                     }
+                }
+            } ,
+            sure : function ( ) {
+                that.dialogVisible = false ;
+                for ( var i = 0 ; i < that.prepareMyId.length ; i++ ) {
+                    axios.post( "/hotShow/addTeacher" ,{
+                        execiseTime : that.times[i] ,
+                        name : that.project[i] ,
+                        teacherId : that.teacherId ,
+                        price : 200 ,
+                        date : that.value1 ,
+                        area : that.area  ,
+                    }).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.$message({
+                                message: "预约成功",
+                                type: 'success'
+                            });
+                        } else {
+                            that.$message.error("预约不成功");
+                        }
+                    })
                 }
             }
         }

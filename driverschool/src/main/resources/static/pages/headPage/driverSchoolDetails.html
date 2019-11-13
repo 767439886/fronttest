@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="../../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../../css/dirverSchoolDetails.css">
+    <script src="../../js/axios-0.18.0.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script src="../../plugins/elementui/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <el-header>
+            <div class="title">
+                驾校详情
+            </div>
+            <el-divider class="divider">
+                <el-divider><i class="el-icon-s-home"></i></el-divider>
+            </el-divider>
+        </el-header>
+        <el-row class="row">
+            <el-col :span="24" class="col">
+                <div class="grid-content bg-purple-dark">
+                    <div class="block">
+                        <el-carousel class="carousel">
+                            <el-carousel-item class="carousel-context" v-for="item in urlPath" :key="item">
+                                <h3 class="small">
+                                    <img class="pic" :src="item">
+                                </h3>
+                            </el-carousel-item>
+                        </el-carousel>
+                    </div>
+                </div>
+            </el-col>
+        </el-row>
+        <div class="schoolNmae">
+            <div class="name">
+                哈哈
+            </div>
+            <el-divider class="divider">
+                <el-divider><i class="el-icon-s-flag"></i></el-divider>
+            </el-divider>
+        <div>
+        <el-form class="form" :model="form" label-width="400px">
+            <span class="area">训练场地选择：</span>
+                    <el-select class="select" v-model="area" placeholder="请选择活动区域">
+                        <el-option label="区域一" value="shanghai"></el-option>
+                        <el-option label="区域二" value="beijing"></el-option>
+                    </el-select>
+        </el-form>
+        <div class="schoolName">
+            <div class="name">
+                班级信息选择
+            </div>
+            <el-divider class="divider">
+                <el-divider><i class="el-icon-s-flag"></i></el-divider>
+            </el-divider>
+        </div>
+        <el-row>
+            <el-col :span="24">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span class="card_title">班级名称</span>
+                        <el-button type="success"  style="float: right; " type="text">进入报名</el-button>
+                    </div>
+                    <div class="text item">
+                        <div>
+                            <span class="schoolMiaosu">
+                               {{name}}
+                            </span>
+                        </div>
+                        <div>
+                            <span class="schoolMiaosu">
+                                价格：
+                            </span>
+                            <span>{{money}}</span>
+                        </div>
+                        <div>
+                            <span class="schoolMiaosu">
+                                所属驾照：
+                            </span>
+                            <span>{{describe}}</span>
+                        </div>
+                        <div>
+                            <span class="schoolMiaosu">
+                                驾校描述：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </span>
+                            <span>
+                                联桥网络科技为广大驾培人员提供找驾校、找教练、找陪练服务，
+                                是驾考学员联系驾校、教练、陪练，驾培人员服务学员的桥梁和纽带，
+                                驾校一点通还为学员提供驾考服务平台，深受广大驾考学员和驾培从业人员的欢迎。
+                                在未来，“驾校一点通”将携手58同城共同缔造全方位O2O的车主服务平台。
+                            </span>
+                        </div>
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
+    </div>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el: "#app" ,
+            data : {
+                urlPath : [ "../../img/driverSchool/12.jpg" ,
+                    "../../img/photo4.jpg" ,
+                    "../../img/photo1.png" , "../../img/driverSchool/34.jpg" ] ,
+                area : ""
+            }
+        })
+    </script>
+</body>

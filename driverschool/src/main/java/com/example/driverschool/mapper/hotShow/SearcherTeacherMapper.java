@@ -8,4 +8,5 @@ public interface SearcherTeacherMapper {
 
     public List<Teacher> searcherTeacher () ;
     public List<Teacher> searcherTeacherId ( String id ) ;
+    public List<Teacher> searchAllTeacher ( ) ;
 }

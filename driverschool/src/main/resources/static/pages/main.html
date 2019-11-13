@@ -97,20 +97,19 @@
                                background-color="#545c64"
                                text-color="#fff"
                                active-text-color="#ffd04b">
-                           <el-submenu index="1">
-                               <template slot="title">
-                                   <i class="el-icon-location"></i>
-                                   <span>首页</span>
-                               </template>
-                               <el-menu-item @click="button(1)" class="el-icon-s-management" index="1-1">
-                                   热门首选
-                               </el-menu-item>
-                           </el-submenu>
-                           <el-menu-item index="3">
+                           <el-menu-item @click="button(1)" index="2">
+                               <i class="el-icon-s-management"></i>
+                               <span slot="title">欢迎首页</span>
+                           </el-menu-item>
+                           <el-menu-item @click="button(2)" index="1">
+                               <i  class="el-icon-s-management"></i>
+                               <span slot="title">热门首选</span>
+                           </el-menu-item>
+                           <el-menu-item @click="button(3)" index="3">
                                <i class="el-icon-user-solid"></i>
                                <span slot="title">教练</span>
                            </el-menu-item>
-                           <el-menu-item index="4">
+                           <el-menu-item @click="button(4)" index="4">
                                <i class="el-icon-setting"></i>
                                <span slot="title">驾校</span>
                            </el-menu-item>
@@ -148,7 +147,13 @@
         methods : {
             button : function (value) {
                 if ( value == 1 ) {
+                    that.picPath = "../pages/headPage/welcome.html"
+                } else if ( value == 2 ) {
                     that.picPath = "../pages/headPage/hotProject.html" ;
+                } else if ( value == 3 ){
+                    that.picPath = "../pages/headPage/teacherShow.html" ;
+                } else if ( value == 4 ) {
+                    that.picPath = "../pages/headPage/driverSchool.html" ;
                 }
             }  ,
             getUser : function () {
@@ -157,7 +162,7 @@
                     if ( data.bool ) {
                         that.name = data.data ;
                     } else  {
-                        that.$message.error(data.message);
+                        location.href = "../loginDriverSchool.html" ;
                     }
                 })
             }
