@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="css/page-health-orderNotice.css" />
+    <link rel="stylesheet" href="plugins/elementui/index.css">
+    <script>
+        if(window.self != window.top){
+            window.top.location = window.location;
+        }
+    </script>
+    <!-- 引入组件库 -->
+    <script src="js/vue.js"></script>
+    <script src="js/axios-0.18.0.js"></script>
+    <script src="plugins/elementui/index.js"></script>
+</head>
+
+<body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+    <div id="app">
+        <!-- 页面头部 -->
+        <el-container>
+            <el-card class="box-card" class="card">
+                <div slot="header" class="clearfix">
+                    <span>卡片名称</span>
+                    <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                </div>
+                <div v-for="o in 4" :key="o" class="text item">
+                    {{'列表内容 ' + o }}
+                </div>
+            </el-card>
+        </el-container>
+    </div>
+</body>
+<script type="text/javascript">
+    var that ;
+    new Vue({
+        el : "#app" ,
+        data : {
+
+        } ,
+        created:{
+
+        } ,
+        methods : {
+
+        }
+    })
+</script>
