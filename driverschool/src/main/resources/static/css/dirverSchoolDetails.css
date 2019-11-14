@@ -1,3 +1,6 @@
+.box-title{
+    font-size: 25px;
+}
 .title{
     padding-top: 15px;
     font-size: 30px;
@@ -66,4 +69,9 @@
 }
 .form{
     text-align: center ;
+}
+.center{
+    margin-top: 10px;
+    text-align: center ;
+    width: 300px;
 }

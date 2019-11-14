@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface SearchAllSchoolMapper {
 
-    public List<DriverSchool> searchAllSchool () ;
+    public List<DriverSchool> searchAllSchool ( String id ) ;
 }

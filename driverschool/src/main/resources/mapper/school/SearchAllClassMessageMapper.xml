@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.driverschool.mapper.school.SearchAllClassMessageMapper">
+    <select id="SearchAllClass" parameterType="String" resultType="com.example.driverschool.entity.ClassMessage">
+        SELECT
+          `id`,
+          `name`,
+          `money`,
+          `className`,
+          `detailsId`
+        FROM
+          `classmessage`
+        <where>
+            <if test="value != null and value!= '' ">
+                `id` = #{value}
+            </if>
+        </where>
+    </select>
+    <insert id="insertSchoolExcerice" parameterType="com.example.driverschool.entity.Userdriverschool">
+        INSERT INTO `driverschool`.`userdriverschool` (
+          `schoolName`,
+          `price`,
+          `className`,
+          `exercisePlace`,
+          `username`
+        )
+        VALUES
+          (
+            #{schoolName},
+            #{price},
+            #{className},
+            #{exercisePlace},
+            #{username}
+          ) ;
+    </insert>
+</mapper>

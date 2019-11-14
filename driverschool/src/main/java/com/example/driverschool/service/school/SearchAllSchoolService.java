@@ -14,8 +14,8 @@ public class SearchAllSchoolService {
     @Autowired( required =  false )
     private SearchAllSchoolMapper searchAllSchoolMapper ;
 
-    public List<DriverSchool> searchAllSchool(){
-        List<DriverSchool> schools = searchAllSchoolMapper.searchAllSchool() ;
+    public List<DriverSchool> searchAllSchool( String id ){
+        List<DriverSchool> schools = searchAllSchoolMapper.searchAllSchool( id ) ;
         return schools ;
     }
 }

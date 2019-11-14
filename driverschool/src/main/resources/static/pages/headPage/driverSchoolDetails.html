@@ -37,78 +37,170 @@
         </el-row>
         <div class="schoolNmae">
             <div class="name">
-                哈哈
-            </div>
-            <el-divider class="divider">
-                <el-divider><i class="el-icon-s-flag"></i></el-divider>
-            </el-divider>
-        <div>
-        <el-form class="form" :model="form" label-width="400px">
-            <span class="area">训练场地选择：</span>
-                    <el-select class="select" v-model="area" placeholder="请选择活动区域">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                    </el-select>
-        </el-form>
-        <div class="schoolName">
-            <div class="name">
-                班级信息选择
+                {{name}}
             </div>
             <el-divider class="divider">
                 <el-divider><i class="el-icon-s-flag"></i></el-divider>
             </el-divider>
         </div>
+        <el-form class="form" :model="form" label-width="400px">
+                <span class="area">训练场地选择：</span>
+                <el-select class="select" v-model="area" placeholder="请选择活动区域">
+                    <el-option label="广州市黄埔区农商汽车场" value="广州市黄埔区农商汽车场"></el-option>
+                    <el-option label="广州市黄埔区华农停车场" value="广州市黄埔区华农停车场"></el-option>
+                </el-select>
+            </el-form>
+        <div class="schoolName">
+                <div class="name">
+                    班级信息选择
+                </div>
+                <el-divider class="divider">
+                    <el-divider><i class="el-icon-s-flag"></i></el-divider>
+                </el-divider>
+            </div>
         <el-row>
-            <el-col :span="24">
-                <el-card class="box-card">
-                    <div slot="header" class="clearfix">
-                        <span class="card_title">班级名称</span>
-                        <el-button type="success"  style="float: right; " type="text">进入报名</el-button>
-                    </div>
-                    <div class="text item">
-                        <div>
-                            <span class="schoolMiaosu">
-                               {{name}}
-                            </span>
+                <el-col :span="24" v-for="classMessage in classList" >
+                    <el-card class="box-card">
+                        <div slot="header" class="clearfix">
+                            <span class="card_title">{{classMessage.name}}</span>
+                            <el-button @click="details(classMessage)" type="success"  style="float: right; " type="text">进入报名</el-button>
                         </div>
-                        <div>
+                        <div class="text item">
+                            <div>
                             <span class="schoolMiaosu">
                                 价格：
                             </span>
-                            <span>{{money}}</span>
-                        </div>
-                        <div>
+                                <span>{{classMessage.money}}&nbsp;&yen;</span>
+                            </div>
+                            <div>
                             <span class="schoolMiaosu">
                                 所属驾照：
                             </span>
-                            <span>{{describe}}</span>
-                        </div>
-                        <div>
+                                <span>{{classMessage.className}}</span>
+                            </div>
+                            <div>
                             <span class="schoolMiaosu">
                                 驾校描述：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </span>
-                            <span>
+                                <span>
                                 联桥网络科技为广大驾培人员提供找驾校、找教练、找陪练服务，
                                 是驾考学员联系驾校、教练、陪练，驾培人员服务学员的桥梁和纽带，
                                 驾校一点通还为学员提供驾考服务平台，深受广大驾考学员和驾培从业人员的欢迎。
                                 在未来，“驾校一点通”将携手58同城共同缔造全方位O2O的车主服务平台。
                             </span>
+                            </div>
                         </div>
-                    </div>
-                </el-card>
-            </el-col>
+                    </el-card>
+                </el-col>
         </el-row>
+        <el-dialog
+                title="驾校详情"
+                :visible.sync="dialogVisible"
+                width="50%">
+            <el-card class="box-card">
+                <div class="box-title">套餐内容</div>
+                <div>驾照类型：<span>{{classMessage.className}}</span></div>
+                <div>训练车型：<span>大众</span></div>
+                <div>练车时间：<span>8：00</span></div>
+            </el-card>
+            <el-card class="box-card">
+                <div class="box-title">收费明细</div>
+                <div>套餐费用：<span>{{classMessage.money}}</span></div>
+                <div>包含：<span>培训费，考试费，资料工本费，学习证</span></div>
+            </el-card>
+            <el-card class="box-card">
+                <div class="box-title">服务保障</div>
+                <div>学车课时：<span>&yen;200</span></div>
+                <div>接送方式：<span>学校指定地点接送</span></div>
+                <div>描述：<span>培训费，开始费，资料共本费，学习证</span></div>
+            </el-card>
+<!--            <div>-->
+<!--                请输入你的名字:-->
+<!--                <el-input class="center" v-model="myName" placeholder="请输入你的名字"></el-input>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                请输入你的手机号:-->
+<!--                <el-input class="center" v-model="myUsername" placeholder="请输入你的手机号"></el-input>-->
+<!--            </div>-->
+            <el-row>
+                <el-button @click="sure()"  style="float: right"  type="success" plain>确定报名</el-button>
+            </el-row>
+        </el-dialog>
     </div>
-    <script type="text/javascript">
-        var that ;
-        new Vue({
-            el: "#app" ,
-            data : {
-                urlPath : [ "../../img/driverSchool/12.jpg" ,
-                    "../../img/photo4.jpg" ,
-                    "../../img/photo1.png" , "../../img/driverSchool/34.jpg" ] ,
-                area : ""
-            }
-        })
-    </script>
 </body>
+<script type="text/javascript">
+    var that ;
+    new Vue({
+        el: "#app" ,
+        data : {
+            urlPath : [ "../../img/driverSchool/12.jpg" ,
+                "../../img/photo4.jpg" ,
+                "../../img/photo1.png" , "../../img/driverSchool/34.jpg" ] ,
+            area : "" ,
+            school : "" ,
+            name : "" ,
+            classList : [] ,
+            classMessage : {
+                className : "" ,
+                money : ""
+            } ,
+            dialogVisible: false
+        } ,
+        created : function () {
+            that = this ;
+            //  得到该学校的id
+            var search = location.search ;
+            var strings = search.split( "=" ) ;
+            that.school = strings[1] ;
+            that.getSchoolId() ;
+            that.getClassMessage () ;
+        } ,
+        methods : {
+            getSchoolId : function () {
+                axios.get( "/School//searchIdSchool?id=" + that.school ).then(function (value) {
+                    value1 = value.data ;
+                    if ( value1.bool ) {
+                        that.name = value1.data.name ;
+                    } else {
+                        that.$message.error(data.message);
+                    }
+                })
+            } ,
+            getClassMessage : function () {
+                axios.get( "/School/searchAllClass" ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.classList = data.data ;
+                    } else {
+                        that.$message.error(data.message);
+                    }
+                })
+            } ,
+            sure : function () {
+                that.dialogVisible = false ;
+                var signSchool = {
+                    exercisePlace : that.area ,
+                    schoolName : that.name ,
+                    price : that.classMessage.money ,
+                    className : that.classMessage.name
+                } ;
+                axios.post( "/SchoolExcerice/addSchoolExcerice" , signSchool).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ){
+                        that.$message({
+                            message: data.message ,
+                            type: 'success'
+                        });
+                    } else {
+                        that.$message.error(data.message);
+                    }
+                })
+            } ,
+            details : function (index) {
+                that.dialogVisible = true ;
+                that.classMessage = index ;
+            }
+        }
+    })
+</script>
+</html>
