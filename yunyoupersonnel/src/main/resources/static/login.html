@@ -10,6 +10,7 @@
     <meta name="author" content="人事平台">
     <link rel="stylesheet" href="css/page-health-orderNotice.css" />
     <link rel="stylesheet" href="plugins/elementui/index.css">
+    <link rel="stylesheet" href="css/card.css">
     <script>
         if(window.self != window.top){
             window.top.location = window.location;
@@ -21,18 +22,26 @@
     <script src="plugins/elementui/index.js"></script>
 </head>
 
-<body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+<body>
     <div id="app">
         <!-- 页面头部 -->
         <el-container>
-            <el-card class="box-card" class="card">
+            <el-card class="card">
                 <div slot="header" class="clearfix">
-                    <span>卡片名称</span>
-                    <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                    <span class="title">云游人事管理系统</span>
                 </div>
-                <div v-for="o in 4" :key="o" class="text item">
-                    {{'列表内容 ' + o }}
+                <div class="input">
+                    <el-input class="el-input" v-model="input" placeholder="请输入用户名">
+                    </el-input>
                 </div>
+                <div class="input">
+                    <el-input class="el-input" v-model="input" placeholder="请输入密码">
+                    </el-input>
+                </div>
+                <el-row class="button">
+                    <el-button class="but" type="success">登录</el-button>
+                    <el-button class="but" type="warning">取消</el-button>
+                </el-row>
             </el-card>
         </el-container>
     </div>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <style>
+        .el-header{
+            margin-right: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            width: 100%;
+        }
+        .tac{
+            width: 100%;
+            height: 100%;
+        }
+        .el-col{
+            width: 100%;
+            height: 100%;
+        }
+        .body{
+            height: 100%;
+        }
+        .html{
+            height: 100%;
+        }
+        #app{
+            height: 100%;
+        }
+        .el-container{
+            height: 100%;
+        }
+        .head{
+            padding-left: 45%;
+            font-size: 25px;
+            text-align: center ;
+        }
+        .font{
+            font-size: 15px;
+        }
+        .aside{
+            width: 200px;
+        }
+    </style>
+</head>
+<body class="body">
+    <div id="app">
+        <el-container>
+            <el-header>
+                <el-menu
+                        :default-active="activeIndex2"
+                        class="el-menu-demo"
+                        mode="horizontal"
+                        background-color="#545c64"
+                        text-color="#fff"
+                        active-text-color="#ffd04b">
+                    <el-menu-item  class="head">云游人事管理系统</el-menu-item>
+                    <div class="right-menu">
+                        <span class="help">{{name}}</span>
+                        <el-dropdown class="avatar-container right-menu-item" trigger="click">
+                            <div class="avatar-wrapper">
+                                <img src="../img/134.jpg" class="user-avatar">
+                            </div>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item divided>
+                                    <span  style="display:block;">修改密码</span>
+                                </el-dropdown-item>
+                                <el-dropdown-item divided>
+                                    <span style="display:block;" >退出</span>
+                                </el-dropdown-item>
+                                <el-dropdown-item divided>
+                                    <span style="display:block;" >跟换头像</span>
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
+                </el-menu>
+            </el-header>
+            <el-container>
+                <el-aside style="width: 250px">
+                    <el-row class="tac">
+                        <el-col :span="12">
+                            <el-menu
+                                    default-active="2"
+                                    class="tac"
+                                    background-color="#545c64"
+                                    text-color="#fff"
+                                    active-text-color="#ffd04b">
+                                <el-menu-item class="font-head"  index="2">
+                                    <i class="el-icon-s-management"></i>
+                                    <span class="font" slot="title">首页</span>
+                                </el-menu-item>
+                                <el-menu-item class="font-head"  index="1">
+                                    <i  class="el-icon-s-management"></i>
+                                    <span class="font" slot="title">人员档案</span>
+                                </el-menu-item>
+                                <el-menu-item class="font-head" index="3">
+                                    <i class="el-icon-user-solid"></i>
+                                    <span class="font" slot="title">培训管理</span>
+                                </el-menu-item>
+                                <el-menu-item class="font-head" index="4">
+                                    <i class="el-icon-setting"></i>
+                                    <span class="font" slot="title">职称管理</span>
+                                </el-menu-item>
+                                <el-menu-item class="font-head" index="5">
+                                    <i class="el-icon-setting"></i>
+                                    <span class="font" slot="title">奖惩管理</span>
+                                </el-menu-item>
+                                <el-menu-item class="font-head" index="6">
+                                    <i class="el-icon-setting"></i>
+                                    <span class="font" slot="title">人员调动</span>
+                                </el-menu-item>
+                            </el-menu>
+                        </el-col>
+                    </el-row>
+                </el-aside>
+                <el-container>
+                    <!--  嵌套使用  -->
+                    <iframe name="right" class="el-main" :src="picPath" width="100%" height="100%" frameborder="0"></iframe>
+                </el-container>
+            </el-container>
+        </el-container>
+    </div>
+</body>
+<script type="text/javascript">
+    new Vue({
+        el:  "#app" ,
+        data : {
+            name : ""
+        }
+    })
+</script>
