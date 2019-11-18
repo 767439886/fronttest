@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="html" xmlns:display="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/addPeople.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <el-card class="box-card">
+                <div slot="header" class="clearfix">
+                    <span class="add">添加人员档案</span>
+                </div>
+                <div v-bind:style="display1" >
+                    <el-row>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">员工编号：</span>
+                            <el-dropdown size="small" split-button >
+                                {{user.id}}
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item>黄金糕</el-dropdown-item>
+                                    <el-dropdown-item>狮子头</el-dropdown-item>
+                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                                    <el-dropdown-item>双皮奶</el-dropdown-item>
+                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">姓名：</span>
+                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">性别：</span>
+                            <el-dropdown size="small" split-button >
+                                {{user.sex}}
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item>黄金糕</el-dropdown-item>
+                                    <el-dropdown-item>狮子头</el-dropdown-item>
+                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                                    <el-dropdown-item>双皮奶</el-dropdown-item>
+                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">所属部门：</span>
+                            <el-dropdown size="small" split-button >
+                                {{user.branch}}
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item>黄金糕</el-dropdown-item>
+                                    <el-dropdown-item>狮子头</el-dropdown-item>
+                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                                    <el-dropdown-item>双皮奶</el-dropdown-item>
+                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div></el-col>
+                    </el-row>
+                    <el-row >
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <div class="block">
+                                <span class="font_style">出生年月日：</span>
+                                <el-date-picker
+                                        v-model="value1"
+                                        type="date"
+                                        placeholder="选择日期">
+                                </el-date-picker>
+                            </div>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">籍贯：</span>
+                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                    </el-row>
+                    <el-row >
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">婚姻状况：</span>
+                            <el-dropdown size="small" split-button >
+                                {{user.marriage}}
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item>黄金糕</el-dropdown-item>
+                                    <el-dropdown-item>狮子头</el-dropdown-item>
+                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                                    <el-dropdown-item>双皮奶</el-dropdown-item>
+                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">身份证号：</span>
+                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                    </el-row>
+                    <el-row >
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">政治面貌：</span>
+                            <el-dropdown size="small" split-button >
+                                {{user.id}}
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item>黄金糕</el-dropdown-item>
+                                    <el-dropdown-item>狮子头</el-dropdown-item>
+                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                                    <el-dropdown-item>双皮奶</el-dropdown-item>
+                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">民族：</span>
+                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                    </el-row>
+                    <el-row >
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">学历：</span>
+                            <el-dropdown size="small" split-button >
+                                {{user.id}}
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item>黄金糕</el-dropdown-item>
+                                    <el-dropdown-item>狮子头</el-dropdown-item>
+                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                                    <el-dropdown-item>双皮奶</el-dropdown-item>
+                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">专业：</span>
+                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                    </el-row>
+                    <el-row >
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">毕业时期：</span>
+                            <el-dropdown size="small" split-button >
+                                {{user.id}}
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item>黄金糕</el-dropdown-item>
+                                    <el-dropdown-item>狮子头</el-dropdown-item>
+                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                                    <el-dropdown-item>双皮奶</el-dropdown-item>
+                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">毕业院校：</span>
+                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                    </el-row>
+                    <el-row >
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">公积金账号：</span>
+                            <el-dropdown size="small" split-button >
+                                {{user.id}}
+                                <el-dropdown-menu slot="dropdown">
+                                    <el-dropdown-item>黄金糕</el-dropdown-item>
+                                    <el-dropdown-item>狮子头</el-dropdown-item>
+                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                                    <el-dropdown-item>双皮奶</el-dropdown-item>
+                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </el-dropdown>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">行政级别：</span>
+                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                    </el-row>
+                </div>
+                <el-row>
+                    <el-col :span="12"><div class="grid-content bg-purple">
+                        <div class="block">
+                            <el-pagination
+                                    @current-change="handleCurrentChange"
+                                    background
+                                    layout="prev, pager, next"
+                                    :total="30">
+                            </el-pagination>
+                        </div>
+                    </div></el-col>
+                    <el-col :span="12"><div class="grid-content bg-purple">
+                        <el-button class="success" type="success">成功按钮</el-button>
+                    </div>
+                    </el-col>
+                </el-row>
+        </el-card>
+    </div>
+</body>
+<script type="text/javascript">
+    new Vue({
+        el : "#app" ,
+        data : {
+            display1 : "display:none1" ,
+            user : {
+                id : "请选择员工编号" ,
+                sex : "请选择性别" ,
+                branch : "请选择所属部门" ,
+                marriage: "未婚"
+            }
+        }
+    })
+</script>
+</html>

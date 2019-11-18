@@ -31,15 +31,15 @@
                     <span class="title">云游人事管理系统</span>
                 </div>
                 <div class="input">
-                    <el-input class="el-input" v-model="input" placeholder="请输入用户名">
+                    <el-input class="el-input" v-model="username" placeholder="请输入用户名">
                     </el-input>
                 </div>
                 <div class="input">
-                    <el-input class="el-input" v-model="input" placeholder="请输入密码">
+                    <el-input class="el-input" v-model="password" placeholder="请输入密码">
                     </el-input>
                 </div>
                 <el-row class="button">
-                    <el-button class="but" type="success">登录</el-button>
+                    <el-button @click="dianji" class="but" type="success">登录</el-button>
                     <el-button class="but" type="warning">取消</el-button>
                 </el-row>
             </el-card>
@@ -51,13 +51,27 @@
     new Vue({
         el : "#app" ,
         data : {
-
+            username : "" ,
+            password : ""
         } ,
-        created:{
-
+        created: function(){
+            that = this ;
         } ,
         methods : {
-
+            dianji : function () {
+                var user = {
+                    username : that.username ,
+                    password : that.password
+                }
+                axios.post( "/login/login" , user ).then(function (value) {
+                    value = value.data ;
+                    if ( value.bool ) {
+                        location.href = "/pages/main.html" ;
+                    } else {
+                        that.$message.error("登录错误，账号或密码错误" ) ;
+                    }
+                })
+            }
         }
     })
 </script>
