@@ -18,8 +18,9 @@ public class Schoolmessage implements java.io.Serializable{
 	private String duty;
 	private String position;
 	private String foreignLanuage;
-	private String fllevel;
+	private String FLlevel;
 	private Long uid;
+	private String university ;
 
 	/** setter and getter method */
 	public void setId(Long id){
@@ -70,17 +71,22 @@ public class Schoolmessage implements java.io.Serializable{
 	public String getPosition(){
 		return this.position;
 	}
-	public void setFllevel(String fllevel){
-		this.fllevel = fllevel;
-	}
-	public String getFllevel(){
-		return this.fllevel;
-	}
-	public void setUid(Long uid){
+    public String getFLlevel() {
+        return FLlevel;
+    }
+    public void setFLlevel(String FLlevel) {
+        this.FLlevel = FLlevel;
+    }
+    public void setUid(Long uid){
 		this.uid = uid;
 	}
 	public Long getUid(){
 		return this.uid;
 	}
-
+    public String getUniversity() {
+        return university;
+    }
+    public void setUniversity(String university) {
+        this.university = university;
+    }
 }

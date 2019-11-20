@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="html" xmlns:display="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/cultivateAddPeople.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <el-card class="box-card-big">
+            <div slot="header" class="clearfix">
+                <span>添加培训记录</span>
+            </div>
+            <div class="addPeopletitle">
+                培训人员名单
+            </div>
+            <el-card class="addPeopleCulivate">
+                <template>
+                    <el-table
+                            ref="multipleTable"
+                            :data="tableData"
+                            tooltip-effect="dark"
+                            style="width: 100%"
+                            @selection-change="handleSelectionChange">
+                        <el-table-column
+                                type="selection"
+                                width="300">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="姓名"
+                                width="500">
+                        </el-table-column>
+                        <el-table-column
+                                prop="id"
+                                label="员工编号"
+                                width="300"
+                                show-overflow-tooltip>
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </el-card>
+            <el-row class="button">
+                <el-button @click="addCultivatePeople()" class="but" type="success">增加</el-button>
+                <el-button class="but" type="danger">删除</el-button>
+            </el-row>
+            <el-divider><i class="el-icon-s-platform"><span style="font-weight: bold ; font-size: 17px ; margin-left: 5px" >培训详情</span></i></el-divider>
+            <div>
+                <el-form ref="form" :model="form" label-width="80px">
+                    <el-form-item label="活动名称">
+                        <el-input class="left" v-model="form.name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="培训单位">
+                        <el-input class="left" v-model="form.name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="培训结果">
+                        <el-select v-model="form.region" placeholder="请选择培训结果">
+                            <el-option label="差" value="shanghai"></el-option>
+                            <el-option label="良好" value="beijing"></el-option>
+                            <el-option label="优秀" value="beijing"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="活动时间">
+                        <el-col :span="11">
+                            <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                        </el-col>
+                        <el-col class="line" :span="2">-</el-col>
+                        <el-col :span="11">
+                            <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                        </el-col>
+                    </el-form-item>
+
+                    <el-form-item label="培训内容">
+                        <el-input type="textarea" v-model="form.desc"></el-input>
+                    </el-form-item>
+                    <el-form-item style="text-align: center">
+                        <el-button type="primary" @click="onSubmit">添加培训</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </el-card>
+        <el-dialog
+                title="请选择要添加的人员"
+                :visible.sync="dialogVisible"
+                width="30%"
+                :before-close="handleClose">
+            <span>
+                <template>
+                    <el-table
+                            ref="multipleTable"
+                            :data="addPeople"
+                            tooltip-effect="dark"
+                            style="width: 100%"
+                            @selection-change="smallHandleSelectionChange">
+                        <el-table-column
+                                type="selection"
+                                width="120">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="姓名"
+                                width="130">
+                        </el-table-column>
+                        <el-table-column
+                                prop="id"
+                                label="员工编号"
+                                width="100"
+                                show-overflow-tooltip>
+                        </el-table-column>
+                    </el-table>
+                </template>
+            </span>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogSure()">确 定</el-button>
+          </span>
+        </el-dialog>
+    </div>
+</body>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el: "#app" ,
+            data : {
+                tableData: [{
+                    id : "" ,
+                    name: "",
+                }],
+                addPeople: [{
+                    id : "" ,
+                    name : ""
+                }] ,
+                multipleSelection: [] ,
+                allSelectId : [] ,
+                smallAllSelectId : [] ,
+                form: {
+                    name: '',
+                    region: '',
+                    date1: '',
+                    date2: '',
+                    delivery: false,
+                    type: [],
+                    resource: '',
+                    desc: ''
+                } ,
+                dialogVisible : false
+            } ,
+            created : function(){
+                that = this ;
+            } ,
+            methods : {
+
+                //  当人员改变了
+                handleSelectionChange : function(val) {
+
+                } ,
+                searchAllPeople : function(){
+                    axios.get( "/personnel/searchAllPeopleId" ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.addPeople = data.data ;
+                        } else {
+                            that.$message.error(data.message );
+                        }
+                    })
+                } ,
+                addCultivatePeople : function () {
+                    that.dialogVisible = true ;
+                    that.searchAllPeople() ;
+                } ,
+                smallHandleSelectionChange : function ( index ) {
+                    that.smallAllSelectId = index ;
+                } ,
+                dialogSure : function () {
+                    that.dialogVisible = false ;
+                    that.tableData = that.smallAllSelectId ;
+                }
+            }
+        })
+    </script>
+</html>

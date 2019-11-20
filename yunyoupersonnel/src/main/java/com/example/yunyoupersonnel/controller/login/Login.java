@@ -4,7 +4,8 @@ import com.example.yunyoupersonnel.Utils.Cookies;
 import com.example.yunyoupersonnel.Utils.JWTUtils;
 import com.example.yunyoupersonnel.common.Result;
 import com.example.yunyoupersonnel.entity.User;
-import com.example.yunyoupersonnel.service.AdminService;
+
+import com.example.yunyoupersonnel.service.Login.AdminService;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

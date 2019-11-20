@@ -27,48 +27,29 @@
                     <el-row>
                         <el-col :span="12"><div class="grid-content bg-purple">
                             <span class="font_style">员工编号：</span>
-                            <el-dropdown size="small" split-button >
-                                {{user.id}}
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item>黄金糕</el-dropdown-item>
-                                    <el-dropdown-item>狮子头</el-dropdown-item>
-                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                                    <el-dropdown-item>双皮奶</el-dropdown-item>
-                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
+                            <el-input v-model="user.id" placeholder="请选择员工编号"></el-input>
                         </div></el-col>
                         <el-col :span="12"><div class="grid-content bg-purple">
                             <span class="font_style">姓名：</span>
-                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                            <el-input v-model="user.name" placeholder="请输入内容"></el-input>
                         </div></el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="12"><div class="grid-content bg-purple">
                             <span class="font_style">性别：</span>
-                            <el-dropdown size="small" split-button >
-                                {{user.sex}}
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item>黄金糕</el-dropdown-item>
-                                    <el-dropdown-item>狮子头</el-dropdown-item>
-                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                                    <el-dropdown-item>双皮奶</el-dropdown-item>
-                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
+                            <el-select size="medium"  v-model="user.sex">
+                                <el-option label="男" value="男"></el-option>
+                                <el-option label="女" value="女"></el-option>
+                            </el-select>
                         </div></el-col>
                         <el-col :span="12"><div class="grid-content bg-purple">
-                            <span class="font_style">所属部门：</span>
-                            <el-dropdown size="small" split-button >
-                                {{user.branch}}
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item>黄金糕</el-dropdown-item>
-                                    <el-dropdown-item>狮子头</el-dropdown-item>
-                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                                    <el-dropdown-item>双皮奶</el-dropdown-item>
-                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
+                            <span class="font_style">部门：</span>
+                            <el-select size="medium"  v-model="user.branch">
+                                <el-option label="生产部" value="生产部"></el-option>
+                                <el-option label="研发部" value="研发部"></el-option>
+                                <el-option label="人事部" value="人事部"></el-option>
+                                <el-option label="财务部" value="财务部"></el-option>
+                            </el-select>
                         </div></el-col>
                     </el-row>
                     <el-row >
@@ -76,7 +57,7 @@
                             <div class="block">
                                 <span class="font_style">出生年月日：</span>
                                 <el-date-picker
-                                        v-model="value1"
+                                        v-model="user.birthday"
                                         type="date"
                                         placeholder="选择日期">
                                 </el-date-picker>
@@ -84,134 +65,222 @@
                         </div></el-col>
                         <el-col :span="12"><div class="grid-content bg-purple">
                             <span class="font_style">籍贯：</span>
-                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                            <el-select size="medium"  v-model="user.nativePlace">
+                                <el-option label="广东广州" value="广东广州"></el-option>
+                                <el-option label="广东深圳" value="广东深圳"></el-option>
+                                <el-option label="广东东莞" value="广东东莞"></el-option>
+                                <el-option label="广东佛山" value="广东佛山"></el-option>
+                            </el-select>
                         </div></el-col>
                     </el-row>
                     <el-row >
                         <el-col :span="12"><div class="grid-content bg-purple">
-                            <span class="font_style">婚姻状况：</span>
-                            <el-dropdown size="small" split-button >
-                                {{user.marriage}}
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item>黄金糕</el-dropdown-item>
-                                    <el-dropdown-item>狮子头</el-dropdown-item>
-                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                                    <el-dropdown-item>双皮奶</el-dropdown-item>
-                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
+                            <span class="font_style">婚姻：</span>
+                            <el-select size="medium"  v-model="user.marriage">
+                                <el-option label="已婚" value="已婚"></el-option>
+                                <el-option label="未婚" value="未婚"></el-option>
+                            </el-select>
                         </div></el-col>
                         <el-col :span="12"><div class="grid-content bg-purple">
                             <span class="font_style">身份证号：</span>
-                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                            <el-input v-model="user.idCard" placeholder="请输入内容"></el-input>
                         </div></el-col>
                     </el-row>
                     <el-row >
                         <el-col :span="12"><div class="grid-content bg-purple">
                             <span class="font_style">政治面貌：</span>
-                            <el-dropdown size="small" split-button >
-                                {{user.id}}
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item>黄金糕</el-dropdown-item>
-                                    <el-dropdown-item>狮子头</el-dropdown-item>
-                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                                    <el-dropdown-item>双皮奶</el-dropdown-item>
-                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
+                            <el-select size="medium"  v-model="user.politics">
+                                <el-option label="群众" value="群众"></el-option>
+                                <el-option label="党员" value="党员"></el-option>
+                            </el-select>
                         </div></el-col>
                         <el-col :span="12"><div class="grid-content bg-purple">
                             <span class="font_style">民族：</span>
-                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                            <el-input v-model="user.folk" placeholder="请输入内容"></el-input>
                         </div></el-col>
                     </el-row>
                     <el-row >
                         <el-col :span="12"><div class="grid-content bg-purple">
                             <span class="font_style">学历：</span>
-                            <el-dropdown size="small" split-button >
-                                {{user.id}}
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item>黄金糕</el-dropdown-item>
-                                    <el-dropdown-item>狮子头</el-dropdown-item>
-                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                                    <el-dropdown-item>双皮奶</el-dropdown-item>
-                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
+                            <el-select size="medium"  v-model="user.education">
+                                <el-option label="大专" value="大专"></el-option>
+                                <el-option label="本科" value="本科"></el-option>
+                            </el-select>
                         </div></el-col>
                         <el-col :span="12"><div class="grid-content bg-purple">
                             <span class="font_style">专业：</span>
-                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                            <el-input v-model="user.deparment" placeholder="请输入内容"></el-input>
                         </div></el-col>
                     </el-row>
                     <el-row >
                         <el-col :span="12"><div class="grid-content bg-purple">
-                            <span class="font_style">毕业时期：</span>
-                            <el-dropdown size="small" split-button >
-                                {{user.id}}
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item>黄金糕</el-dropdown-item>
-                                    <el-dropdown-item>狮子头</el-dropdown-item>
-                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                                    <el-dropdown-item>双皮奶</el-dropdown-item>
-                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
+                            <div class="block">
+                                <span class="font_style">毕业时期：</span>
+                                <el-date-picker
+                                        v-model="user.graduateDate"
+                                        type="date"
+                                        placeholder="选择日期">
+                                </el-date-picker>
+                            </div>
                         </div></el-col>
                         <el-col :span="12"><div class="grid-content bg-purple">
                             <span class="font_style">毕业院校：</span>
-                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                            <el-input v-model="user.university" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">公积金账号：</span>
+                            <el-input v-model="user.accumulateID" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">行政级别：</span>
+                            <el-select size="medium"  v-model="user.administrationLevel">
+                                <el-option label="助理工程师" value="助理工程师"></el-option>
+                                <el-option label="初级工程师" value="初级工程师"></el-option>
+                            </el-select>
                         </div></el-col>
                     </el-row>
                     <el-row >
                         <el-col :span="12"><div class="grid-content bg-purple">
-                            <span class="font_style">公积金账号：</span>
-                            <el-dropdown size="small" split-button >
-                                {{user.id}}
-                                <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item>黄金糕</el-dropdown-item>
-                                    <el-dropdown-item>狮子头</el-dropdown-item>
-                                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                                    <el-dropdown-item>双皮奶</el-dropdown-item>
-                                    <el-dropdown-item>蚵仔煎</el-dropdown-item>
-                                </el-dropdown-menu>
-                            </el-dropdown>
+                            <span class="font_style">职务：</span>
+                            <el-select size="medium"  v-model="user.duty">
+                                <el-option label="助理工程师" value="助理工程师"></el-option>
+                                <el-option label="初级工程师" value="初级工程师"></el-option>
+                            </el-select>
                         </div></el-col>
                         <el-col :span="12"><div class="grid-content bg-purple">
-                            <span class="font_style">行政级别：</span>
-                            <el-input v-model="input" placeholder="请输入内容"></el-input>
+                            <span class="font_style">昵称：</span>
+                            <el-input v-model="user.position" placeholder="请输入内容"></el-input>
                         </div></el-col>
                     </el-row>
+                    <el-row >
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">外语水平：</span>
+                            <el-select size="medium"  v-model="user.foreignLanuage">
+                                <el-option label="一级" value="一级"></el-option>
+                                <el-option label="二级" value="二级"></el-option>
+                                <el-option label="三级" value="三级"></el-option>
+                                <el-option label="四级" value="四级"></el-option>
+                            </el-select>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">外语语种：</span>
+                            <el-input v-model="user.FLlevel" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">计算机水平：</span>
+                            <el-select size="medium"  v-model="user.computerLevel">
+                                <el-option label="一级" value="一级"></el-option>
+                                <el-option label="二级" value="二级"></el-option>
+                                <el-option label="三级" value="三级"></el-option>
+                                <el-option label="四级" value="四级"></el-option>
+                            </el-select>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">联系电话：</span>
+                            <el-input v-model="user.hone" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">手机号码：</span>
+                            <el-input v-model="user.mobilePhone" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">家庭住址：</span>
+                            <el-input v-model="user.address" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">在职情况：</span>
+                            <el-select size="medium"  v-model="user.incumbency">
+                                <el-option label="在职" value="在职"></el-option>
+                                <el-option label="事假" value="事假"></el-option>
+                                <el-option label="产假" value="产假"></el-option>
+                            </el-select>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">用工形式：</span>
+                            <el-select size="medium"  v-model="user.incumbencyType">
+                                <el-option label="试用期" value="试用期"></el-option>
+                                <el-option label="正式工" value="正式工"></el-option>
+                                <el-option label="暑期工" value="暑期工"></el-option>
+                            </el-select>
+                        </div></el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">个人简历：</span>
+                        </div></el-col>
+                        <el-col :span="24">
+                            <el-form label-width="80px">
+                                <el-form-item>
+                                    <el-input type="textarea" v-model="user.resume"></el-input>
+                                </el-form-item>
+                            </el-form>
+                        </el-col>
+                    </el-row>
                 </div>
-                <el-row>
-                    <el-col :span="12"><div class="grid-content bg-purple">
-                        <div class="block">
-                            <el-pagination
-                                    @current-change="handleCurrentChange"
-                                    background
-                                    layout="prev, pager, next"
-                                    :total="30">
-                            </el-pagination>
-                        </div>
-                    </div></el-col>
-                    <el-col :span="12"><div class="grid-content bg-purple">
-                        <el-button class="success" type="success">成功按钮</el-button>
-                    </div>
-                    </el-col>
-                </el-row>
+            <el-button @click="addPeople" class="success" type="success">确认增加</el-button>
         </el-card>
     </div>
 </body>
 <script type="text/javascript">
+    var that ;
     new Vue({
-        el : "#app" ,
+        el : '#app' ,
         data : {
-            display1 : "display:none1" ,
-            user : {
-                id : "请选择员工编号" ,
-                sex : "请选择性别" ,
-                branch : "请选择所属部门" ,
-                marriage: "未婚"
+            display1: "display:none1",
+            user: {
+                id: "",
+                name: "",
+                sex: "",
+                branch: "",
+                marriage: "",
+                resume: "",    //  文本的内容
+                birthday: "",
+                nativePlace: "",
+                deparment: "",
+                graduateDate: "",
+                administrationLevel: "",
+                position: "",
+                foreignLanuage: "",
+                FLlevel: "",
+                idCard: "",
+                folk: "",
+                deparment: "",
+                education: "",
+                university: "",
+                politics: "",
+                accumulateID: "",
+                duty: "",
+                phone: "",
+                mobilePhone: "",
+                address: "",
+                incumbencyType: "",
+                computerLevel: ""
+            },
+        } ,
+        created : function () {
+            that = this ;
+        } ,
+        methods : {
+            addPeople : function () {
+                axios.post( "/personnel/add" , that.user ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.$message({
+                            message: "增加成功" ,
+                            type: 'success'
+                        });
+                    } else {
+                        that.$message.error(data.message );
+                    }
+                })
             }
         }
     })

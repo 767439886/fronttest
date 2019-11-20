@@ -113,7 +113,7 @@
                                     text-color="#fff"
                                     active-text-color="#ffd04b">
 
-                                <el-menu-item class="font-head"  index="1">
+                                <el-menu-item class="font-head" @click="updatePage('')"  index="1">
                                     <i  class="el-icon-s-management"></i>
                                     <span class="font" slot="title">首页</span>
                                 </el-menu-item>
@@ -123,9 +123,8 @@
                                         <span class="font">人员档案</span>
                                     </template>
                                     <el-menu-item-group>
-                                        <el-menu-item index="1-1">添加人员档案</el-menu-item>
-                                        <el-menu-item index="1-2">管理人员档案</el-menu-item>
-                                        <el-menu-item index="1-2">查询人员档案</el-menu-item>
+                                        <el-menu-item @click="updatePage('1-1')" index="1-1">添加人员档案</el-menu-item>
+                                        <el-menu-item @click="updatePage('1-2')" index="1-2">管理人员档案</el-menu-item>
                                     </el-menu-item-group>
                                 </el-submenu>
                                 <el-menu-item class="font-head" index="3">
@@ -178,6 +177,15 @@
                         that.$message.error('错了哦，这是一条错误消息');
                     }
                 })
+            } ,
+            updatePage : function (value) {
+                if ( value == "1-1" ) {
+                    that.picPath = "/pages/addPeople.html" ;
+                } else if ( value == "1-2") {
+                    that.picPath = "/pages/managerPeople.html" ;
+                } else {
+                    that.picPath = "/pages/welcome.html" ;
+                }
             }
         }
     })
