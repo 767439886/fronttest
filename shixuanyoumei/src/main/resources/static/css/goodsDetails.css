@@ -1,0 +1,75 @@
+html ,body{
+    max-width: 680px;
+    height: 100%;
+    padding: 0;
+    margin: auto;
+    overflow: auto;
+}
+#app{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+.demo-image{
+    height: 30%;
+    padding-bottom: 10px;
+}
+.el-icon-back{
+    font-size: 3vh;
+    position: relative;
+    top: 25%;
+    color: white;
+    float: right;
+    padding-left: 1vh ;
+    height: 100%;
+    float: left;
+}
+.newGoods{
+    width: 100%;
+    height: 7%;
+    background-color: #ca3420;
+}
+.el-icon-star-off{
+    padding-right: 1.3vh;
+    float: right;
+    padding-top: 1vh ;
+    font-weight: bold;
+    font-size: 20px;
+}
+.yen{
+    padding-left: 1.3vh;
+    float: left;
+    color: #ce283d;
+    padding-top: 1vh ;
+    font-weight: bold;
+    font-size: 2.7vh;
+}
+.title{
+    padding-top: 1vh ;
+    text-align: center ;
+    font-size: 3.3vh;
+    font-weight: bold;
+}
+.function{
+    padding: 10px;
+    color: #ff5a9f;
+    font-size: 2.7vh;
+    font-weight: bold;
+}
+.el-icon-star-off{
+    padding-right: 1.3vh;
+    float: right;
+    color: black;
+    font-weight: bold;
+    font-size: 3vh;
+}
+.function1{
+    padding: 20px;
+    font-size: 2.5vh;
+    color: black;
+}
+.but1{
+    width: 32%;
+    font-size: 2vh;
+    margin-right: 0px;
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.shixuanyoumei.mapper.BrandMapper" >
+    <select id="SearchBrand" parameterType="String" resultType="com.example.shixuanyoumei.entity.Brand">
+        SELECT
+          `id`,
+          `name`,
+          `context`,
+          `address`,
+          `telephone`,
+          `picPath`
+        FROM
+          `brand`
+        <where>
+            <if test=" value != null and value != '' ">
+                `id` = #{value}
+            </if>
+        </where>
+    </select>
+    <select id="SearchTypeBrand" resultType="com.example.shixuanyoumei.entity.Brand" >
+        SELECT
+          `id`,
+          `name`,
+          `context`,
+          `address`,
+          `telephone`,
+          `picPath`,
+          `type`
+        FROM
+          `brand`
+        <where>
+            <if test="value != null and value != '' ">
+                `type` = #{value}
+            </if>
+        </where>
+    </select>
+</mapper>

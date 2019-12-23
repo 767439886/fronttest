@@ -1,0 +1,340 @@
+<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+        <script src="js/vue.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/axios-0.18.0.js"></script>
+        <style type="text/css">
+            html , body {
+                width: 100% ;
+                height: 96%;
+                margin: 0px ;
+                padding: 0px ;
+                overflow: hidden;
+            }
+            #app {
+                width: 100% ;
+                height: 100%;
+            }
+            .outside{
+                position: relative ;
+                left: 30%;
+                width: 40%;
+                height: 101%;
+                border: none;
+                margin: 0;
+                padding: 0;
+            }
+            .insertside{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-image: url("/img/12.jpg");
+                background-size: cover;
+                margin: 0;
+                padding: 0;
+            }
+            .insertside2{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-image: url("/img/12.jpg");
+                background-size: cover;
+                margin: 0;
+                padding: 0;
+            }
+            .plance{
+                background-size: 100% , 100% ;
+                margin: 0 ;
+                padding: 0;
+                position: absolute;
+            }
+            .bullet{
+                width: 0.5vh;
+                height: 1.2vh;
+                background-image: url("/img/bullet.png");
+                position: absolute ;
+                border-color: yellow;
+            }
+            .enemy{
+                background-size: 100% , 100% ;
+                background-image: url("/img/enemy.png");
+                position: absolute;
+            }
+        </style>
+        <script src="useJS/Crash.js"></script>
+        <!--  position: relative 先对于父元素        -->
+    </head>
+    <body>
+        <div id="app">
+            <div class="outside">
+                <div :style="insertside" class="insertside"></div>
+                <!--  使用相对位置的时候要注意 ：兄弟元素不要随便使用，否则会有冲突  -->
+                <div :style="insertside2" class="insertside2"></div>
+                <div :style="planceStyle" v-bind:class="{ plance : planenone}"></div>
+                <div :style="bullet" class="bullet" v-for="( bullet , index ) in bullets" ></div>
+
+                <!--  敌人飞机    -->
+                <div :style="enemyPlance" class="enemy" v-for="( enemyPlance , index ) in enemys"></div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        var that ;
+        var vue = new Vue ({
+            el : "#app" ,
+            data : {
+                insertside : {
+                    top: "0%"
+                } ,
+                insertside2 : {
+                    top: "-100%"
+                } ,
+
+                planceStyle : {
+                    backgroundImage: 'url("/img/hero.png")' ,
+                    top: "90%" ,
+                    left: "45%" ,
+                    width: "6vh" ,
+                    height: "6vh" ,
+                } ,
+                planenone : true ,
+                bullets : [] ,
+                value : {
+                    EnemyWidth : 0 ,
+                    EnemyTop : 0 ,
+                    planTop : 0 ,
+                    planWidth : 0 ,
+                    width : 0 ,
+                    heigth : 0 ,
+                    bulletTop : 0 ,
+                    bulletWidth : 0
+                } ,
+
+                enemys :[] ,
+                runData : {
+                    planceRun :{} ,
+                    bullerCreate : {} ,
+                    enemyCreate : {}
+                }
+            } ,
+            mounted : function () {
+                that = this ;
+                that.run() ;
+                that.launchBullet() ;
+                that.enemyPlanceCreate() ;
+                that.computerValue() ;
+            } ,
+            created : function() {
+                document.onkeydown = function () {
+                    vue.planceRun () ;
+                }
+            } ,
+            methods : {
+                run : function() {
+                    var planceRun = window.setInterval( function () {
+                        let insertside = that.getValue( that.insertside.top ) ;
+                        let insertside2 = that.getValue( that.insertside2.top ) ;
+                        if ( parseInt(insertside )  == 100 ) {
+                            insertside = -99  ;
+                        } else if ( parseInt(insertside2 ) == 100 ){
+                            insertside2 = -99 ;
+                        }
+                        that.insertside.top = insertside  + "%" ;
+                        that.insertside2.top = insertside2 + "%" ;
+
+                    }  , 10 ) ;
+                    that.runData.planceRun = planceRun ;
+                } ,
+                planceRun : function() {
+                    var e = window.event || e ;
+                    switch( e.keyCode ){
+                        case 37: //左
+                            var style1 = that.getValue( that.planceStyle.left ) ;
+                            style1 -= 1.7 ;
+                            that.planceStyle.left = style1 + "%" ;
+                            break;
+                        case 38: //上
+                            var style2 = that.getValue( that.planceStyle.top ) ;
+                            style2 -= 1.0 ;
+                            that.planceStyle.top = style2 + "%" ;
+                            break;
+                        case 39:  //右
+                            var style3 = that.getValue( that.planceStyle.left ) ;
+                            style3 += 1.7 ;
+                            that.planceStyle.left = style3 + "%" ;
+                            break;
+                        case 40:  //下
+                            var style4 = that.getValue( that.planceStyle.top ) ;
+                            style4 += 1.3 ;
+                            that.planceStyle.top = style4 + "%" ;
+                            break;
+                    }
+                    if ( style1 <= 0 ) {
+                        that.planceStyle.left = "0%" ;
+                    }
+                    if ( style2 <= 0 ) {
+                        that.planceStyle.top = "0%" ;
+                    }
+                    if ( style3 >= 90 ) {
+                        that.planceStyle.left = "90%"
+                    }
+                    if ( style4 >= 90 ) {
+                        that.planceStyle.top = "90%"
+                    }
+                } ,
+                plancebomb : function( num , interval ) {
+                    if ( num > 3 ) {
+                        that.planenone = false ;
+                        window.clearInterval( interval )  ;
+                        return ;
+                    }
+                    that.planceStyle.backgroundImage = 'url("/img/heroBao' + num + '.png")' ;
+                    return num ;
+                } ,
+                getValue : function (insertside) {
+                    insertside = insertside.substring( 0 , insertside.length - 1 ) ;
+                    return parseFloat( insertside ) + 0.3 ;
+                } ,
+
+                //   子弹的样式
+                launchBullet : function() {
+                    let bullerCreate = window.setInterval( function () {
+                        that.bullet() ;
+                    } , 200 ) ;
+                    that.runData.bullerCreate = bullerCreate ;
+                } ,
+                bullet : function () {
+                    topValue = that.getValue( that.planceStyle.top ) ;
+                    leftValue = that.getValue( that.planceStyle.left ) ;
+                    topValue = topValue - 2 + "%" ;
+                    leftValue = leftValue + 3.3 + "%" ;
+                    var bulletStyle = {
+                        top : topValue ,
+                        left : leftValue ,
+                        bulletInterval : {}
+                    }
+                    //  子弹的样式
+                    that.bullets.unshift(bulletStyle) ;
+                    var interva = window.setInterval( function () {
+                        let top = that.getValue( bulletStyle.top ) ;
+                        if ( parseInt(top) <= 0 ) {
+                            that.deleteBullet(bulletStyle) ;
+                            window.clearInterval( interva ) ;
+                        }else {
+                            bulletStyle.top = ( top - 1 ) + "%" ;
+                        }
+                    } , 15 );
+                    bulletStyle.bulletInterval = interva ;
+                } ,
+                deleteBullet : function (val) {
+                    for ( var i = 0 ; i < that.bullets.length ; i++ ) {
+                        if ( val == that.bullets[i] ) {
+                            that.bullets.splice( i , 1 ) ;
+                        }
+                    }
+                } ,
+
+                //   建造敌人飞机
+                enemyPlanceCreate : function () {
+                    let enemyCreate = window.setInterval( function () {
+                        var enemyPlance = {
+                            left : "35%" ,
+                            top : "3%" ,
+                            width: "6vh" ,
+                            height: "8vh" ,
+                            enemyInterval : {}
+                            //  敌机移动定时器
+                        } ;
+                        that.enemys.unshift( enemyPlance ) ;
+                        let num = Math.floor(Math.random()*90) ;
+                        enemyPlance.left = num + "%" ;
+                        that.enemyPlanceMove(enemyPlance) ;
+                    } , 1000 )
+                    that.runData.enemyCreate = enemyCreate ;
+                } ,
+                enemyPlanceMove : function(enemy) {
+                    var enemyInterval = window.setInterval(function () {
+                        var top = that.getValue( enemy.top ) ;
+                        if ( parseInt(top) >= 100 ) {
+                            that.deleteEnemy(enemy) ;
+                            window.clearInterval( enemyInterval ) ;
+                        }
+                        top = top + 0.1 + "%" ;
+                        enemy.top = top ;
+                        that.ifCrashBullet(enemy) ;
+                        that.ifCrashHero(enemy) ;
+                    } , 10 )
+                    enemy.enemyInterval = enemyInterval ;
+                } ,
+                ifCrashHero : function(enemy) {
+                    if (
+                        crash (  that.planceStyle , that.value.planTop  , that.value.planWidth ,
+                            that.value.width , that.value.heigth ,
+                            enemy , that.value.EnemyTop , that.value.EnemyWidth ) ){
+                        window.clearInterval( enemy.enemyInterval ) ;
+                        that.deleteEnemy( enemy ) ;
+                        //  停止所有定时器,游戏结束
+                        window.clearInterval( that.runData.bullerCreate ) ;
+                        window.clearInterval( that.runData.enemyCreate ) ;
+                        window.clearInterval( that.runData.planceRun ) ;
+                        var num = 1 ;
+                        var interval = window.setInterval( function () {
+                            num = that.plancebomb(num ,interval )
+                            num++ ;
+                        } , 170 );
+                    }
+                } ,
+                ifCrashBullet : function(enemu) {
+                    var innerHeight = window.innerHeight ;
+                    for ( var  i = 0 ; i < that.bullets.length ; i++ ) {
+                        let buulet = that.bullets[i] ;
+                        if (
+                            crash (  buulet , that.value.bulletTop  , that.value.bulletWidth ,
+                                that.value.width , that.value.heigth ,
+                                enemu , that.value.EnemyTop , that.value.EnemyWidth ) ){
+                            window.clearInterval( enemu.enemyInterval ) ;
+                            window.clearInterval( buulet ) ;
+                            that.deleteBullet( buulet ) ;
+                            that.deleteEnemy( enemu ) ;
+                        }
+                    }
+                } ,
+                deleteEnemy : function(val) {
+                    for ( var i = 0 ; i < that.enemys.length ; i++ ) {
+                        if ( val == that.enemys[i] ) {
+                            that.enemys.splice( i , 1 ) ;
+                        }
+                    }
+                } ,
+                computerValue : function() {
+                    var planWidth = innerHeight / 100 * getValue2("6vh")  ;
+                    var EnemyTop = innerHeight / 100 * getValue2("8vh")  ;
+                    var EnemyWidth = innerHeight / 100 * getValue2("6vh")  ;
+                    var element = document.getElementsByClassName("outside")[0] ;
+                    var width = window.getComputedStyle( element , null)["width"] ;
+                    width = getValue2( width ) ;
+                    var heigth = window.getComputedStyle( element , null)["height"] ;
+                    heigth = getValue2( heigth ) ;
+                    var bulletTop = innerHeight / 100 * getValue2("1.2vh") ;
+                    var bulletWidth = innerHeight / 100 * getValue2("0.5vh") ;
+                    that.value.EnemyTop = EnemyTop ;
+                    that.value.EnemyWidth = EnemyWidth ;
+                    that.value.planTop = EnemyWidth ;
+                    that.value.planWidth = EnemyWidth ;
+                    that.value.width = width ;
+                    that.value.heigth = heigth ;
+                    that.value.bulletTop = bulletTop ;
+                    that.value.bulletWidth = bulletWidth ;
+                    console.log( that.value ) ;
+                } ,
+
+                //  测试
+                test : function () {
+                    var planTop = innerHeight / 100 * getValue2("5vh")  ;
+                }
+            }
+
+        });
+    </script>
+</html>

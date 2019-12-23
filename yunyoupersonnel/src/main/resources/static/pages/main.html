@@ -74,6 +74,19 @@
             margin: 0px ;
             padding: 0px;
         }
+        .el-dialog__header{
+            text-align: center;
+        }
+        .el-dialog{
+            border-radius: 20px
+        }
+        .password{
+            width: 70%;
+            margin: 10px;
+        }
+        .Password{
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="body">
@@ -90,7 +103,7 @@
                             </div>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item divided>
-                                    <span  style="display:block;">修改密码</span>
+                                    <span @click="updatePassword"  style="display:block;">修改密码</span>
                                 </el-dropdown-item>
                                 <el-dropdown-item divided>
                                     <span style="display:block;" >退出</span>
@@ -127,19 +140,31 @@
                                         <el-menu-item @click="updatePage('1-2')" index="1-2">管理人员档案</el-menu-item>
                                     </el-menu-item-group>
                                 </el-submenu>
-                                <el-menu-item class="font-head" index="3">
-                                    <i class="el-icon-user-solid"></i>
-                                    <span class="font" slot="title">培训管理</span>
-                                </el-menu-item>
-                                <el-menu-item class="font-head" index="4">
+                                <el-submenu class="font-head" index="3">
+                                    <template slot="title">
+                                        <i class="el-icon-s-management"></i>
+                                        <span class="font">培训管理</span>
+                                    </template>
+                                    <el-menu-item-group>
+                                        <el-menu-item @click="updatePage('1-3')" index="1-3">添加培训</el-menu-item>
+                                        <el-menu-item @click="updatePage('1-4')" index="1-4">管理培训</el-menu-item>
+                                    </el-menu-item-group>
+                                </el-submenu>
+                                <el-menu-item @click="updatePage('1-8')" class="font-head" index="4">
                                     <i class="el-icon-setting"></i>
                                     <span class="font" slot="title">职称管理</span>
                                 </el-menu-item>
-                                <el-menu-item class="font-head" index="5">
-                                    <i class="el-icon-setting"></i>
-                                    <span class="font" slot="title">奖惩管理</span>
-                                </el-menu-item>
-                                <el-menu-item class="font-head" index="6">
+                                <el-submenu class="font-head" index="5">
+                                    <template slot="title">
+                                        <i class="el-icon-s-management"></i>
+                                        <span class="font">奖惩管理</span>
+                                    </template>
+                                    <el-menu-item-group>
+                                        <el-menu-item @click="updatePage('1-5')" index="1-5">添加惩罚记录</el-menu-item>
+                                        <el-menu-item @click="updatePage('1-6')" index="1-6">管理惩罚记录</el-menu-item>
+                                    </el-menu-item-group>
+                                </el-submenu>
+                                <el-menu-item @click="updatePage('1-7')" class="font-head" index="6">
                                     <i class="el-icon-setting"></i>
                                     <span class="font" slot="title">人员调动</span>
                                 </el-menu-item>
@@ -152,6 +177,29 @@
                     <iframe name="right" class="el-main" :src="picPath" width="100%" height="100%" frameborder="0"></iframe>
                 </el-container>
             </el-container>
+
+            <el-dialog
+                    title="更改密码"
+                    :visible.sync="dialogVisible"
+                    width="40%"
+                    :before-close="handleClose">
+                <div>
+                    <span class="Password">旧密码：</span>
+                    <el-input class="password" v-model="form.oldPassword"></el-input>
+                </div>
+                <div>
+                    <span class="Password">新密码：</span>
+                    <el-input class="password" v-model="form.newPassword"></el-input>
+                </div>
+                <div>
+                    <span class="Password">再次输入密码：</span>
+                    <el-input class="password" v-model="form.nextPassword"></el-input>
+                </div>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="surePassword">确 定</el-button>
+                </span>
+            </el-dialog>
         </el-container>
     </div>
 </body>
@@ -161,7 +209,13 @@
         el:  "#app" ,
         data : {
             name : "" ,
-            picPath: "/pages/welcome.html"
+            picPath: "/pages/welcome.html" ,
+            dialogVisible : false ,
+            form : {
+                oldPassword : "" ,
+                newPassword : "" ,
+                nextPassword : ""
+            }
         } ,
         created : function(){
             that = this ;
@@ -179,12 +233,45 @@
                 })
             } ,
             updatePage : function (value) {
-                if ( value == "1-1" ) {
-                    that.picPath = "/pages/addPeople.html" ;
-                } else if ( value == "1-2") {
-                    that.picPath = "/pages/managerPeople.html" ;
+                if (value == "1-1") {
+                    that.picPath = "/pages/addPeople.html";
+                } else if (value == "1-2") {
+                    that.picPath = "/pages/managerPeople.html";
+                } else if (value == "1-3") {
+                    that.picPath = "/pages/cultivateAddPeople.html"
+                } else if (value == "1-4") {
+                    that.picPath = "/pages/culitivateManagerPeople.html";
+                } else if (value == "1-5") {
+                    that.picPath = "/pages/addPunishAndAward.html";
+                } else if (value == "1-6") {
+                    that.picPath = "/pages/PunishAndAwardManager.html"
+                } else if (value == "1-7" ) {
+                    that.picPath = "/pages/managerPeopleRemove.html"
+                } else if ( value == "1-8" ){
+                    that.picPath = "/pages/management.html"
                 } else {
                     that.picPath = "/pages/welcome.html" ;
+                }
+            } ,
+            updatePassword : function () {
+                that.dialogVisible = true ;
+            } ,
+            surePassword : function () {
+                if ( that.form.newPassword == that.form.nextPassword ) {
+                    axios.post("/login/updatePassword", that.form).then(function (value) {
+                        data = value.data;
+                        if (data.bool) {
+                            that.$message({
+                                message: "修改密码成功" ,
+                                type: 'success'
+                            });
+                            that.dialogVisible = false ;
+                        } else {
+                            that.$message.error( "修改密码失败" );
+                        }
+                    })
+                } else {
+                    that.$message.error( "密码不正确" );
                 }
             }
         }

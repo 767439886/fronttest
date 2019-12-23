@@ -32,13 +32,17 @@ public class Cookies {
     }
 
     public static String getCookies (HttpServletRequest httpServlet ) {
-        Cookie[] cookies = httpServlet.getCookies() ;
-        for ( int i = 0 ; i < cookies.length ; i++ ) {
-            String name = cookies[i].getName() ;
-            if ( name.equals( "admin" ) ) {
-                String value = cookies[i].getValue() ;
-                return value ;
+        try {
+            Cookie[] cookies = httpServlet.getCookies() ;
+            for ( int i = 0 ; i < cookies.length ; i++ ) {
+                String name = cookies[i].getName() ;
+                if ( name.equals( "admin" ) ) {
+                    String value = cookies[i].getValue() ;
+                    return value ;
+                }
             }
+        } catch ( Exception e ) {
+            System.out.println( "没有该cookie" );
         }
         return null ;
     }

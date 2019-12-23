@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <!--  响应式布局     -->
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../css/advisory.css">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <link rel="stylesheet" href="../css/product.css">
+    <style>
+        .message{
+            height: 90%;
+        }
+        .describe{
+            font-size: 2.4vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
+            <el-menu-item @click="searchProduct" index="1">全部</el-menu-item>
+            <el-menu-item @click="skin(1)" index="2" >护肤</el-menu-item>
+            <el-menu-item @click="skin(2)" index="3" >彩妆</el-menu-item>
+            <el-menu-item @click="skin(3)" index="4" >美体</el-menu-item>
+            <el-menu-item @click="skin(4)" index="5" >男士</el-menu-item>
+            <el-menu-item @click="skin(5)" index="6" >孕婴</el-menu-item>
+            <el-menu-item @click="skin(6)" index="7" >功效</el-menu-item>
+        </el-menu>
+        <div class="message">
+            <el-row>
+                <el-col :span="24">
+                    <el-row :gutter="20" v-for="product in productList">
+                        <el-col :span="9" >
+                            <div @click="detailShop(product.id)" class="grid-content bg-purple">
+                                <el-image
+                                        style="width: 100%; height: 100% "
+                                        :src="product.picpath"
+                                        fit="fill">
+                                </el-image>
+                            </div>
+                        </el-col>
+                        <el-col :span="11"><div class="grid-content bg-purple">
+                            <span class="describe">{{product.content}}</span>
+                            <br><div class="little">特惠:  {{product.main}}</div>
+                        </div></el-col>
+                        <el-col :span="4"><div class="grid-content bg-purple">
+                            <span class="yuan">&yen;{{product.price}}</span>
+                        </div></el-col>
+                    </el-row>
+                </el-col>
+            </el-row>
+        </div>
+    </div>
+</body>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el : "#app" ,
+            data : {
+                activeIndex : "1" ,
+                productList:[]
+            } ,
+            created : function () {
+                that = this ;
+                that.searchProduct() ;
+            } ,
+            methods : {
+                searchProduct : function () {
+                    axios.get( "/shop/searchAllShopping" ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.productList = data.data ;
+                        } else {
+                            that.$message({
+                                showClose: true,
+                                message: "查询商品失败" ,
+                                type: 'error'
+                            });
+                        }
+                    })
+                } ,
+                skin : function ( type ) {
+                    axios.get( "/product/skin?type=" + type ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.productList = data.data ;
+                        } else {
+                            that.$message({
+                                showClose: true,
+                                message: "查询商品失败" ,
+                                type: 'error'
+                            });
+                        }
+                    })
+                } ,
+                detailShop : ( id ) => {
+                    location.href = "/pages/goodsDetails.html?id=" + id ;
+                }
+            }
+        })
+    </script>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="html" xmlns:display="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/peopleRemove.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span class="title">人员调动</span>
+            </div>
+            <div>
+                <template>
+                    <el-table
+                            :data="tableData"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="uid"
+                                label="员工id号"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="translateDate"
+                                label="调动时间"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="priorBranch"
+                                label="前部门"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="nextBranch"
+                                label="现部门"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="priorDuty"
+                                label="前职务"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="nextDuty"
+                                label="现职务"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="handeName"
+                                label="经办人"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="remark"
+                                label="备注"
+                                width="150">
+                        </el-table-column>
+                    </el-table>
+                    <el-row>
+                        <el-button @click="addRemove()" type="danger">增加调动</el-button>
+                    </el-row>
+                </template>
+                <el-dialog
+                        title="添加详情"
+                        :visible.sync="dialogVisible"
+                        :before-close="handleClose">
+                    <div>
+                        <el-form ref="form" :model="form" label-width="80px">
+                            <el-form-item label="员工">
+                                <el-select v-model="form.uid" placeholder="请选择">
+                                    <el-option label="叶" value="12"></el-option>
+                                    <el-option label="张" value="14"></el-option>
+                                    <el-option label="李" value="15"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="调动时间">
+                                <el-col :span="11">
+                                <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="选择日期" v-model="form.translateDate" style="width: 60%;"></el-date-picker>
+                                </el-col>
+                            </el-form-item>
+                            <el-form-item label="前部门">
+                                <el-select v-model="form.priorBranch" placeholder="请选择">
+                                    <el-option label="前台" value="前台"></el-option>
+                                    <el-option label="人事部" value="人事部"></el-option>
+                                    <el-option label="研发部" value="研发部"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="后部门">
+                                <el-select v-model="form.nextBranch" placeholder="请选择">
+                                    <el-option label="研发部" value="研发部"></el-option>
+                                    <el-option label="董事部" value="董事部"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="前职务">
+                                <el-select v-model="form.priorDuty" placeholder="请选择">
+                                    <el-option label="管理" value="管理"></el-option>
+                                    <el-option label="分配" value="分配"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="后职务">
+                                <el-select v-model="form.nextDuty" placeholder="请选择">
+                                    <el-option label="架构师" value="架构师"></el-option>
+                                    <el-option label="程序员" value="程序员"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="经办人">
+                                <el-input v-model="form.handeName"></el-input>
+                            </el-form-item>
+                            <el-form-item label="备注">
+                                <el-input v-model="form.remark"></el-input>
+                            </el-form-item>
+                        </el-form>
+                    </div>
+                    <div class="but">
+                        <el-button type="primary" @click="surePeople()">确 定</el-button>
+                        <el-button @click="dialogVisible = false">取 消</el-button>
+                    </div>
+                </el-dialog>
+            </div>
+        </el-card>
+    </div>
+</body>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el : "#app" ,
+            data : {
+                tableData : [] ,
+                form : {
+                    id : "" ,
+                    uid : "" ,
+                    translateDate : "" ,
+                    priorBranch : "" ,
+                    nextBranch :"" ,
+                    priorDuty : "" ,
+                    nextDuty : "" ,
+                    handeName :"" ,
+                    remark : "" 
+                } ,
+                dialogVisible : false
+            } ,
+            created : function(){
+                that = this ;
+                that.searchPeopleRemove() ;
+            } ,
+            methods : {
+                searchPeopleRemove : function () {
+                    axios.get( "/remove/search" ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.tableData = data.data ;
+                        } else {
+                            that.$message.error("搜索失败");
+                        }
+                    })
+                } ,
+                addRemove : function () {
+                    that.dialogVisible = true ;
+                } ,
+                handleClose : function () {
+                    that.dialogVisible = false ;
+                } ,
+                surePeople : function () {
+                    axios.post( "/remove/add" , that.form ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.tableData = data.data ;
+                            that.dialogVisible = false ;
+                            that.searchPeopleRemove() ;
+                        } else {
+                            that.$message.error( data.message );
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</html>

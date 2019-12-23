@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="html" xmlns:display="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/punishAndAwardManage.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <el-card class="box-card-big">
+            <div slot="header" class="clearfix">
+                <span class="add">管理惩罚记录</span>
+            </div>
+            <div>
+                <template>
+                    <el-table
+                            :data="tableData"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="uid"
+                                label="员工id号"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="position"
+                                label="职称"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="rewardPunish"
+                                label="惩罚"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="rewardContent"
+                                label="惩罚内容"
+                                width="200">
+                        </el-table-column>
+                        <el-table-column
+                                prop="reason"
+                                label="原因"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="branch"
+                                label="批注部门"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="handleName"
+                                label="审核人"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="startDate"
+                                label="开始时间"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="cancelDate"
+                                label="结束时间"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="cancelReason"
+                                label="撤销原因"
+                                width="150">
+                        </el-table-column>
+
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <el-button
+                                        size="mini"
+                                        type="danger"
+                                        @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+<!--                <el-dialog-->
+<!--                        title="人员编辑"-->
+<!--                        :visible.sync="dialogVisible"-->
+<!--                        width="60%"-->
+<!--                        :before-close="handleClose">-->
+<!--                    <div>-->
+<!--                        <el-form ref="form" :model="form" label-width="80px">-->
+<!--                            <el-form-item label="用户名id">-->
+<!--                                <el-input class="left" v-model="form.cultivateName"></el-input>-->
+<!--                            </el-form-item>-->
+<!--                            <el-form-item label="职称">-->
+<!--                                <el-input class="left" v-model="form.culitivateCompany"></el-input>-->
+<!--                            </el-form-item>-->
+<!--                            <el-form-item label="惩罚">-->
+<!--                                <el-select v-model="form.culitivateResult" placeholder="请选择培训结果">-->
+<!--                                    <el-option label="差" value="差"></el-option>-->
+<!--                                    <el-option label="良好" value="良好"></el-option>-->
+<!--                                    <el-option label="优秀" value="优秀"></el-option>-->
+<!--                                </el-select>-->
+<!--                            </el-form-item>-->
+<!--                            <el-form-item label="时间">-->
+<!--                                <el-col :span="7">-->
+<!--                                    <div class="block">-->
+<!--                                        <el-date-picker-->
+<!--                                                v-model="form.startDate"-->
+<!--                                                type="date"-->
+<!--                                                value-format="yyyy-MM-dd"-->
+<!--                                                placeholder="开始时间">-->
+<!--                                        </el-date-picker>-->
+<!--                                    </div>-->
+<!--                                </el-col>-->
+<!--                                <el-col class="line" :span="1">-</el-col>-->
+<!--                                <el-col :span="6">-->
+<!--                                    <div class="block">-->
+<!--                                        <el-date-picker-->
+<!--                                                v-model="form.endDate"-->
+<!--                                                type="date"-->
+<!--                                                value-format="yyyy-MM-dd"-->
+<!--                                                placeholder="结束时间">-->
+<!--                                        </el-date-picker>-->
+<!--                                    </div>-->
+<!--                                </el-col>-->
+<!--                            </el-form-item>-->
+
+<!--                            <el-form-item label="培训内容">-->
+<!--                                <el-input type="textarea" v-model="form.cultivateCenter"></el-input>-->
+<!--                            </el-form-item>-->
+<!--                        </el-form>-->
+<!--                    </div>-->
+<!--                    <span slot="footer" class="dialog-footer">-->
+<!--            <el-button @click="dialogVisible = false">取 消</el-button>-->
+<!--            <el-button type="primary" @click="dialogSure()">确 定</el-button>-->
+<!--          </span>-->
+<!--                </el-dialog>-->
+            </div>
+        </el-card>
+    </div>
+</body>
+<script type="text/javascript">
+    new Vue({
+        el : "#app" ,
+        data : {
+            tableData : [] ,
+            form: {
+                uid : "" ,
+                position : "" ,
+                rewardContent : "" ,
+                rewardPunish : "" ,
+                reason : "" ,
+                branch : "" ,
+                handleName : "" ,
+                startName : "" ,
+                cancelDate : "" 
+            } ,
+            dialogVisible : false
+        } ,
+        created : function () {
+            that = this ;
+            that.searchPunishAndAward() ;
+        } ,
+        methods : {
+            searchPunishAndAward : function () {
+                axios.get( "/punishAndAward/search" ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.tableData = data.data ;
+                    } else {
+                        that.$message.error(data.message );
+                    }
+                })
+            } ,
+            handleDelete : function ( index , row ) {
+                axios.get( "/punishAndAward/delete?id=" + row.id ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.searchPunishAndAward() ;
+                    } else {
+                        that.$message.error(data.message );
+                    }
+                })
+            }
+        }
+    })
+</script>

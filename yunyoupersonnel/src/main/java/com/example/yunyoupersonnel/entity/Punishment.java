@@ -18,8 +18,8 @@ public class Punishment implements java.io.Serializable{
 	private String reason;
 	private String branch;
 	private String handleName;
-	private java.util.Date startDate;
-	private java.util.Date cancelDate;
+	private String startDate;
+	private String cancelDate;
 	private String cancelReason;
 	private String remark;
 
@@ -61,18 +61,23 @@ public class Punishment implements java.io.Serializable{
     public void setHandleName(String handleName) {
         this.handleName = handleName;
     }
-    public Date getStartDate() {
+
+    public String getStartDate() {
         return startDate;
     }
-    public void setStartDate(Date startDate) {
+
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
-    public Date getCancelDate() {
+
+    public String getCancelDate() {
         return cancelDate;
     }
-    public void setCancelDate(Date cancelDate) {
+
+    public void setCancelDate(String cancelDate) {
         this.cancelDate = cancelDate;
     }
+
     public String getCancelReason() {
         return cancelReason;
     }

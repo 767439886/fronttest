@@ -12,7 +12,7 @@ public class Peoplemove implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Long uid;
-	private java.util.Date translateDate;
+	private String translateDate;
 	private String priorBranch;
 	private String nextBranch;
 	private String priorDuty;
@@ -33,10 +33,10 @@ public class Peoplemove implements java.io.Serializable{
 	public Long getUid(){
 		return this.uid;
 	}
-    public Date getTranslateDate() {
+    public String getTranslateDate() {
         return translateDate;
     }
-    public void setTranslateDate(Date translateDate) {
+    public void setTranslateDate(String translateDate) {
         this.translateDate = translateDate;
     }
     public String getPriorBranch() {

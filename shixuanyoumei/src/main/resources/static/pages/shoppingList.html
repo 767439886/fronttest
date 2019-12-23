@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <!--  响应式布局     -->
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/shoppingList.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+</head>
+    <body>
+        <div id="app" >
+            <div class="newGoods">
+                <span @click="back" class="el-icon-back"></span>
+            </div>
+            <div>
+                <el-row :gutter="20">
+                    <el-col :span="24"><div class="grid-content bg-purple">
+                            <el-row class="row" v-for="value in shopList">
+                                <el-col :span="8"><div class="grid-content bg-purple">
+                                    <div class="demo-image">
+                                        <div class="block">
+                                            <el-image
+                                                    style="width: 100%; height: 60%"
+                                                    :src="value.picpath"
+                                                    fit="fill"></el-image>
+                                        </div>
+                                    </div>
+                                </div></el-col>
+                                <el-col :span="8"><div class="grid-content bg-purple content">
+                                    {{value.content}}
+                                </div></el-col>
+                                <el-col :span="5"><div class="numberAndPrice grid-content bg-purple">
+                                    <div class="number">x{{value.number}}</div>
+                                    <div class="price">{{value.price}}</div>
+                                </div></el-col>
+                                <el-col :span="3"><div class="grid-content bg-purple">
+                                    <template>
+                                            <el-checkbox v-model="checked1" @change="checkId(value)" :key="value.id"></el-checkbox>
+                                    </template>
+                                    <div class="number1">
+                                        <li @click="add(value)" class="el-icon-plus"></li>
+                                        <li @click="reduce(value)" class="el-icon-minus"></li>
+                                    </div>
+                                </div></el-col>
+                            </el-row>
+                    </div></el-col>
+                </el-row>
+            </div>
+            <div class="choice1">
+                <template>
+                    <el-checkbox @change="checkAll()" >全选</el-checkbox>
+                </template>
+                <div class="yen">
+                    合计：&yen;
+                    <span class="price">{{totalPrice}}</span>
+                    元
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+<script type="text/javascript">
+    var that ;
+    new Vue({
+        el : "#app" ,
+        data : {
+            shopList : [] ,
+            allChecked : "" ,
+            selectId : [] ,
+            totalPrice : 0 ,
+            checked1 : false
+        } ,
+        created : function () {
+            that = this ;
+            that.searchShopList() ;
+        } ,
+        methods : {
+            searchShopList : () => {
+                axios.get( "/shopList/searchShopList" ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.shopList = data.data ;
+                        for( i = 0 ; i < that.shopList.length ; i++ ) {
+                            that.shopList[i].OriginalPrice = that.shopList[i].price ;
+                            price = that.shopList[i].price * 2
+                            that.shopList[i].price = price ;
+                        }
+                    } else {
+                        that.$message({
+                            showClose: true,
+                            message: "查询商品失败" ,
+                            type: 'error'
+                        });
+                    }
+                })
+            } ,
+            back :() => {
+                history.back() ;
+            } ,
+            allSelect: (val) => {
+
+            } ,
+            checkId : (val) => {
+                if ( that.ifSelectId(val) ) {
+                    that.selectId.push( val ) ;
+                }
+                that.totalPrice1 () ;
+                console.log( that.selectId ) ;
+                window.event.checked = true ;
+                console.log( window.event ) ;
+                that.checked1 = false ;
+            } ,
+
+            //   判断出多选框是否已经被勾选了
+            ifSelectId : (val) => {
+                for ( let i = 0 ; i < that.selectId.length ; i++ ){
+                    if ( that.selectId[i] == val ) {
+                        that.selectId.splice( i , 1 ) ;
+                        console.log( that.selectId.length ) ;
+                        return false
+                    }
+                }
+                return true ;
+            } ,
+            totalPrice1 :() => {
+                that.totalPrice = 0 ;
+                for ( let i = 0 ; i < that.selectId.length ; i++ ) {
+                    that.totalPrice = that.selectId[i].price  + that.totalPrice ;
+                }
+            } ,
+            add: (value) => {
+                var number = parseInt( value.number);
+                value.number = ( number + 1 ) + "" ;
+                var price = parseInt( value.price);
+                former = price / number ;
+                if ( value.number != 1 ) {
+                    value.price = former * parseInt(value.number);
+                } else {
+                    value.price = value.OriginalPrice ;
+                }
+            } ,
+            reduce : (value) => {
+                var number = parseInt( value.number);
+                if ( number > 0  ){
+                    value.number = (number - 1) + "";
+                } else {
+                    value.number = 0 ;
+                }
+                var price = parseInt( value.price);
+                former = price / number ;
+                if ( number > 0 ) {
+                    value.price = former * parseInt(value.number);
+                } else {
+                    value.price = 0 ;
+                }
+            } ,
+            checkAll : () => {
+                if ( that.checked == true ) {
+                    that.checked = false ;
+                } else {
+                    that.checked = true ;
+                }
+            }
+        }
+    })
+</script>

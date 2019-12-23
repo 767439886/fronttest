@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <style>
+        .el-header{
+            margin-right: 0px;
+            padding-left: 0px;
+            padding-right: 0px;
+            width: 100%;
+        }
+        .tac{
+            width: 100%;
+            height: 100%;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .el-col{
+            width: 100%;
+            height: 100%;
+        }
+        .body{
+            height: 100%;
+        }
+        .html{
+            height: 100%;
+        }
+        #app{
+            height: 100%;
+        }
+        .el-container{
+            height: 100%;
+        }
+        .head{
+            padding-left: 45%;
+            font-size: 25px;
+            text-align: center ;
+        }
+        .font{
+            font-size: 15px;
+        }
+        el-aside{
+            width: 200px;
+            margin: 0px;
+        }
+        .title{
+            color: white;
+            font-size: 30px;
+            padding-top: 10%;
+            position: relative;
+            /*top: 20%; !*偏移*!*/
+            left: 43%;
+            line-height: 60px;
+        }
+        .el-menu{
+            height: 100%;
+        }
+        el-container{
+            padding: 0px;
+        }
+        .el-main{
+            margin: 0px ;
+            padding: 0px;
+        }
+        .el-dialog__header{
+            text-align: center;
+        }
+        .el-dialog{
+            border-radius: 20px
+        }
+        .password{
+            width: 70%;
+            margin: 10px;
+        }
+        .Password{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="body">
+    <div id="app">
+        <el-container>
+            <el-header>
+                <div style="width: 100%; height: 100% ; background-color: #38464e">
+                    <span class="title">干部搜索系统</span>
+                    <div class="right-menu">
+                        <span class="help">{{name}}</span>
+                        <el-dropdown class="avatar-container right-menu-item" trigger="click">
+                            <div class="avatar-wrapper">
+                                <img src="../img/134.jpg" class="user-avatar">
+                            </div>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item divided>
+                                    <span @click="updatePassword"  style="display:block;">修改密码</span>
+                                </el-dropdown-item>
+                                <el-dropdown-item divided>
+                                    <span style="display:block;" >退出</span>
+                                </el-dropdown-item>
+                                <el-dropdown-item divided>
+                                    <span style="display:block;" >跟换头像</span>
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
+                </div>
+            </el-header>
+            <el-container>
+                <el-aside style="width: 250px">
+                    <el-row class="tac">
+                        <el-col :span="12">
+                            <el-menu
+                                    default-active="2"
+                                    background-color="#545c64"
+                                    text-color="#fff"
+                                    active-text-color="#ffd04b">
+
+                                <el-menu-item class="font-head" @click="updatePage('')"  index="1">
+                                    <i  class="el-icon-s-management"></i>
+                                    <span class="font" slot="title">首页</span>
+                                </el-menu-item>
+                                <el-submenu class="font-head" index="2">
+                                    <template slot="title">
+                                        <i class="el-icon-s-management"></i>
+                                        <span class="font">人员档案</span>
+                                    </template>
+                                    <el-menu-item-group>
+                                        <el-menu-item @click="updatePage('1-2')" index="1-2">管理人员档案</el-menu-item>
+                                    </el-menu-item-group>
+                                </el-submenu>
+                            </el-menu>
+                        </el-col>
+                    </el-row>
+                </el-aside>
+                <el-container>
+                    <!--  嵌套使用  -->
+                    <iframe name="right" class="el-main" :src="picPath" width="100%" height="100%" frameborder="0"></iframe>
+                </el-container>
+            </el-container>
+
+            <el-dialog
+                    title="更改密码"
+                    :visible.sync="dialogVisible"
+                    width="40%"
+                    :before-close="handleClose">
+                <div>
+                    <span class="Password">旧密码：</span>
+                    <el-input class="password" v-model="form.oldPassword"></el-input>
+                </div>
+                <div>
+                    <span class="Password">新密码：</span>
+                    <el-input class="password" v-model="form.newPassword"></el-input>
+                </div>
+                <div>
+                    <span class="Password">再次输入密码：</span>
+                    <el-input class="password" v-model="form.nextPassword"></el-input>
+                </div>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="surePassword">确 定</el-button>
+                </span>
+            </el-dialog>
+        </el-container>
+    </div>
+</body>
+<script type="text/javascript">
+    var that ;
+    new Vue({
+        el:  "#app" ,
+        data : {
+            name : "" ,
+            picPath: "/pages/welcome.html" ,
+            dialogVisible : false ,
+            form : {
+                oldPassword : "" ,
+                newPassword : "" ,
+                nextPassword : ""
+            }
+        } ,
+        created : function(){
+            that = this ;
+            that.getUsername () ;
+        } ,
+        methods : {
+            getUsername : function () {
+                axios.post( "/login/getUsername" ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.name = data.data.username ;
+                    } else {
+                        that.$message.error('错了哦，这是一条错误消息');
+                    }
+                })
+            } ,
+            updatePage : function (value) {
+                if (value == "1-1") {
+                    that.picPath = "/pages/addPeople.html";
+                } else if (value == "1-2") {
+                    that.picPath = "/pages/managerPeople.html";
+                } else if (value == "1-3") {
+                    that.picPath = "/pages/cultivateAddPeople.html"
+                } else if (value == "1-4") {
+                    that.picPath = "/pages/culitivateManagerPeople.html";
+                } else if (value == "1-5") {
+                    that.picPath = "/pages/addPunishAndAward.html";
+                } else if (value == "1-6") {
+                    that.picPath = "/pages/PunishAndAwardManager.html"
+                } else if (value == "1-7" ) {
+                    that.picPath = "/pages/managerPeopleRemove.html"
+                } else if ( value == "1-8" ){
+                    that.picPath = "/pages/management.html"
+                } else {
+                    that.picPath = "/pages/welcome.html" ;
+                }
+            } ,
+            updatePassword : function () {
+                that.dialogVisible = true ;
+            } ,
+            surePassword : function () {
+                if ( that.form.newPassword == that.form.nextPassword ) {
+                    axios.post("/login/updatePassword", that.form).then(function (value) {
+                        data = value.data;
+                        if (data.bool) {
+                            that.$message({
+                                message: "修改密码成功" ,
+                                type: 'success'
+                            });
+                            that.dialogVisible = false ;
+                        } else {
+                            that.$message.error( "修改密码失败" );
+                        }
+                    })
+                } else {
+                    that.$message.error( "密码不正确" );
+                }
+            }
+        }
+    })
+</script>

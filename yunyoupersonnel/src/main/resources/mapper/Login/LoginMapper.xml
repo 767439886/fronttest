@@ -27,4 +27,33 @@
             </if>
         </where>
     </select>
+    <select id="updatePassword" parameterType="Map">
+        UPDATE
+          `user`
+        SET
+          `password` = #{newPassword}
+        WHERE `id` = #{id} ;
+    </select>
+    <select id="verifyPassword" parameterType="Map" resultType="com.example.yunyoupersonnel.entity.User" >
+        SELECT
+          `id`,
+          `username`,
+          `password`,
+          `sex`,
+          `branch`,
+          `idCard`,
+          `nativePlace`,
+          `marriage`,
+          `politics`,
+          `folk`,
+          `education`,
+          `deparment`,
+          `name`
+        FROM
+          `user`
+        where
+            `password` = #{oldPassword}
+        and
+            `id` = #{id}
+    </select>
 </mapper>

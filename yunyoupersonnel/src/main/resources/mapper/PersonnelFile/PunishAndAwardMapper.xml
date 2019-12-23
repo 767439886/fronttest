@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.yunyoupersonnel.mapper.PersonnelFile.PunishAndAwardMapper">
+    <insert id="addPunishAndward" parameterType="com.example.yunyoupersonnel.entity.Punishment">
+        INSERT INTO `punishment`  (
+          `uid`,
+          `position`,
+          `rewardPunish`,
+          `rewardContent`,
+          `reason`,
+          `branch`,
+          `handleName`,
+          `startDate`,
+          `cancelDate`,
+          `cancelReason`,
+          `remark`
+        )
+        VALUES
+        (
+            #{uid},
+            #{position},
+            #{rewardPunish},
+            #{rewardContent},
+            #{reason},
+            #{branch},
+            #{handleName},
+            #{startDate},
+            #{cancelDate},
+            #{cancelReason},
+            #{remark}
+        ) ;
+    </insert>
+    <delete id="deletePunishAndward" parameterType="String">
+        DELETE
+        FROM
+          `punishment`
+        WHERE `id` = #{id} ;
+    </delete>
+    <update id="updatePunishAndward" parameterType="com.example.yunyoupersonnel.entity.Punishment">
+        UPDATE
+          `punishment`
+        SET
+          `uid` = #{uid} ,
+          `position` = #{position},
+          `rewardPunish` = #{rewardPunish},
+          `rewardContent` = #{rewardContent},
+          `reason` = #{reason} ,
+          `branch` = #{branch} ,
+          `handleName` = #{handleName} ,
+          `startDate` = #{startDate},
+          `cancelDate` = #{cancelDate},
+          `cancelReason` = #{cancelReason} ,
+          `remark` = #{remark}
+        WHERE `id` = #{id} ;
+    </update>
+    <select id="searchList" resultType="com.example.yunyoupersonnel.entity.Punishment">
+        SELECT
+          `id`,
+          `uid`,
+          `position`,
+          `rewardPunish`,
+          `rewardContent`,
+          `reason`,
+          `branch`,
+          `handleName`,
+          `startDate`,
+          `cancelDate`,
+          `cancelReason`,
+          `remark`
+        FROM
+          `punishment`
+    </select>
+</mapper>

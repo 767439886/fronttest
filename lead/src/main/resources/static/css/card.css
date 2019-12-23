@@ -1,0 +1,43 @@
+.card{
+    width: 600px;
+    height: 300px;
+    position: relative;
+    top: 50%; /*偏移*/
+    left: 33%;
+    border-radius: 30px ;
+    background: url("../img/office/15.jpg") ;
+}
+.el-container{
+    height: 50%;
+}
+#app{
+    height: 100%;
+}
+html,body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: url("../img/photo1.png") ;
+}
+.clearfix{
+    text-align: center ;
+}
+.title{
+    font-family: "微软雅黑"  ;
+    font-size: 25px;
+}
+.input{
+    margin-left: 80px;
+    text-align: center ;
+    width: 400px;
+    margin-top: 20px;
+}
+.button{
+    margin-top: 15px;
+    text-align: center ;
+}
+.but{
+    width: 150px;
+}
+

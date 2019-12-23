@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.shixuanyoumei.mapper.ShopMapper">
+    <select id="SearchHotShop" resultType="com.example.shixuanyoumei.entity.Shopping">
+        SELECT
+          `id`,
+          `picpath`,
+          `content`,
+          `main`,
+          `consitute`,
+          `price`
+        FROM
+          `shopping`
+         LIMIT 0 , 4
+    </select>
+    <select id="SearchNewShop" resultType="com.example.shixuanyoumei.entity.Shopping">
+        SELECT
+          `id`,
+          `picpath`,
+          `content`,
+          `main`,
+          `consitute`,
+          `price`
+        FROM
+          `shopping`
+         LIMIT 4 , 4
+    </select>
+    <select id="SearchRecommendShop" resultType="com.example.shixuanyoumei.entity.Shopping">
+        SELECT
+          `id`,
+          `picpath`,
+          `content`,
+          `main`,
+          `consitute`,
+          `price`
+        FROM
+          `shopping`
+         LIMIT 3 , 4
+    </select>
+    <select id="SearchAllShop" resultType="com.example.shixuanyoumei.entity.Shopping">
+        SELECT
+          `id`,
+          `picpath`,
+          `content`,
+          `main`,
+          `consitute`,
+          `price`
+        FROM
+          `shopping`
+        LIMIT 2 , 50
+    </select>
+    <select id="SearchConditionShop" parameterType="Map"
+            resultType="com.example.shixuanyoumei.entity.Shopping">
+        SELECT
+          `id`,
+          `picpath`,
+          `content`,
+          `main`,
+          `consitute`,
+          `price`,
+          `type`
+        FROM
+          `shopping`
+        <where>
+            <if test="id != null and id != '' ">
+                `id` = #{id}
+            </if>
+        </where>
+    </select>
+</mapper>

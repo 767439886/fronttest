@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.shixuanyoumei.mapper.ShopCardMapper">
+    <select id="SearchTypeShop" parameterType="String"
+            resultType="com.example.shixuanyoumei.entity.Shopping">
+        SELECT
+          s.`id`,
+          `picpath`,
+          `content`,
+          `main`,
+          `consitute`,
+          `price`,
+          `type` ,
+          shl.`number`
+        FROM
+          `shoppinglist` shl
+        JOIN
+          `shopping` s
+        ON
+           s.id = shl.shoppingId
+        WHERE
+           shl.uid = #{value}
+    </select>
+    <select id="SearchShoppingList" parameterType="Map"
+            resultType="com.example.shixuanyoumei.entity.Shoppinglist">
+        SELECT
+          `id`,
+          `shoppingId`,
+          `uid`,
+          `number`
+        FROM
+          `shoppinglist`
+        <where>
+            <if test="uid != null and uid != '' ">
+                `uid` = #{uid}
+            </if>
+            <if test="shoppingId != null and shoppingId != '' ">
+               and `shoppingId` = #{shoppingId}
+            </if>
+        </where>
+    </select>
+    <insert id="insertShop" parameterType="com.example.shixuanyoumei.entity.Shoppinglist">
+        INSERT INTO `shoppinglist`
+            ( `shoppingId`, `uid`, `number`)
+        VALUES
+            ( #{shoppingId} , #{uid} , 1 ) ;
+    </insert>
+    <update id="updateShop" parameterType="com.example.shixuanyoumei.entity.Shoppinglist">
+        UPDATE
+          `shoppinglist`
+        SET
+          `number` = #{number}
+        WHERE `id` = #{id} ;
+    </update>
+</mapper>

@@ -1,10 +1,12 @@
 package com.example.yunyoupersonnel.controller.PersonnelFile;
+import com.example.yunyoupersonnel.MyException.DataException;
 import com.example.yunyoupersonnel.common.PageResult;
 import com.example.yunyoupersonnel.common.Result;
 import com.example.yunyoupersonnel.entity.User;
 import com.example.yunyoupersonnel.service.PersonnelFile.PersonnelService;
 import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +22,11 @@ public class PersonnelController {
     public Result addPersonnel (@RequestBody Map<String,Object> haMap ) {
         try {
             //  增加员工
-            addPersonnelService.addPersonnel( haMap ) ;
-            return new Result( "添加成功" , true ) ;
-        } catch ( Exception e ) {
+            addPersonnelService.addPersonnel(haMap);
+            return new Result("添加成功", true);
+        } catch ( DataException e) {
+            return new Result( "每输入毕业时间或员工id输入错误" , false ) ;
+        }catch ( Exception e ) {
             e.printStackTrace();
             return new Result( "添加失败" , false ) ;
         }

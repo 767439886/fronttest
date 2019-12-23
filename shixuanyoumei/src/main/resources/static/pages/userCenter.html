@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <!--  响应式布局     -->
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/userCenter.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="newGoods">
+            <span @click="back" class="el-icon-back"></span>
+        </div>
+        <div>
+            <el-divider class="message">个人信息</el-divider>
+        </div>
+        <div class="style">
+            <div class="userMessage">姓名：
+                <span>{{form.name}}</span>
+            </div>
+            <div class="userMessage">用户名：
+                <span>{{form.username}}</span>
+            </div>
+            <div class="userMessage">地址：
+                <span>{{form.address}}</span>
+            </div>
+            <div class="userMessage">手机号码：
+                <span>{{form.phone}}</span>
+            </div>
+            <div class="userMessage">常使用的送货地址:
+                <span>{{form.deliverAddress}}</span>
+            </div>
+        </div>
+        <div>
+            <el-row>
+                <el-button @click="messageUser()" type="primary">
+                    <span class="but1">修改按钮</span>
+                </el-button>
+            </el-row>
+        </div>
+        <el-dialog
+                title="个人信息"
+                :visible.sync="dialogVisible"
+                width="70%"
+                height="100%"
+                :before-close="handleClose">
+            <div>
+                <el-form ref="form" :model="form1" label-width="70px">
+                    <el-form-item label="姓名">
+                        <el-input v-model="form1.name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="送货地址">
+                        <el-input v-model="form1.deliverAddress"></el-input>
+                    </el-form-item>
+                    <el-form-item label="地址">
+                        <el-input v-model="form1.address"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话">
+                        <el-input v-model="form1.phone"></el-input>
+                    </el-form-item>
+                </el-form>
+                <el-button type="primary" @click="sure()">
+                    <span class="but1">确 定</span>
+                </el-button>
+            </div>
+        </el-dialog>
+    </div>
+</body>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el : "#app" ,
+            data : {
+                form : {} ,
+                form1 : {} ,
+                dialogVisible : false
+            } ,
+            created : function(){
+                that = this ;
+                that.searchUserCenter() ;
+            } ,
+            methods : {
+                searchUserCenter : function(){
+                    axios.get( "/login/getUserMessage" ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.form = data.data ;
+                            var parse = JSON.stringify( that.form ) ;
+                            var parse2 = JSON.parse( parse );
+                            that.form1 = parse2 ;
+                        } else {
+                            that.$message({
+                                showClose: true,
+                                message: "查询失败" ,
+                                type: 'error'
+                            });
+                        }
+                    })
+                } ,
+                back :() => {
+
+                } ,
+                sure : () => {
+                    that.dialogVisible = false ;
+                    axios.post( "/login/updateUserMessage" , that.form1 ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.$message({
+                                showClose: true,
+                                message: "修改成功" ,
+                                type: 'success'
+                            });
+                            that.searchUserCenter() ;
+                        } else {
+                            that.$message({
+                                showClose: true,
+                                message: "查询失败" ,
+                                type: 'error'
+                            });
+                        }
+                    })
+                } ,
+                handleClose : function () {
+                    that.dialogVisible = false ;
+                } ,
+                messageUser : function () {
+                    that.dialogVisible = true ;
+                }
+            }
+        })
+    </script>
+</html>

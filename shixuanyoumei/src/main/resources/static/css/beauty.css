@@ -1,0 +1,62 @@
+.newGoods{
+    width: 100%;
+    height: 7%;
+    background-color: #ca3420;
+}
+html , body {
+    max-width: 680px;
+    height: 98%;
+    margin: auto;
+    overflow: auto;
+}
+#app{
+    width: 100%;
+    height: 100%;
+}
+.el-icon-back{
+    font-size: 3vh;
+    position: relative;
+    top: 26%;
+    color: white;
+    float: right;
+    padding-left: 1vh ;
+    height: 100%;
+    float: left;
+}
+.el-menu-item{
+    width: 16.6%;
+    font-size: 2.5vh;
+    text-align: center;
+    font-weight: bold;
+}
+.title{
+    font-weight: bold;
+    font-size: 2vh;
+}
+.demo-image{
+    text-align: center;
+}
+.char{
+    font-size: 3vh;
+    line-height: 3vh;
+    /*position: relative;*/
+    /*top: 23%;*/
+    color: white;
+    font-weight: bold;
+    margin-left: 40% ;
+    height: 100%;
+}
+.el-row{
+    padding: 1vh;
+}
+.grid{
+    padding-top: 6%;
+}
+.desc{
+    font-size: 1vh;
+    color: #8c939d;
+}
+.centext{
+    font-weight: bold;
+    font-size: 2.3vh;
+}

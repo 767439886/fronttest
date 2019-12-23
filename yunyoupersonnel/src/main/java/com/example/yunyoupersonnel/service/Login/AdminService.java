@@ -1,5 +1,7 @@
 package com.example.yunyoupersonnel.service.Login;
 
+import com.example.yunyoupersonnel.MyException.DataException;
+import com.example.yunyoupersonnel.Utils.Cookies;
 import com.example.yunyoupersonnel.Utils.JWTUtils;
 import com.example.yunyoupersonnel.entity.User;
 import com.example.yunyoupersonnel.mapper.Login.LoginMapper;
@@ -48,4 +50,13 @@ public class AdminService {
         return token;
     }
 
+    //  修改登录的密码
+    public void updatePassword ( Map<String,Object> hashMap ) throws DataException {
+        User oldPassword = loginMapper.verifyPassword(hashMap) ;
+        if ( oldPassword == null ) {
+            throw new DataException( "密码不正确" ) ;
+        } else {
+            loginMapper.updatePassword( hashMap ) ;
+        }
+    }
 }

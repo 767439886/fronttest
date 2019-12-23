@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="js/vue.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/axios-0.18.0.js"></script>
+        <link rel="stylesheet" href="plugins/elementui/index.css">
+        <script src="plugins/elementui/index.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <el-row :gutter="20">
+                <el-col :span="6"><div class="grid-content bg-purple">
+                    哈哈1
+                </div></el-col>
+                <el-col :span="6"><div class="grid-content bg-purple">
+                    哈哈2
+                </div></el-col>
+                <el-col :span="6"><div class="grid-content bg-purple">
+                    哈哈3
+                </div></el-col>
+                <el-col :span="6"><div class="grid-content bg-purple">
+                    哈哈4
+                </div></el-col>
+            </el-row>
+            <el-input type="password" v-model="input" placeholder="请输入内容"></el-input>
+        </div>
+    </body>
+    <script type="text/javascript">
+        new Vue({
+            el : "#app" ,
+            data : {
+                input : ""
+            } ,
+            methods : {
+
+            }
+        })
+    </script>
+</html>

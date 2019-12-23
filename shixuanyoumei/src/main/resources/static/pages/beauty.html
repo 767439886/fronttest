@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <!--  响应式布局     -->
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/beauty.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="newGoods">
+            <span class="char">美容院</span>
+            <span @click="back" class="el-icon-back"></span>
+        </div>
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+            <el-menu-item @click="searchBeauty" index="1">全部</el-menu-item>
+            <el-menu-item @click="searchCityBeauty(1)" index="2" >广州市</el-menu-item>
+            <el-menu-item @click="searchCityBeauty(2)" index="6" >北京市</el-menu-item>
+            <el-menu-item @click="searchCityBeauty(3)" index="3" >天津市</el-menu-item>
+            <el-menu-item @click="searchCityBeauty(4)" index="4" >上海市</el-menu-item>
+            <el-menu-item @click="searchCityBeauty(5)" index="5" >重庆市</el-menu-item>
+        </el-menu>
+        <div>
+            <el-row :gutter="10">
+                <el-row v-for="value in beautyList ">
+                    <el-col :span="24">
+                        <el-col :xs="10" :sm="10" :md="10" :lg="10" :xl="10"><div class="grid-content bg-purple">
+                            <div class="demo-image1">
+                                <div class="block">
+                                    <el-image
+                                            style="width: 80%; height: 100%"
+                                            :src="value.picPath"
+                                            fit="fill">
+                                    </el-image>
+                                </div>
+                            </div>
+                        </div></el-col>
+                        <el-col :xs="14" :sm="14" :md="14" :lg="14" :xl="14">
+                            <div class="grid bg-purple">
+                                <div class="centext">{{value.context}}</div>
+                                <div class="desc">{{value.smallContext}}</div>
+                            </div></el-col>
+                    </el-col>
+                </el-row>
+            </el-row>
+        </div>
+    </div>
+</body>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el : "#app" ,
+            data : {
+                beautyList : []
+            } ,
+            created : function(){
+                that = this ;
+                that.searchBeauty() ;
+            } ,
+            methods : {
+                searchBeauty : function () {
+                    axios.get( "/beauty/search" ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.beautyList = data.data ;
+                        } else {
+                            that.$message({
+                                showClose: true,
+                                message: "查询失败" ,
+                                type: 'error'
+                            });
+                        }
+                    })
+                } ,
+                back : function () {
+                    location.href = "/pages/first.html"
+                } ,
+                searchCityBeauty : function (value) {
+                    axios.get( "/beauty/searchCityBeauty?cityId=" + value ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.beautyList = data.data ;
+                        } else {
+                            that.$message({
+                                showClose: true,
+                                message: "查询失败" ,
+                                type: 'error'
+                            });
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</html>

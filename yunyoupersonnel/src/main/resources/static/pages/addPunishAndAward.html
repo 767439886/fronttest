@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="html" xmlns:display="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/addPunishAndAward.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span class="add">添加惩罚记录</span>
+            </div>
+            <el-form ref="form" :model="form" label-width="80px">
+                <el-form-item label="员工名称">
+                    <el-select v-model="form.uid" placeholder="请选择员工编号">
+                        <el-option label="admin" value="1"></el-option>
+                        <el-option label="叶" value="12"></el-option>
+                        <el-option label="李c" value="14"></el-option>
+                        <el-option label="周" value="20"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="职称">
+                    <el-select v-model="form.position" placeholder="请选择活动区域">
+                        <el-option label="前端程序员" value="前端程序员"></el-option>
+                        <el-option label="后端程序员" value="后端程序员"></el-option>
+                        <el-option label="总经理" value="总经理"></el-option>
+                        <el-option label="项目经理" value="项目经理"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="奖/罚">
+                    <el-select v-model="form.rewardPunish" placeholder="请选择惩罚">
+                        <el-option label="奖" value="奖"></el-option>
+                        <el-option label="罚" value="罚"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="奖惩内容">
+                    <el-input v-model="form.rewardContent"></el-input>
+                </el-form-item>
+                <el-form-item label="奖惩原因">
+                    <el-input v-model="form.reason"></el-input>
+                </el-form-item>
+                <el-form-item label="批准部门">
+                    <el-select v-model="form.branch" placeholder="请选择活动区域">
+                        <el-option label="总经理" value="总经理"></el-option>
+                        <el-option label="项目经理" value="项目经理"></el-option>
+                        <el-option label="产品经理" value="项目经理"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="批准人">
+                    <el-input v-model="form.handleName"></el-input>
+                </el-form-item>
+                <el-form-item label="撤销时间">
+                    <el-col :span="6">
+                        <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="选择日期" v-model="form.startDate" style="width: 100%;"></el-date-picker>
+                    </el-col>
+                    <el-col class="line" :span="1">-</el-col>
+                    <el-col :span="6">
+                        <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="选择日期" v-model="form.cancelDate" style="width: 100%;"></el-date-picker>
+                    </el-col>
+                </el-form-item>
+                <el-form-item label="撤销原因">
+                    <el-input type="textarea" v-model="form.cancelReason"></el-input>
+                </el-form-item>
+            </el-form>
+            <el-row class="success">
+                <el-button @click="addPeople" type="success">确认增加</el-button>
+            </el-row>
+        </el-card>
+    </div>
+</body>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el : "#app"  ,
+            data : {
+                form: {
+                    id : ""  ,
+                    uid : "" ,
+                    position : "" ,
+                    rewardPunish : "" ,
+                    rewardContent : "" ,
+                    reason : "" ,
+                    branch : "" ,
+                    handleName : "" ,
+                    startDate : "" ,
+                    cancelDate : "" ,
+                    cancelReason : "" ,
+                    remark : ""
+                }
+            }  ,
+            created : function(){
+                that = this ;
+            }  ,
+            methods : {
+                addPeople : function () {
+                    axios.post( "/punishAndAward/add" , that.form ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.$message({
+                                message: "增加成功" ,
+                                type: 'success'
+                            });
+                        } else {
+                            that.$message.error(data.message );
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</html>

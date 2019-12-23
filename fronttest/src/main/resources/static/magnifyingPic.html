@@ -1,0 +1,120 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="js/vue.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/axios-0.18.0.js"></script>
+        <style type="text/css">
+            html {
+                width: 100%;
+                height: 100%;
+                margin: 0px;
+                padding: 0px;
+            }
+            body {
+                width: 100%;
+                height: 100%;
+                padding: 10px;
+                margin: 0px;
+            }
+            .smallImg {
+                width: 100%;
+                height: 100%;
+                float: left;
+            }
+            .smallBottom{
+                width: 250px;
+                height: 165px;
+                float: left;
+                margin-right: 30px;
+            }
+            .bigBottom{
+                width: 500px;
+                height: 330px;
+                float: left;
+                background:url("/img/2.jpg") ;
+            }
+            .target{
+                background-color: red;
+                opacity: 0.4 ;
+                float: left;
+            }
+            .bigImg{
+                width: 100%;
+                height: 100%;
+            }
+            .make{
+                width: 250px;
+                height: 165px;
+                background-color: black;
+                opacity: 0.1;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div class="smallBottom" @mousemove="targetMove()">
+                <img class="smallImg" src="/img/2.jpg">
+                <!-- 不要再samllImg上面移动否则会卡顿    -->
+                <div :style="target" class="target" ></div>
+                <div class="make"></div>
+            </div>
+            <div :style="bigPic" class="bigBottom">
+
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el : "#app" ,
+            data : {
+                target : {
+                    position: "absolute" ,
+                    top: "10px" ,
+                    left: "10px" ,
+                    width: "62.5px" ,
+                    height: "41.1px"
+                } ,
+                bigPic : {
+                    backgroundPosition: "0px 0px"
+                    //  第一个参数是right ，第二个参数是bottom
+                }
+            } ,
+            mounted : function() {
+                that = this ;
+            } ,
+            methods : {
+                targetMove : function () {
+                    var event = window.event ;
+                    event.cancelBubble = true ;
+                    let x = event.offsetX ;
+                    let y = event.offsetY ;
+                    width = that.getTargetNum( that.target.width ) / 2 ;
+                    height = that.getTargetNum( that.target.height ) / 2 ;
+                    x = x - width + 10 ;
+                    y = y - height + 10 ;
+                    if ( x < 10 ) {
+                        x = 10 ;
+                    } else if ( ( x + that.getTargetNum( that.target.width ) ) > 250 ) {
+                        x = 260 - that.getTargetNum( that.target.width ) ;
+                    }
+                    if ( y < 10 ) {
+                        y = 10 ;
+                    } else if ( ( y + that.getTargetNum( that.target.height ) ) > 165 ) {
+                        y = 175 - that.getTargetNum( that.target.height ) ;
+                    }
+                    that.target.top = y + "px" ;
+                    that.target.left = x + "px" ;
+                    console.log(x) ;
+                    console.log(y) ;
+                    that.bigPic.backgroundPosition = ( ( x - 10 ) * -8 )  + "px  " + ( ( y - 10 ) * -8 ) + "px";
+                } ,
+                getTargetNum : function ( str ) {
+                    var targetNum = str.slice( 0 ,  str.length - 2 ) ;
+                    return parseInt( targetNum )  ;
+                }
+            }
+        })
+    </script>
+</html>

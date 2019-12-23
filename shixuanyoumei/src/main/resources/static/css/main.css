@@ -1,0 +1,35 @@
+html , body {
+    height: 100% ;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+#app{
+    height: 99% ;
+    max-width: 680px;
+    margin: auto ;
+}
+.head{
+    height: 7%;
+    background-color: #545c64;
+}
+.el-icon-s-fold{
+    font-size: 4vh;
+    padding-bottom: 0px;
+    margin: 0px;
+}
+.el-container{
+    height: 100%;
+}
+.right{
+    width: 33.33%;
+}
+.title{
+    float: none;
+    font-size: 3vh;
+    color: white;
+}
+.el-icon-house{
+}
+
+

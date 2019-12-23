@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="js/vue.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/axios-0.18.0.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <my-message></my-message>
+        </div>
+    </body>
+    <script type="text/javascript">
+        new Vue({
+            el : "#app" ,
+            data : {
+                age : "哈哈"
+            } ,
+            components : {                  //  注意：组件 ，主键只能是小写
+                "my-message" : {
+                    template : "<h2>标题{{age}}</h2>" ,
+                    data : function() {
+                        age1 = {age : "我们"} ;
+                        return  age1 ;          //  这里返回的必须是一个对象，否则会报错
+                    }
+                }
+            } ,
+            mounted : function () {
+
+            } ,
+            methods : {
+
+            }
+        })
+    </script>
+</html>

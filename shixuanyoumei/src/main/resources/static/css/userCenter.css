@@ -1,0 +1,58 @@
+html , body , #app {
+    max-width: 680px ;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    margin: auto;
+    overflow: auto;
+}
+.newGoods{
+    width: 100%;
+    height: 7%;
+    background-color: #ca3420;
+}
+.el-icon-back{
+    font-size: 3vh;
+    position: relative;
+    top: 25%;
+    color: white;
+    float: right;
+    padding-right: 20px ;
+    height: 100%;
+    float: left;
+    padding-left: 1vh ;
+}
+.el-divider__text{
+    font-size: 3vh;
+    font-weight: bold;
+}
+.style{
+    padding-left: 8%;
+}
+.userMessage{
+    padding: 2vh;
+    font-weight: bold;
+    font-size: 3vh;
+}
+.el-row{
+    padding-right: 1.5vh;
+}
+.el-button{
+    float: right;
+}
+.el-dialog{
+    height: 70%;
+}
+.el-dialog__title{
+    font-weight: bold;
+}
+.el-form-item__label{
+    font-size: 2.3vh;
+    font-weight: bold;
+}
+.but1 {
+    font-size: 2vh;
+}
+.el-dialog__body{
+    padding: 1vh;
+}

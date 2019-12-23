@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="html" xmlns:display="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/cultivateManagerPeople.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <el-card class="box-card-big">
+        <div slot="header" class="clearfix">
+            <span class="add">管理培训记录</span>
+        </div>
+        <div>
+            <template>
+                <el-table
+                        :data="tableData"
+                        style="width: 100%">
+                    <el-table-column
+                            prop="uid"
+                            label="员工id号"
+                            width="200">
+                    </el-table-column>
+                    <el-table-column
+                            prop="cultivateName"
+                            label="培训名称"
+                            width="200">
+                    </el-table-column>
+                    <el-table-column
+                            prop="cultivateCenter"
+                            label="培训内容"
+                            width="150">
+                    </el-table-column>
+                    <el-table-column
+                            prop="startDate"
+                            label="开始日期"
+                            width="200">
+                    </el-table-column>
+                    <el-table-column
+                            prop="endDate"
+                            label="结束日期"
+                            width="200">
+                    </el-table-column>
+                    <el-table-column
+                            prop="culitivateCompany"
+                            label="培训单位"
+                            width="150">
+                    </el-table-column>
+                    <el-table-column
+                            prop="culitivateResult"
+                            label="培训结果"
+                            width="150">
+                    </el-table-column>
+
+                    <el-table-column label="操作">
+                        <template slot-scope="scope">
+                            <el-button
+                                    size="mini"
+                                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </template>
+<!--            <el-pagination-->
+<!--                    background-->
+<!--                    @current-change="handleCurrentChange"-->
+<!--                    :current-page="page.currentPage"-->
+<!--                    :page-size="page.pageSize"-->
+<!--                    layout="prev, pager, next"-->
+<!--                    :total="page.total"> &lt;!&ndash;  current-change页面改变事件 page-size页面大小 total页面总数  &ndash;&gt;-->
+<!--            </el-pagination>-->
+            <!--                <el-button type="success">成功按钮</el-button>-->
+        </div>
+    </el-card>
+    <el-dialog
+            title="人员编辑"
+            :visible.sync="dialogVisible"
+            width="60%"
+            :before-close="handleClose">
+            <div>
+                <el-form ref="form" :model="form" label-width="80px">
+                    <el-form-item label="培训名称">
+                        <el-input class="left" v-model="form.cultivateName"></el-input>
+                    </el-form-item>
+                    <el-form-item label="培训单位">
+                        <el-input class="left" v-model="form.culitivateCompany"></el-input>
+                    </el-form-item>
+                    <el-form-item label="培训结果">
+                        <el-select v-model="form.culitivateResult" placeholder="请选择培训结果">
+                            <el-option label="差" value="差"></el-option>
+                            <el-option label="良好" value="良好"></el-option>
+                            <el-option label="优秀" value="优秀"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="培训时间">
+                        <el-col :span="7">
+                            <div class="block">
+                                <el-date-picker
+                                        v-model="form.startDate"
+                                        type="date"
+                                        value-format="yyyy-MM-dd"
+                                        placeholder="开始时间">
+                                </el-date-picker>
+                            </div>
+                        </el-col>
+                        <el-col class="line" :span="1">-</el-col>
+                        <el-col :span="6">
+                            <div class="block">
+                                <el-date-picker
+                                        v-model="form.endDate"
+                                        type="date"
+                                        value-format="yyyy-MM-dd"
+                                        placeholder="结束时间">
+                                </el-date-picker>
+                            </div>
+                        </el-col>
+                    </el-form-item>
+
+                    <el-form-item label="培训内容">
+                        <el-input type="textarea" v-model="form.cultivateCenter"></el-input>
+                    </el-form-item>
+                </el-form>
+            </div>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogSure()">确 定</el-button>
+          </span>
+    </el-dialog>
+</div>
+</body>
+<script type="text/javascript">
+    var that ;
+    new Vue({
+        el : "#app" ,
+        data : {
+            updateId : "" ,
+            cult : {
+                id : "" ,
+                uid : "" ,
+                cultivateName : '' ,
+                cultivateCenter : "" ,
+                startDate : "" ,
+                endDate : "" ,
+                culitivateCompany : "" ,
+                culitivateResult : ""
+            } ,
+            tableData : [] ,
+            searchIdCultivate : "" ,
+            dialogVisible : false ,
+            form: {
+                cultivateName : "" ,
+                cultivateCenter : "" ,
+                startDate : "" ,
+                endDate : "" ,
+                culitivateCompany : "" ,
+                culitivateResult : ""
+            }
+        } ,
+        created : function () {
+            that = this ;
+            that.searchManagerCultivate() ;
+        } ,
+        methods : {
+            searchManagerCultivate : function () {
+                axios.get( "/culitivate/searchCulitivate" ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.tableData = data.data ;
+                    } else {
+                        that.$message.error(data.message) ;
+                    }
+                })
+            } ,
+            handleEdit : function(index , value) {
+                that.dialogVisible = true ;
+                var s = JSON.stringify(value) ;
+                var parse = JSON.parse(s);
+
+                that.form = parse ;
+                that.updateId = value.uid ;
+            } ,
+            handleDelete : function(index , value) {
+                axios.get( "/culitivate/deleteCulitivate?id=" + value.id ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.$message.error(data.message) ;
+                        that.searchManagerCultivate() ;
+                    } else {
+                        that.$message.error(data.message) ;
+                    }
+                })
+            } ,
+            dialogSure : function () {
+                axios.post( "/culitivate/updateCulitivate?id=" + that.updateId
+                    , that.form ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.dialogVisible = false ;
+                        that.searchManagerCultivate() ;
+                        that.$message({
+                            message: data.message ,
+                            type: 'success'
+                        });
+                    } else {
+                        that.$message.error(data.message) ;
+                    }
+                })
+            }
+        }
+    })
+</script>

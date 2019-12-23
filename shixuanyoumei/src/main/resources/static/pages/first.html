@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <!--  响应式布局     -->
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <link rel="stylesheet" href="../css/first.css">
+</head>
+    <body>
+        <div id="app">
+            <el-card class="box-card">
+                <div style="padding: 10px; height: 20%;">
+                    <el-row>
+                        <el-col :xs="6" :sm="6" :md="4" :lg="3" :xl="1"><div class="grid-content bg-purple">
+                            <el-button @click="advisory" class="but">
+                                <span class="el-icon-s-check"></span>
+                                <div class="choice">咨询</div>
+                            </el-button>
+                        </div></el-col>
+                        <el-col :xs="6" :sm="6" :md="4" :lg="3" :xl="1"><div class="grid-content bg-purple-light">
+                            <el-button @click="hairdressing" class="but1" >
+                                <span class="el-icon-s-home"></span>
+                                <div class="choice">美容院</div>
+                            </el-button>
+                        </div></el-col>
+                        <el-col :xs="6" :sm="6" :md="4" :lg="3" :xl="1"><div class="grid-content bg-purple">
+                            <el-button @click="brand"  class="but2" >
+                                <span class="el-icon-s-order"></span>
+                                <div class="choice">品牌</div>
+                            </el-button>
+                        </div></el-col>
+                    </el-row>
+                </div>
+                <div class="title">
+                    <span class="char">特卖专区</span>
+                    <span class="el-icon-right"></span>
+                </div>
+                <div style="padding: 10px; height: 25%;">
+                    <el-row :gutter="20" class="row1">
+                        <el-col :span="6" v-for="value in hotShop" >
+                            <div @click="shopDetail(value.id)" class="grid-content bg-purple">
+                            <div class="demo-image">
+                                <el-image
+                                        style="width: 100%; height: 50%"
+                                        :src="value.picpath"
+                                        fit="fill">
+                                </el-image>
+                                <div class="demonstration">&yen;{{value.price}}</div>
+                                <div class="describe">{{value.main}}</div>
+                            </div>
+                        </div></el-col>
+                    </el-row>
+                </div>
+                <div class="newGoods">
+                    <span class="char">新品推荐</span>
+                    <span class="el-icon-right"></span>
+                </div>
+                <div style="padding: 10px; height: 25%;">
+                        <el-row :gutter="20" class="row1">
+                            <el-col v-for=" value in newShop" :span="6">
+                                <div @click="shopDetail(value.id)" class="grid-content bg-purple">
+                                <div class="demo-image">
+                                    <el-image
+                                            style="width: 100%; height: 50%"
+                                            :src="value.picpath"
+                                            fit="fill">
+                                    </el-image>
+                                    <div class="demonstration">&yen;2680</div>
+                                    <div class="describe">{{value.main}}</div>
+                                </div>
+                            </div></el-col>
+                        </el-row>
+                    </div>
+                <div class="newGoods">
+                    <span class="char">热销推荐</span>
+                    <span class="el-icon-right"></span>
+                </div>
+                <div style="padding: 10px; height: 14%;">
+                    <el-row :gutter="20" class="row1">
+                        <el-col v-for="value in hotRecommend" :span="6">
+                            <div @click="shopDetail(value.id)" class="grid-content bg-purple">
+                            <div class="demo-image">
+                                <el-image
+                                        style="width: 100%; height: 80%"
+                                        :src="value.picpath"
+                                        fit="fill">
+                                </el-image>
+                                <div class="demonstration">&yen;2680</div>
+                                <div class="describe">{{value.main}}</div>
+                            </div>
+                        </div></el-col>
+                    </el-row>
+                </div>
+            </el-card>
+        </div>
+    </body>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el : "#app" ,
+            data : {
+               hotShop :[] ,
+               newShop :[] ,
+               hotRecommend :[]
+            } ,
+            created : function () {
+                that = this ;
+                that.searchHotShopping() ;
+                that.searchNewShopping() ;
+                that.searchhotRecommend() ;
+            } ,
+            methods : {
+                searchHotShopping : function () {
+                    axios.get( "/shop/hotShopping" ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.hotShop = data.data ;
+                        } else {
+                            that.$message({
+                                showClose: true,
+                                message: "查询商品失败" ,
+                                type: 'error'
+                            });
+                        }
+                    })
+                } ,
+                searchNewShopping : function () {
+                    axios.get( "/shop/newShopping" ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.newShop = data.data ;
+                        } else {
+                            that.$message({
+                                showClose: true,
+                                message: "查询商品失败" ,
+                                type: 'error'
+                            });
+                        }
+                    })
+                } ,
+                searchhotRecommend : () => {
+                    axios.get( "/shop/searchhotRecommend" ).then( (value) => {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.hotRecommend = data.data ;
+                        } else {
+                            that.$message({
+                                showClose: true,
+                                message: "查询商品失败" ,
+                                type: 'error'
+                            });
+                        }
+                    })
+                } ,
+                consult : function () {
+
+                } ,
+                advisory : function () {
+                    location.href = "/pages/advisory.html" ;
+                } ,
+                hairdressing : function () {
+                    location.href = "/pages/beauty.html" ;
+                } ,
+                brand : function () {
+                    location.href = "/pages/brand.html" ;
+                } ,
+                shopDetail : function( id ) {
+                    location.href = "/pages/goodsDetails.html?id=" + id ;
+                }
+            }
+        })
+    </script>
+</html>

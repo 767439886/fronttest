@@ -1,0 +1,101 @@
+@media screen and (max-width: 3000px){
+}
+body , html{
+    max-width: 680px;
+    height: 100%;
+    margin: auto;
+    padding: 0px;
+    overflow: hidden;
+}
+
+#app{
+    width: 100%;
+    height: 100%;
+    margin: auto;
+}
+.box-card {
+    margin: 0px;
+    height: 100%;
+    overflow: auto;
+}
+.el-card__body{
+    margin: 0px;
+    height: 100%;
+    padding: 0px;
+}
+.el-col{
+    text-align: center;
+}
+.title{
+    padding-top: 10px ;
+    width: 100% ;
+    height: 4%;
+    background-color: #b92716;
+}
+.el-icon-s-fold{
+    font-size: 40px;
+    overflow: auto;
+}
+.char{
+    font-size: 2.5vh;
+    line-height: 2.5vh;
+    color: white;
+    font-weight: bold;
+    margin-left: 20px ;
+    height: 100%;
+    float: left;
+}
+.el-icon-right{
+    font-size: 3vh;
+    line-height: 3vh;
+    color: white;
+    float: right;
+    padding-right: 20px ;
+    height: 100%;
+    float: right;
+}
+.but , .but1 , .but2{
+    padding: 2vh;
+    width: 90%;
+    height: 100%;
+    color: white;
+}
+.but{
+    background-color: #94a5ff;
+}
+.but1 {
+    background-color: #da5ec3;
+}
+.but2 {
+    background-color: #d4ca6a;
+}
+.el-row {
+    height: 100%;
+}
+.el-col , .bg-purple , .grid-content , .demo-image{
+    height: 100%;
+}
+.el-icon-s-check , .el-icon-s-home , .el-icon-s-order{
+    font-size: 4vh;
+}
+.demonstration{
+    color: #d54940;
+    font-weight: bold;
+    font-size: 3vh;
+}
+.describe{
+    float: left;
+    font-weight: bold;
+    font-size: 2vh;
+}
+.newGoods{
+    padding-top: 10px ;
+    width: 100% ;
+    height: 4%;
+    background-color: #b92716;
+}
+.choice{
+    padding-top: 5%;
+    font-size: 2.5vh;
+    font-weight: bold;
+}

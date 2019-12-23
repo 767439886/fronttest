@@ -1,0 +1,49 @@
+html , body , #app , .el-container{
+    max-width: 698px ;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    margin: auto;
+}
+.box-card{
+    overflow: auto;
+}
+.title{
+    font-size: 3.5vh ;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    padding: 4vh;
+}
+.el-form{
+    padding-top: 5%;
+}
+.el-form-item{
+    text-align: center ;
+    padding-right: 15% ;
+    position: relative;
+    right: 6%;
+}
+.el-header{
+    padding: 0;
+}
+.el-main{
+    padding: 0;
+}
+.login-form , .loginBox{
+    background-color: #8c939d;
+    height: 100%;
+}
+.el-form-item__label{
+    font-size: 2.3vh;
+    font-weight: bold;
+}
+.button{
+    text-align: center;
+}
+.buttonType{
+    margin: 2vh;
+}
+.but{
+    width: 40%;
+}

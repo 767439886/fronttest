@@ -54,36 +54,36 @@
             </el-card>
             <el-row class="button">
                 <el-button @click="addCultivatePeople()" class="but" type="success">增加</el-button>
-                <el-button class="but" type="danger">删除</el-button>
+                <el-button @click="deleteCultivatePeople()" class="but" type="danger">删除</el-button>
             </el-row>
             <el-divider><i class="el-icon-s-platform"><span style="font-weight: bold ; font-size: 17px ; margin-left: 5px" >培训详情</span></i></el-divider>
             <div>
                 <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="活动名称">
-                        <el-input class="left" v-model="form.name"></el-input>
+                    <el-form-item label="培训名称">
+                        <el-input class="left" v-model="form.cultivateName"></el-input>
                     </el-form-item>
                     <el-form-item label="培训单位">
-                        <el-input class="left" v-model="form.name"></el-input>
+                        <el-input class="left" v-model="form.culitivateCompany"></el-input>
                     </el-form-item>
                     <el-form-item label="培训结果">
-                        <el-select v-model="form.region" placeholder="请选择培训结果">
-                            <el-option label="差" value="shanghai"></el-option>
-                            <el-option label="良好" value="beijing"></el-option>
-                            <el-option label="优秀" value="beijing"></el-option>
+                        <el-select v-model="form.culitivateResult" placeholder="请选择培训结果">
+                            <el-option label="差" value="差"></el-option>
+                            <el-option label="良好" value="良好"></el-option>
+                            <el-option label="优秀" value="优秀"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="活动时间">
+                    <el-form-item label="培训时间">
                         <el-col :span="11">
-                            <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                            <el-date-picker type="date" placeholder="选择日期" v-model="form.startDate" style="width: 100%;"></el-date-picker>
                         </el-col>
                         <el-col class="line" :span="2">-</el-col>
                         <el-col :span="11">
-                            <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+                            <el-date-picker type="date" placeholder="选择日期" v-model="form.endDate" style="width: 100%;"></el-date-picker>
                         </el-col>
                     </el-form-item>
 
                     <el-form-item label="培训内容">
-                        <el-input type="textarea" v-model="form.desc"></el-input>
+                        <el-input type="textarea" v-model="form.cultivateCenter"></el-input>
                     </el-form-item>
                     <el-form-item style="text-align: center">
                         <el-button type="primary" @click="onSubmit">添加培训</el-button>
@@ -146,14 +146,12 @@
                 allSelectId : [] ,
                 smallAllSelectId : [] ,
                 form: {
-                    name: '',
-                    region: '',
-                    date1: '',
-                    date2: '',
-                    delivery: false,
-                    type: [],
-                    resource: '',
-                    desc: ''
+                    cultivateName : "" ,
+                    cultivateCenter : "" ,
+                    startDate : "" ,
+                    endDate : "" ,
+                    culitivateCompany : "" ,
+                    culitivateResult : ""
                 } ,
                 dialogVisible : false
             } ,
@@ -164,7 +162,10 @@
 
                 //  当人员改变了
                 handleSelectionChange : function(val) {
-
+                    that.allSelectId = [] ;
+                    for ( i = 0 ; i < val.length ; i++ ) {
+                        that.allSelectId.push(val[i].id);
+                    }
                 } ,
                 searchAllPeople : function(){
                     axios.get( "/personnel/searchAllPeopleId" ).then(function (value) {
@@ -184,8 +185,35 @@
                     that.smallAllSelectId = index ;
                 } ,
                 dialogSure : function () {
-                    that.dialogVisible = false ;
+                    that.dialogVisible = false  ;
                     that.tableData = that.smallAllSelectId ;
+                } ,
+                onSubmit : function () {
+                    tableData = [] ;
+                    for ( i = 0 ; i < that.tableData.length ; i++ ) {
+                        tableData.push( that.tableData[i].id )
+                    }
+                    axios.post( "/culitivate/addCulitivate?ids=" + tableData
+                    , that.form  ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.$message({
+                                message: "添加成功" ,
+                                type: 'success'
+                            });
+                        } else {
+                            that.$message.error("添加失败") ;
+                        }
+                    })
+                } ,
+                deleteCultivatePeople : function () {
+                    for ( i = 0 ; i < that.allSelectId.length ; i++ ) {
+                        for ( j = 0 ; j < that.tableData.length ; j++ ) {
+                            if ( that.tableData[j].id == that.allSelectId[i] ) {
+                                that.tableData.splice( j , 1 ) ;
+                            }
+                        }
+                    }
                 }
             }
         })

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.yunyoupersonnel.mapper.PersonnelFile.CulitivateMapper">
+    <insert id="addCulitivate" parameterType="com.example.yunyoupersonnel.entity.Culitivate">
+            INSERT INTO `yuntianpersonnel`.`cultivate` (
+              `cultivateName`,
+              `cultivateCenter`,
+              `startDate`,
+              `endDate`,
+              `culitivateCompany`,
+              `culitivateResult` ,
+              `uid`
+            )
+            VALUES
+            (
+                #{cultivateName} ,
+                #{cultivateCenter},
+                #{startDate},
+                #{endDate},
+                #{culitivateCompany},
+                #{culitivateResult},
+                #{uid}
+            ) ;
+    </insert>
+    <select id="searchCulitivate" resultType="com.example.yunyoupersonnel.entity.Culitivate">
+        SELECT
+          `id`,
+          `cultivateName`,
+          `cultivateCenter`,
+          `startDate`,
+          `endDate`,
+          `culitivateCompany`,
+          `culitivateResult`,
+          `uid`
+        FROM
+          `cultivate`
+    </select>
+    <delete id="deleteCulitivate" parameterType="String">
+        DELETE
+        FROM
+          `cultivate`
+        where
+           id = #{value} ;
+    </delete>
+    <update id="updateCulitivate" parameterType="com.example.yunyoupersonnel.entity.Culitivate">
+        UPDATE
+          `cultivate`
+        SET
+          `cultivateName` = #{cultivateName} ,
+          `cultivateCenter` = #{cultivateCenter},
+          `startDate` = #{startDate},
+          `endDate` = #{endDate},
+          `culitivateCompany` = #{culitivateCompany},
+          `culitivateResult` = #{culitivateResult},
+          `uid` = #{uid}
+        WHERE `id` = #{id} ;
+    </update>
+</mapper>

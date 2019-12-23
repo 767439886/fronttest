@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.leading.mapper.SearchLeading">
+    <select id="SearchPeopleMessage" parameterType="Map" resultType="com.example.leading.entity.Peoplemessage">
+        SELECT
+          `id`,
+          `birthday`,
+          `sex`,
+          `edu`,
+          `degree`,
+          `school`,
+          `profession`,
+          `politics`,
+          `duty`,
+          `province`,
+          `city`,
+          `areas`,
+          `name`,
+          `branch`,
+          `sprovince`,
+          `scity`,
+          `sareas`
+        FROM
+          `peoplemessage`
+        <where>
+            <if test="id != null and  id != '' ">
+                id = #{id}
+            </if>
+            <if test="name != null and name != '' ">
+                and name = #{name}
+            </if>
+            <if test="branch != null and branch != ''">
+                and branch = #{branch}
+            </if>
+            <if test="birthday != null and birthday != '' ">
+                and birthday = #{birthday }
+            </if>
+            <if test="edu != null  and edu != '' " >
+                and edu = #{edu}
+            </if>
+            <if test="school != null and school != '' ">
+                and school = #{school}
+            </if>
+            <if test="profession != null and profession != '' ">
+                and profession = #{profession}
+            </if>
+            <if test="nativePlaceProvince != null and nativePlaceProvince != '' ">
+                and province = #{nativePlaceProvince}
+            </if>
+            <if test="nativePlaceCity != null and nativePlaceCity != '' ">
+                and city = #{nativePlaceCity}
+            </if>
+            <if test="nativePlaceArea != null and nativePlaceArea != '' ">
+                and areas = #{nativePlaceArea}
+            </if>
+            <if test="branchAreaProvince != null and branchAreaProvince != '' ">
+                and sprovince = #{branchAreaProvince}
+            </if>
+            <if test="branchAreaCity != null and branchAreaCity != '' ">
+                and scity = #{branchAreaCity}
+            </if>
+            <if test="branchAreaArea != null and branchAreaArea != '' ">
+                and sareas = #{branchAreaArea}
+            </if>
+            <if test="birthday != null and birthday != '' ">
+                and birthday = #{birthday}
+            </if>
+            <if test="politics != null and politics != '' ">
+                and politics = #{politics}
+            </if>
+        </where>
+    </select>
+    <select id="SearchAllAreas" parameterType="Map" resultType="com.example.leading.entity.Areas">
+        SELECT
+          `id`,
+          `name`,
+          `parentId`
+        FROM
+          `areas`
+        <where>
+            <if test="id != null and id != ''">
+                `id` = #{id}
+            </if>
+            <if test="parentId != null and parentId != ''">
+                and `parentId` = #{parentId}
+            </if>
+        </where>
+    </select>
+    <select id="SearchAllCity" parameterType="Map" resultType="com.example.leading.entity.City">
+        SELECT
+          `id`,
+          `name`,
+          `parentId`
+        FROM
+          `city`
+        <where>
+            <if test="id != null and id != ''">
+                `id` = #{id}
+            </if>
+            <if test="parentId != null and parentId != ''">
+                and `parentId` = #{parentId}
+            </if>
+        </where>
+    </select>
+    <select id="SearchAllProvince" parameterType="Map" resultType="com.example.leading.entity.Province">
+        SELECT
+          `id`,
+          `name`
+        FROM
+          `province`
+        <where>
+            <if test="id != null and id != ''">
+                `id` = #{id}
+            </if>
+        </where>
+    </select>
+</mapper>

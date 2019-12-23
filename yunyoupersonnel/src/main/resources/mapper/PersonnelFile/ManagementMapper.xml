@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.yunyoupersonnel.mapper.PersonnelFile.ManagementMapper">
+    <select id="searchManagement" resultType="com.example.yunyoupersonnel.entity.Management">
+        SELECT
+          `id`,
+          `updateDate`,
+          `uid`,
+          `position`,
+          `level`,
+          `upPerson`
+        FROM
+          `management`
+    </select>
+    <insert id="addManagement" parameterType="com.example.yunyoupersonnel.entity.Management">
+        INSERT INTO `yuntianpersonnel`.`management` (
+          `updateDate`,
+          `uid`,
+          `position`,
+          `level`,
+          `upPerson`
+        )
+        VALUES
+        (
+            #{updateDate} ,
+            #{uid} ,
+            #{position} ,
+            #{level} ,
+            #{upPerson}
+        ) ;
+    </insert>
+    <delete id="deleteManagement" parameterType="String">
+        DELETE
+        FROM
+          `management`
+        WHERE `id` = #{value} ;
+    </delete>
+</mapper>

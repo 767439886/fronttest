@@ -1,5 +1,6 @@
 package com.example.yunyoupersonnel.service.PersonnelFile;
 
+import com.example.yunyoupersonnel.MyException.DataException;
 import com.example.yunyoupersonnel.entity.User;
 import com.example.yunyoupersonnel.mapper.PersonnelFile.PersonnelMapper;
 import com.github.pagehelper.Page;
@@ -20,13 +21,18 @@ public class PersonnelService {
     private PersonnelMapper addPersonnelMapper ;
 
 
-    public void addPersonnel(Map<String,Object> map ){
-        String graduateDate = (String)map.get("graduateDate") ;
-        String[] ts = graduateDate.split("T") ;
-        map.put( "graduateDate" , ts[0] ) ;
-        addPersonnelMapper.addUser( map ) ;
-        addPersonnelMapper.addbasicsmessag( map ) ;
-        addPersonnelMapper.addSchoolMessage( map ) ;
+    public void addPersonnel(Map<String,Object> map ) throws DataException {
+        try {
+            String graduateDate = (String)map.get("graduateDate") ;
+            String[] ts = graduateDate.split("T") ;
+            map.put( "graduateDate" , ts[0] ) ;
+            addPersonnelMapper.addUser( map ) ;
+            addPersonnelMapper.addbasicsmessag( map ) ;
+            addPersonnelMapper.addSchoolMessage( map ) ;
+        } catch ( Exception e) {
+            e.printStackTrace();
+            throw new DataException( "异常" ) ;
+        }
     }
 
     public Page<User> searchAllPeople (String pageSize , String nowPage , Map<String,Object>condition ) {
@@ -37,7 +43,7 @@ public class PersonnelService {
         return maps ;
     }
 
-    public void update( Map<String,Object> user ){
+    public void update( Map<String,Object> user ) throws DataException {
         this.delete( user.get("id") +  "" ) ;
         user.put( "FLlevel" , user.get("fllevel") ) ;
         this.addPersonnel(user);

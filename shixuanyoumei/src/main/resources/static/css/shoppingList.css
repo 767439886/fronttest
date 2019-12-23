@@ -1,0 +1,79 @@
+html , body , #app {
+    max-width: 680px ;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    margin: auto;
+    overflow: auto;
+}
+.el-icon-back{
+    font-size: 3vh;
+    position: relative;
+    top: 25%;
+    color: white;
+    float: right;
+    padding-right: 20px ;
+    height: 100%;
+    float: left;
+    padding-left: 1vh ;
+}
+.newGoods{
+    width: 100%;
+    height: 7%;
+    background-color: #ca3420;
+}
+.el-row{
+    padding: 0.2vh;
+}
+.row{
+    height: 20%;
+}
+.content{
+    padding-left: 3vh;
+    padding-right: 3vh;
+    padding-top: 30%;
+    font-size: 2.4vh;
+}
+.numberAndPrice {
+    padding-top: 45%;
+}
+.number{
+    color: #ce2d1b;
+    font-size: 2.4vh;
+}
+.price {
+    color: #ea9748;
+    font-size: 2.6vh;
+}
+.el-checkbox{
+    margin-top: 90%;
+}
+.choice1{
+    padding-top: 1.5vh;
+    height: 10%;
+    margin: 0 ;
+}
+.el-checkbox{
+    margin: 0;
+    padding: 1.5vh;
+    font-weight: bold;
+    border: 1px;
+}
+.el-checkbox__input{
+    font-weight: bold;
+}
+.el-checkbox__label{
+    font-size: 2.5vh;
+    font-weight: bold;
+}
+.yen{
+    padding-right: 1.5vh;
+    font-weight: bold;
+    float: right;
+}
+.price{
+    color: #d3302d;
+}
+.number1{
+    padding-top: 1.5vh;
+}

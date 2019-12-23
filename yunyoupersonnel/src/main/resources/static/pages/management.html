@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="html" xmlns:display="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/peopleRemove.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+</head>
+<body>
+<div id="app">
+    <el-card class="box-card">
+        <div slot="header" class="clearfix">
+            <span class="title">职称评定记录</span>
+        </div>
+        <div>
+            <template>
+                <el-table
+                        :data="tableData"
+                        style="width: 100%">
+                    <el-table-column
+                            prop="uid"
+                            label="员工id号"
+                            width="300">
+                    </el-table-column>
+                    <el-table-column
+                            prop="updateDate"
+                            label="调动时间"
+                            width="300">
+                    </el-table-column>
+                    <el-table-column
+                            prop="position"
+                            label="职位"
+                            width="300">
+                    </el-table-column>
+                    <el-table-column
+                            prop="level"
+                            label="等级"
+                            width="250">
+                    </el-table-column>
+                    <el-table-column
+                            prop="upPerson"
+                            label="升职负责人"
+                            width="250">
+                    </el-table-column>
+                    <el-table-column label="操作">
+                        <template slot-scope="scope">
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-row>
+                    <el-button @click="addManagement" type="danger">增加评定</el-button>
+                </el-row>
+            </template>
+            <el-dialog
+                    title="添加详情"
+                    :visible.sync="dialogVisible"
+                    :before-close="handleClose">
+                <div>
+                    <el-form ref="form" :model="form" label-width="80px">
+                        <el-form-item label="员工">
+                            <el-select v-model="form.uid" placeholder="请选择">
+                                <el-option label="叶" value="12"></el-option>
+                                <el-option label="张" value="14"></el-option>
+                                <el-option label="李" value="15"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="升职日期">
+                            <el-col :span="11">
+                                <el-date-picker type="date" value-format="yyyy-MM-dd" placeholder="选择日期" v-model="form.updateDate" style="width: 60%;"></el-date-picker>
+                            </el-col>
+                        </el-form-item>
+                        <el-form-item label="职位">
+                            <el-select v-model="form.position" placeholder="请选择">
+                                <el-option label="前端" value="前端"></el-option>
+                                <el-option label="后端" value="后端"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="等级">
+                            <el-select v-model="form.level" placeholder="请选择">
+                                <el-option label="高级" value="高级"></el-option>
+                                <el-option label="中级" value="中级"></el-option>
+                                <el-option label="低级" value="低级"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="负责人">
+                            <el-input v-model="form.upPerson"></el-input>
+                        </el-form-item>
+                    </el-form>
+                </div>
+                <div class="but">
+                    <el-button type="primary" @click="surePeople()">确 定</el-button>
+                    <el-button @click="dialogVisible = false">取 消</el-button>
+                </div>
+            </el-dialog>
+        </div>
+    </el-card>
+</div>
+</body>
+<script type="text/javascript">
+    var that ;
+    new Vue({
+        el: "#app" ,
+        data : {
+            tableData : [],
+            form : {
+                uid : "" ,
+                updateDate:"" ,
+                position : "" ,
+                level : "" ,
+                upPerson : "" ,
+                position : ""
+            } ,
+            dialogVisible : false
+        } ,
+        created : function () {
+            that = this ;
+            that.searchManagement() ;
+        } ,
+        methods : {
+            searchManagement : function () {
+                axios.get( "/management/search" ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.tableData = data.data ;
+                    } else {
+                        that.$message.error("搜索失败");
+                    }
+                })
+            } ,
+            addManagement : function () {
+                that.dialogVisible = true ;
+            } ,
+            surePeople : function () {
+                axios.post( "/management/add" , that.form ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.$message({
+                            message: "增加成功" ,
+                            type: 'success'
+                        });
+                        that.clear() ;
+                        that.dialogVisible = false ;
+                        that.searchManagement() ;
+                    } else {
+                        that.$message.error("增加失败");
+                    }
+                })
+            } ,
+            handleDelete : function( index , value ){
+                axios.get( "/management/delete?id=" + value.id  ).then(function (value) {
+                    data = value.data ;
+                    if ( data.bool ) {
+                        that.$message({
+                            message: "删除成功" ,
+                            type: 'success'
+                        });
+                        that.searchManagement() ;
+                    } else {
+                        that.$message.error("删除失败");
+                    }
+                })
+            } ,
+            clear : function () {
+                that.form.uid = "" ;
+                that.form.updateDate = "" ;
+                that.form.position = "" ;
+                that.form.level = "" ;
+                that.form.upPerson = "" ;
+                that.form.position = "" ;
+            }
+        }
+    })
+</script>

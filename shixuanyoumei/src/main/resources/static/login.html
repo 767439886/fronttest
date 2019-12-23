@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <!--  响应式布局     -->
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="plugins/elementui/index.css">
+    <link rel="stylesheet" href="css/login.css">
+    <!-- 引入组件库 -->
+    <script src="js/axios-0.18.0.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="plugins/elementui/index.js"></script>
+    <style>
+        .el-header, .el-footer {
+            margin: 0px;
+            padding: 0px;
+            background-color: #B3C0D1;
+            color: #333;
+            text-align: center;
+            line-height: 60px;
+        }
+        .el-main{
+            padding: 0px;
+            margin: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <el-container>
+            <el-header>
+                <el-menu background-color="#545c60" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+                    <el-menu-item index="4"><i style="color: white" class="el-icon-back"></i></el-menu-item>
+                    <span class="title">注册</span>
+                    <el-menu-item style="float: right" index="4"><i style="color: white" class="el-icon-right"></i></el-menu-item>
+                </el-menu>
+            </el-header>
+            <el-main>
+                <div class="contentBox">
+                    <div class="userStyle">用户注册</div>
+                    <div class="context" >
+                        <el-form ref="form" :model="form">
+                            <el-form-item>
+                                <el-input class="input" @blur="usernameBlur" v-model="form.username" placeholder="请输入手机号"></el-input>
+                                <span v-html="verifyUsername.message"></span>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-input class="input" @blur="passwordBlur" v-model="form.password" placeholder="请输入密码,必须满足6位数"></el-input>
+                                <span v-html="verifyPassword.message" ></span>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-input class="input" @blur="nextPasswordBlur" v-model="form.nextPassword" placeholder="请再次输入密码"></el-input>
+                                <span v-html="verifyNextPassword.message" ></span>
+                            </el-form-item>
+                        </el-form>
+                        <div class="check">
+                            <template>
+                                <el-checkbox  v-model="checked">
+                                    已经阅读并表示同意
+                                    <span class="agreement">
+                                <el-link :underline="false" href="xxx" type="success">《十选优美用户协议》</el-link>
+                            </span>
+                                </el-checkbox>
+                            </template>
+                        </div>
+                    </div>
+                    <el-row class="button">
+                        <el-button @click="clickRegister" class="registerButton" type="success">立即注册</el-button>
+                    </el-row>
+                    <el-dialog
+                            title="注册成功信息"
+                            :visible.sync="dialogVisible"
+                            width="30%"
+                    >
+                        <span style="font-size: 20px">{{text}}</span>
+                        <span slot="footer" class="dialog-footer">
+                    <el-button type="success" @click="sure">确 定</el-button>
+                </span>
+                    </el-dialog>
+                </div>
+            </el-main>
+        </el-container>
+    </div>
+</body>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el : "#app" ,
+            data : {
+                //  登录的表单
+                form : {
+                    username : "" ,
+                    password : "" ,
+                    nextPassword : "" ,
+                    authCode : ""
+                } ,
+                //  表单的验证提示
+                verifyUsername : {
+                    message : "" ,
+                    bool : false
+                } ,
+                verifyPassword : {
+                    message : "" ,
+                    bool : false
+                } ,
+                verifyNextPassword : {
+                    message : "" ,
+                    bool : false
+                } ,
+                checked: false ,
+
+                //  获取验证码按键的状态
+                dis: true ,
+                dialogVisible : false ,
+                text : ""
+            } ,
+            created : function () {
+                that = this ;
+            } ,
+            methods  : {
+                usernameBlur : function () {
+                    //  手机号检验规则
+                    var reg = /^1[3|4|5|7|8|9][0-9]{9}$/;
+                    //  进行校验
+                    if( reg.test( that.form.username) ) {
+                        that.verifyUsername.message = "<span class='verifySuccess'>输入成功</span>"
+                        that.verifyUsername.bool = true ;
+                        that.dis = false ;
+                    } else {
+                        that.verifyUsername.message = "<span class='verifyError'>不符合规范</span>"
+                        that.verifyUsername.bool = false ;
+                    }
+                } ,
+                passwordBlur : function () {
+                    //  密码检验规则
+                    var reg = /^[0-9|a-z|A-Z]{5}$/;
+                    //  进行校验
+                    if( reg.test( that.form.password) ) {
+                        that.verifyPassword.message = "<span class='verifySuccess'>输入成功</span>"
+                        that.verifyPassword.bool = true ;
+                    } else {
+                        that.verifyPassword.message = "<span class='verifyError'>密码不符合规范</span>"
+                        that.verifyPassword.bool = false ;
+                    }
+                    that.nextPasswordBlur() ;
+                } ,
+                nextPasswordBlur : function () {
+                    that.verifyNextPassword.bool = false ;
+                    if ( that.form.nextPassword != '' ) {
+                        if (that.form.password == that.form.nextPassword) {
+                            that.verifyNextPassword.message = "<span class='verifySuccess'>输入成功</span>"
+                            that.verifyNextPassword.bool = true;
+                        } else {
+                            that.verifyNextPassword.message = "<span class='verifyError'>输入的密码不一致</span>"
+                        }
+                    }
+                } ,
+                clickRegister : function () {
+                    if( that.checked ) {
+                        if( that.verifyUsername.bool) {
+                            if( that.verifyNextPassword.bool ) {
+                                axios.get( "/register/addUser").then(function (value) {
+                                    data = value.data ;
+                                    if ( data.bool ) {
+                                        that.dialogVisible = true ;
+                                        that.text = data.message ;
+                                    } else {
+                                        this.$message( data.message ) ;
+                                    }
+                                })
+                            } else {
+                                that.$message("请输入密码");
+                            }
+                        } else {
+                            that.$message("请输入手机号");
+                        }
+                    } else {
+                        that.$message("请同意协议");
+                    }
+                } ,
+                sure : function () {
+                    that.dialogVisible = false ;
+                    window.location.href  = "/loginDriverSchool.html" ;
+                }
+            }
+        })
+    </script>
+</html>

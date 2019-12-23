@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="js/vue.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/axios-0.18.0.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <haha :my-self="mySelf"></haha>
+        </div>
+        <template id="com1">
+            <div>哈哈{{mySelf}}</div>
+        </template>     <!--  模板不允许卸载el的app里面   -->
+    </body>
+</html>
+<script type="text/javascript">
+    new Vue({
+        el : "#app" ,
+        data : {
+            mySelf : "我们"
+        } ,
+        components : {
+            "haha" : {
+                template: "#com1",
+                data: function () {
+                    return {
+                        // mySelf : "我们是什么"
+                    };
+                } ,
+                props : ["mySelf"]
+                //  注意：标签内部能使用-横线进行连接，否则报错
+            }
+        }
+    })
+</script>

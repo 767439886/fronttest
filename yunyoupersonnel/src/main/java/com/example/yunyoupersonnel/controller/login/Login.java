@@ -1,5 +1,6 @@
 package com.example.yunyoupersonnel.controller.login;
 
+import com.example.yunyoupersonnel.MyException.DataException;
 import com.example.yunyoupersonnel.Utils.Cookies;
 import com.example.yunyoupersonnel.Utils.JWTUtils;
 import com.example.yunyoupersonnel.common.Result;
@@ -31,15 +32,20 @@ public class Login {
     @PostMapping(value = "/login")
     public Result login( @RequestBody User user ) throws Exception {
         //  检查是否表中是否正确
-        Map<String, Object> resultMap = adminService.checkUsernameAndPwd(user);
-        if ((boolean)resultMap.get("bool")) {
-            //获取新token，过期时间为12h
-            String token = adminService.getToken( (User)resultMap.get("user") );
-            // 在线用户数
-            //OnlineCount.getInstance().insertToken(token);
-            //加入cookie
-            Cookies.setCookies( httpServletRequest , token , httpServletResponse );
-            return new Result( "登录成功" , true );
+        Map<String, Object> resultMap = adminService.checkUsernameAndPwd(user) ;
+        String cookies = Cookies.getCookies(httpServletRequest) ;
+        if ( cookies == null ) {
+            if ((boolean) resultMap.get("bool")) {
+                //获取新token，过期时间为12h
+                String token = adminService.getToken((User) resultMap.get("user"));
+                // 在线用户数
+                //OnlineCount.getInstance().insertToken(token);
+                //加入cookie
+                Cookies.setCookies(httpServletRequest, token, httpServletResponse);
+                return new Result("登录成功", true);
+            }
+        } else {
+            return new  Result ( "登录成功" , true ) ;
         }
         return new Result( "登录失败" , false );
     }
@@ -57,6 +63,24 @@ public class Login {
         } catch ( Exception e ) {
             e.printStackTrace();
             return new Result( "登录失败" , false );
+        }
+    }
+
+    @RequestMapping( "/updatePassword" )
+    public Result updatePassword( @RequestBody Map<String,Object> updatePassword ) {
+        try {
+            String token = Cookies.getCookies(httpServletRequest) ;
+            Claims claims = JWTUtils.parseJWT(token) ;
+            Map<String,Object> admin_username = (Map<String,Object>)claims.get("admin_username") ;
+            updatePassword.put( "id" , admin_username.get("id") ) ;
+            adminService.updatePassword(updatePassword) ;
+            return new Result( "更改成功" , true ) ;
+        } catch ( DataException e) {
+            e.printStackTrace();
+            return new Result( "更改失败" ,false ) ;
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            return new Result( "更改失败" , false );
         }
     }
 }

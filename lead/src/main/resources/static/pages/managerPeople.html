@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="html" xmlns:display="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0,user-scalable=no,minimal-ui">
+    <meta name="description" content="人事平台">
+    <meta name="author" content="人事平台">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/managerPeople.css">
+    <!-- 引入组件库 -->
+    <script src="../js/axios-0.18.0.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <el-card class="box-card">
+            <div slot="header" class="clearfix">
+                <span class="header">干部人员档案</span>
+            </div>
+            <el-row>
+                <el-button @click="handleSearch()" type="primary">搜索</el-button>
+            </el-row>
+            <div>
+                <template>
+                    <el-table
+                            :data="tableData"
+                            style="width: 100%">
+                        <el-table-column
+                                prop="id"
+                                label="员工id号"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="姓名"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="sex"
+                                label="性别"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="branch"
+                                label="任职机构"
+                                width="180">
+                        </el-table-column>
+                        <el-table-column
+                                prop="nativePlace"
+                                label="籍贯"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="politics"
+                                label="政治面貌"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="brandAread"
+                                label="任职区域"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="edu"
+                                label="学历"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="profession"
+                                label="专业"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                prop="school"
+                                label="毕业校园"
+                                width="150">
+                        </el-table-column>
+
+                        <el-table-column label="操作">
+                            <template slot-scope="scope">
+                                <el-button
+                                        size="mini"
+                                        @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                                <el-button
+                                        size="mini"
+                                        type="danger"
+                                        @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </template>
+                <el-pagination
+                        background
+                        @current-change="handleCurrentChange"
+                        :current-page="page.currentPage"
+                        :page-size="page.pageSize"
+                        layout="prev, pager, next"
+                        :total="page.total"> <!--  current-change页面改变事件 page-size页面大小 total页面总数  -->
+                </el-pagination>
+<!--                <el-button type="success">成功按钮</el-button>-->
+            </div>
+        </el-card>
+        <el-dialog
+                title="搜索条件"
+                :visible.sync="dialogVisible"
+                :before-close="handleClose">
+                    <div>
+                        <el-row>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">员工编号：</span>
+                            <el-input v-model="user.id" placeholder="请选择员工编号"></el-input>
+                        </div></el-col>
+                        <el-col :span="12"><div class="grid-content bg-purple">
+                            <span class="font_style">姓名：</span>
+                            <el-input v-model="user.name" placeholder="请输入内容"></el-input>
+                        </div></el-col>
+                    </el-row>
+                        <el-row>
+                            <el-col :span="12"><div class="grid-content bg-purple">
+                                <span class="font_style">性别：</span>
+                                <el-select size="medium"  v-model="user.sex">
+                                    <el-option label="男" value="男"></el-option>
+                                    <el-option label="女" value="女"></el-option>
+                                </el-select>
+                            </div></el-col>
+                            <el-col :span="12"><div class="grid-content bg-purple">
+                                <span class="font_style">任职机构：</span>
+                                <el-select size="medium"  v-model="user.branch">
+                                    <el-option label="生产机构" value="生产机构"></el-option>
+                                    <el-option label="研发机构" value="研发机构"></el-option>
+                                    <el-option label="人事机构" value="人事机构"></el-option>
+                                    <el-option label="财务机构" value="财务机构"></el-option>
+                                </el-select>
+                            </div></el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="12"><div class="grid-content bg-purple">
+                                <div class="block">
+                                    <span class="font_style">出生时间：</span>
+                                    <el-date-picker
+                                            v-model="user.birthday"
+                                            type="date"
+                                            value-format="yyyy-MM-dd"
+                                            placeholder="选择日期">
+                                    </el-date-picker>
+                                </div>
+                            </div></el-col>
+                            <el-col :span="11"><div class="grid-content bg-purple">
+                                <span class="font_style">政治面貌：</span>
+                                <el-select size="medium"  v-model="user.politics">
+                                    <el-option label="群众" value="群众"></el-option>
+                                    <el-option label="党员" value="党员"></el-option>
+                                </el-select>
+                            </div></el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="24"><div class="grid-content bg-purple">
+                                <span class="font_style">籍贯：</span>
+                                <el-select @change="city1()" style="width: 200px"  v-model="user.nativePlaceProvince">
+                                    <el-option :label="term.name" :value="term.id" v-for="term in provinceList"></el-option>
+                                </el-select>
+                                <el-select @change="area1()" style="width: 200px" v-model="user.nativePlaceCity">
+                                    <el-option :label="term.name" :value="term.id" v-for="term in cityList1"></el-option>
+                                </el-select>
+                                <el-select style="width: 200px" v-model="user.nativePlaceArea">
+                                    <el-option :label="term.name" :value="term.id" v-for="term in areaList1"></el-option>
+                                </el-select>
+                            </div></el-col>
+                        </el-row>
+                        <el-row>
+                            <el-col :span="24"><div class="grid-content bg-purple">
+                                <span class="font_style">任职区域：</span>
+                                <el-select @change="city2()" style="width: 200px"  v-model="user.branchAreaProvince">
+                                    <el-option :label="term.name" :value="term.id" v-for="term in provinceList"></el-option>
+                                </el-select>
+                                <el-select  @change="area2()" style="width: 200px" v-model="user.branchAreaCity">
+                                    <el-option :label="term.name" :value="term.id" v-for="term in cityList2"></el-option>
+                                </el-select>
+                                <el-select style="width: 200px" v-model="user.branchAreaArea">
+                                    <el-option :label="term.name" :value="term.id" v-for="term in areaList2"></el-option>
+                                </el-select>
+                            </div></el-col>
+                        </el-row>
+                        <el-row >
+                            <el-col :span="12"><div class="grid-content bg-purple">
+                                <span class="font_style">学历：</span>
+                                <el-select size="medium"  v-model="user.edu">
+                                    <el-option label="大专" value="大专"></el-option>
+                                    <el-option label="本科" value="本科"></el-option>
+                                    <el-option label="高中" value="高中"></el-option>
+                                    <el-option label="初中" value="初中"></el-option>
+                                </el-select>
+                            </div></el-col>
+                            <el-col :span="12"><div class="grid-content bg-purple">
+                                <span class="font_style">专业：</span>
+                                <el-input v-model="user.profession" placeholder="请输入内容"></el-input>
+                            </div></el-col>
+                        </el-row>
+                        <el-row >
+                            <el-col :span="24"><div class="grid-content bg-purple">
+                                <span class="font_style">毕业院校：</span>
+                                <el-input v-model="user.school" placeholder="请输入内容"></el-input>
+                            </div></el-col>
+                        </el-row>
+                    </div>
+            <div>
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="searchAllPeople()">确 定</el-button>
+            </div>
+        </el-dialog>
+    </div>
+</body>
+    <script type="text/javascript">
+        var that ;
+        new Vue({
+            el : "#app" ,
+            data : {
+                page : {
+                    total : 0 ,
+                    pageSize : 5 ,
+                    currentPage : 1 ,
+                } ,
+                tableData: [] ,
+                dialogVisible : false ,
+                user: {
+                    branch : "" ,
+                    id: "",
+                    name: "",
+                    sex: "",
+                    birthday: "",
+                    nativePlaceProvince: "" ,
+                    nativePlaceCity: "" ,
+                    nativePlaceArea: "" ,
+                    branchAreaProvince : "" ,
+                    branchAreaCity : "" ,
+                    branchAreaArea : "" ,
+                    edu : "" ,
+                    school : "" ,
+                    profession : "" ,
+                    politics : ""
+                } ,
+                provinceList: [] ,
+                cityList1 : [] ,
+                areaList1 : [] ,
+                cityList2 : [] ,
+                areaList2 : []
+            } ,
+            created : function(){
+                that = this ;
+                that.searchAllPeople() ;
+                that.searchProvinceList() ;
+            } ,
+            methods : {
+                searchAllPeople : function () {
+                    that.dialogVisible = false ;
+                    axios.post( "/personnel/searchAllPeople?nowPage=" +
+                    that.page.currentPage + "&pageSize=" + that.page.pageSize ,
+                    that.user ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.tableData =  data.list1   ;   // 数据不要用Map装，会出现异常
+                            that.page.total = data.pagetotal ;
+                            that.currentPage = data.nowPage ;
+                        } else {
+                            that.$message.error("搜索失败");
+                        }
+                    })
+                } ,
+                handleCurrentChange : function (currentPage) {
+                    //  进行换页
+                    that.page.currentPage = currentPage ;
+                    that.searchAllPeople() ;
+                } ,
+                searchProvinceList() {
+                    axios.get( "/personnel/searchProProvince" ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.provinceList =  data.data   ;   // 数据不要用Map装，会出现异常
+                        } else {
+                            that.$message.error("搜索失败");
+                        }
+                    })
+                } ,
+                handleSearch : function () {
+                    that.dialogVisible = true ;
+                    that.clearValue() ;
+                } ,
+                clearValue : function() {
+                    that.user.id = "" ;
+                    that.user.name = "" ;
+                    that.user.sex = "" ;
+                    that.user.birthday = "" ;
+                    that.user.nativePlaceProvince = "" ;
+                    that.user.nativePlaceCity = "" ;
+                    that.user.nativePlaceArea = "" ;
+
+                    that.user.branchAreaProvince = "" ;
+                    that.user.branchAreaCity = "" ;
+                    that.user.branchAreaArea = "" ;
+
+                    that.user.edu = "" ;
+                    that.user.school = "" ;
+                    that.user.profession = "" ;
+                    that.user.politics = "" ;
+                    that.user.branch = "" ;
+                } ,
+                handleClose : function () {
+                    that.dialogVisible = false ;
+                } ,
+                city1 : function () {
+                    that.user.nativePlaceCity = "" ;
+                    that.user.nativePlaceArea = "" ;
+                    that.cityList1 = []  ;
+                    axios.get( "/personnel/searchCity?parentId=" + that.user.nativePlaceProvince ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.cityList1 =  data.data   ;   // 数据不要用Map装，会出现异常
+                        } else {
+                            that.$message.error("搜索失败");
+                        }
+                    })
+                } ,
+                city2 : function () {
+                    that.user.branchAreaCity = "" ;
+                    that.user.branchAreaArea = "" ;
+                    that.cityList2 = []  ;
+                    axios.get( "/personnel/searchCity?parentId=" + that.user.branchAreaProvince ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.cityList2 =  data.data   ;   // 数据不要用Map装，会出现异常
+                        } else {
+                            that.$message.error("搜索失败");
+                        }
+                    })
+                } ,
+                area1 : function () {
+                    that.user.nativePlaceArea = "" ;
+                    axios.get( "/personnel/searchArea?parentId=" + that.user.nativePlaceCity ).then(function (value) {
+                            data = value.data ;
+                            if ( data.bool ) {
+                                that.areaList1 =  data.data   ;   // 数据不要用Map装，会出现异常
+                            } else {
+                                that.$message.error("搜索失败");
+                            }
+                    })
+                } ,
+                area2 : function () {
+                    that.user.branchAreaArea = "" ;
+                    axios.get( "/personnel/searchArea?parentId=" + that.user.branchAreaCity ).then(function (value) {
+                        data = value.data ;
+                        if ( data.bool ) {
+                            that.areaList2 =  data.data   ;   // 数据不要用Map装，会出现异常
+                        } else {
+                            that.$message.error("搜索失败");
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</html>
