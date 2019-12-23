@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+        <script src="js/vue.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/axios-0.18.0.js"></script>
+        <style type="text/css">
+             html , body , .pic {
+                 margin: 0 ;
+                 padding: 0;
+                 width: 100% ;
+            }
+            .img{
+                height: 600px;
+                width: 600px;
+                position: absolute;
+                top: 5% ;
+                left: 33%;
+            }
+            .front{
+                position: absolute ;
+                top: 70%;
+                left: 35%;
+            }
+            .next{
+                position: absolute ;
+                top: 70%;
+                left: 65%;
+            }
+        </style>
+        <script type="text/javascript">
+            var that ;
+            window.onload = () => {
+                new Vue({
+                    el : "#app" ,
+                    data : {
+                        target: 0 ,
+                        pict : {} ,
+                        picList : [
+                            {
+                                opacity : 1 ,
+                                controller : {}
+                            } ,
+                            {
+                                opacity : 0 ,
+                                controller : {}
+                            } ,
+                            {
+                                opacity : 0 ,
+                                controller : {}
+                            } ,
+                            {
+                                opacity : 0 ,
+                                controller : {}
+                            }
+                        ] ,
+                        index : 0 ,
+                        pict : {} ,
+                        pict1 : {}
+                    }  ,
+                    mounted : function () {
+                        that = this ;
+                        // that.slowlyOpacity1() ;
+                    } ,
+                    methods : {
+                        slowlyOpacity1 : () => {
+                            var interval = window.setInterval( "that.disable( that.pict  , 100 )" , 30 ) ;
+                            that.pict.controller = interval ;
+                        } ,
+                        slowlyShow : () => {
+                            var interval = window.setInterval( "that.disable( that.pict1  , 0 )" , 30 ) ;
+                            that.pict1.controller = interval ;
+                        } ,
+                        disable : ( pic , target ) => {
+                            let opacity = parseInt( pic.opacity * 100) ;
+                            let differentValue = ( opacity - target ) / 40 ;
+                            if ( differentValue > 0 ) {
+                                let number = Math.ceil( differentValue ) ;
+                                pic.opacity = parseFloat( ( pic.opacity * 100 - number ) / 100.0 ) ;
+                                //  把差值进行相加
+                            } else if ( differentValue < 0 ){
+                                let number = Math.floor( differentValue ) ;
+                                pic.opacity = parseFloat( ( pic.opacity * 100 - number ) / 100.0 ) ;
+                            } else {
+                                let number = Math.ceil( differentValue ) ;
+                                pic.opacity = parseFloat( ( pic.opacity * 100 - number ) / 100.0 ) ;
+                                window.clearInterval( pic.controller  ) ;
+                            }
+                        } ,
+                        //  慢慢隐藏
+                        nextClick : () => {
+                            let index = that.index ;
+                            var indexNew = index + 1 ;
+                            if ( indexNew == 4 ) {
+                                indexNew = 0 ;
+                            }
+                            that.pict = that.picList[indexNew] ;
+                            that.pict1 = that.picList[index] ;
+                            that.slowlyOpacity1( ) ;
+                            that.slowlyShow() ;
+                            that.index = indexNew ;
+                        }
+                    }
+                })
+            }
+        </script>
+    </head>
+    <body>
+        <div id="app">
+            <div class="pic" >
+                <img v-bind:style="picList[0]" class="img" src="/img/01.jpg">
+                <img v-bind:style="picList[1]" class="img" src="/img/02.jpg">
+                <img v-bind:style="picList[2]" class="img" src="/img/05.jpg">
+                <img v-bind:style="picList[3]" class="img" src="/img/04.jpg">
+                <button class="front">上一张</button>
+                <button @click="nextClick" class="next">下一张</button>
+            </div>
+        </div>
+    </body>
+</html>

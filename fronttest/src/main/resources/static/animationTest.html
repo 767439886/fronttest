@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+        <script src="js/vue.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/axios-0.18.0.js"></script>
+        <script type="text/javascript">
+            window.onload = () => {
+                new Vue({
+                    el : "#app"  ,
+                    data : {
+                        square1 : {
+                            position: "absolute" ,
+                            top : "0px" ,
+                            left : "0px"  ,
+                            height: "100px" ,
+                            width: "100px" ,
+                            x : 0 ,
+                            y : 0
+                        } ,
+                        square2 : {
+                            position: "absolute" ,
+                            top : "0px" ,
+                            left : "1000px"  ,
+                            height: "100px" ,
+                            width: "100px" ,
+                            x : 0 ,
+                            y : 0
+                        } ,
+                        suq1 : {
+                            num : 4 ,
+                            num1 : 12 ,
+                        } ,
+                        suq2 : {
+                            num : 6 ,
+                            num1 : 16
+                        }
+                    } ,
+                    mounted : function () {
+                        that = this ;
+                        that.move() ;
+                    } ,
+                    methods : {
+                        start : (num , num1 , qure) => {
+                            var top = qure["top"].substring( 0 , qure["top"].length - 2 );
+                            var value = qure["left"].substring( 0 ,qure["left"].length - 2 ) ;
+                            var number = parseInt( value ) ;
+                            var number1 = parseInt(top) ;
+                            number += num ;
+                            number1 += num1 ;
+                            qure["left"] = number + "px";
+                            qure["top"] = number1 + "px" ;
+                        } ,
+                        move : () => {
+                            window.setInterval( "that.moveTime()" , 22 ) ;
+                        } ,
+                        if_Crash : ( qure , sq ) => {
+                            var value = parseInt( qure["left"].substring( 0 ,qure["left"].length - 2 ) ) ;
+                            var width = parseInt( qure["width"].substring( 0 ,qure["width"].length - 2 ) ) ;
+                            if ( value > document.body.clientWidth - width ) {
+                                qure["left"] =  document.body.clientWidth - width + "px" ;
+                                //   进行位置的修正
+                                sq.num *= -1 ;
+                            }
+                            else if ( value < 0   ) {
+                                qure["left"] =  0 + "px" ;
+                                //   进行位置修正
+                                sq.num *= -1 ;
+                            }
+
+                            var top = parseInt( qure["top"].substring( 0 ,qure["top"].length - 2 ) ) ;
+                            var height = parseInt( qure["height"].substring( 0 ,qure["height"].length - 2 ) ) ;
+                            if ( top > document.body.clientHeight - height ) {
+                                qure["top"] =  document.body.clientHeight - height + "px" ;
+                                //   进行位置的修正
+                                sq.num1 *= -1 ;
+                            }
+                            else if ( top < 0   ) {
+                                qure["top"] =  0 + "px" ;
+                                //   进行位置修正
+                                sq.num1 *= -1 ;
+                            }
+                            that.start( sq.num , sq.num1 , qure )
+                        } ,
+                        if_Two_Crash : () => {
+                            let value = that.square1["left"].substring( 0 ,that.square1["left"].length - 2 ) ;
+                            that.square1.x = parseInt( value) + parseInt( that.square1.width ) / 2  ;
+                            let top = that.square1["top"].substring( 0 , that.square1["top"].length - 2 );
+                            that.square1.y = parseInt(top) +  parseInt( that.square1.height ) / 2  ;
+                            //  计算出中心点在哪
+
+                            value = that.square2["left"].substring( 0 ,that.square2["left"].length - 2 ) ;
+                            that.square2.x = parseInt(value) + parseInt( that.square2.width ) / 2  ;
+                            top = that.square2["top"].substring( 0 , that.square2["top"].length - 2 );
+                            that.square2.y = parseInt(top) + parseInt( that.square2.height ) / 2   ;
+
+                            width = Math.abs( that.square1.x - that.square2.x ) ;
+                            height = Math.abs( that.square1.y - that.square2.y ) ;
+
+                            widthMax = ( parseInt( that.square1.width ) + parseInt( that.square2.width ) ) / 2 ;
+                            heightMax = ( parseInt( that.square1.height ) + parseInt( that.square2.height ) ) / 2 ;
+                            console.log( width + " ::" ) ;
+                            console.log( widthMax ) ;
+                            if ( ( width < widthMax ) && ( height < heightMax ) ) {
+                                return true
+                            }
+                            return  false
+                        } ,
+                        moveTime : () => {
+                            that.if_Crash( that.square1 , that.suq1 ) ;
+                            that.if_Crash( that.square2 , that.suq2 ) ;
+                            // 使用定时器的时候要注意了，第一个参数不可以加小括号
+                            if ( that.if_Two_Crash() ) {
+                                that.suq1.num *= -1 ;
+                                that.suq1.num1 *= -1 ;
+                                that.suq2.num *= -1 ;
+                                that.suq2.num1 *= -1 ;
+                            }
+                        }
+                    }
+                })
+            }
+        </script>
+        <style type="text/css">
+            html , body {
+                width: 100%;
+                height: 100%;
+                margin: 0 ;
+                padding: 0;
+                overflow: hidden;
+            }
+            .css{
+                background-color : red ;
+            }
+            .css1{
+                background-color: #d53cca;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div  class="css" v-bind:class="square1" v-bind:style="square1"></div>
+            <div class="css1" v-bind:class="square2" v-bind:style="square2"></div>
+        </div>
+    </body>
+</html>
